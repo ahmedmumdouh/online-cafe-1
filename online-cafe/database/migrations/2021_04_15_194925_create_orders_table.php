@@ -15,8 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('room_id');
+            $table->foreignId('user_id')->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('room_id')->constrained()
+                ->onDelete('cascade');
             $table->text('notes');
             $table->enum('status', ['processing', 'out_for_delivery', 'done']);
             $table->integer('total_price');

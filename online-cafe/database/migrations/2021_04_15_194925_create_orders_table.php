@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('room_id');
             $table->text('notes');
-            $table->string('status');
+            $table->enum('status', ['processing', 'out_for_delivery', 'done']);
             $table->integer('total_price');
 
             $table->timestamps();

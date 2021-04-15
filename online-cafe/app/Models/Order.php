@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Product;
+use App\Models\User;
 
 class Order extends Model
 {
@@ -15,5 +16,9 @@ class Order extends Model
 
         return $this->belongsToMany(Product::class)
             ->withPivot(['quantity']);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

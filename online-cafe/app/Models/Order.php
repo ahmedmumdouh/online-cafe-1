@@ -12,6 +12,13 @@ use App\Models\Room;
 class Order extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'room_id',
+        'notes',
+        'status',
+        'total_price',
+    ];
     public function  products()
     {
 

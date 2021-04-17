@@ -19,9 +19,16 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.withCredentials =true
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
+
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            axios.get('/api/testapi').then(response => {
+                console.log(response)
+            })
         },
         props:["user"],
     }

@@ -6,7 +6,7 @@
 
 require("./bootstrap");
 
-window.Vue = require("vue").default;
+// window.Vue = require("vue").default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -32,5 +32,10 @@ window.Vue = require("vue").default;
 // });
 
 import { createApp } from "vue";
-import example from "./components/ExampleComponent.vue";
-createApp(example).mount("#main");
+// import example from "./components/ExampleComponent.vue";
+// createApp(example).mount("#main");
+
+
+let app = createApp({});
+app.component("example", require("./components/ExampleComponent.vue").default);
+app.mount("#main");

@@ -6,7 +6,10 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        I'm an example compo
+                       
+                        <h3>Welcome to OS - {{user}}</h3>
+    
                     </div>
                 </div>
             </div>
@@ -20,6 +23,6 @@
         mounted() {
             console.log('Component mounted.')
         },
-
+        props:["user"],
     }
 </script>

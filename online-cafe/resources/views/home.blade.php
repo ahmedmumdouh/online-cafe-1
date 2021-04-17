@@ -20,6 +20,10 @@
         </div>
     </div>
 </div> -->
-<div id="main"></div>
+
+
+<div id="main">
+    <example user="{{Auth::user()}}" />
+</div>
 
 @endsection

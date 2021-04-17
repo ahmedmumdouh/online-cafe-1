@@ -6,7 +6,10 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        I'm an example compo
+                       
+                        <h3>Welcome to OS - {{user}}</h3>
+    
                     </div>
                 </div>
             </div>
@@ -16,10 +19,17 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.withCredentials =true
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
+
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            axios.get('/api/categories').then(response => {
+                console.log(response.data)
+            })
         },
-
+        props:["user"],
     }
 </script>

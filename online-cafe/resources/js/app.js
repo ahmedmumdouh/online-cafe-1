@@ -32,5 +32,8 @@ window.Vue = require("vue").default;
 // });
 
 import { createApp } from "vue";
-import example from "./components/ExampleComponent.vue";
-createApp(example).mount("#main");
+// import example from "./components/ExampleComponent.vue";
+import admincomponent from './admincomponent.vue';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+createApp(admincomponent).mount("#main");

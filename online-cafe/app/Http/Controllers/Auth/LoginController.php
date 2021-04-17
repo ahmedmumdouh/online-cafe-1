@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -36,5 +42,64 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    // handling github authentication redirect
+    public function redirectToGithub()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    // handling github callback
+    public function handlGithubCallback()
+    {
+        $user = Socialite::driver('github')->user();
+        $this->LoginOrRegisterUser($user);
+        return redirect(route('home'));
+    }
+
+
+    //handling google authentication redirect
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    // handling Google callback
+    public function handlGoogleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+        $this->LoginOrRegisterUser($user);
+        return redirect(route('home'));
+    }
+
+    //handling facebook authentication redirect
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    // handling facebook callback
+    public function handlFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        $this->LoginOrRegisterUser($user);
+        return redirect(route('home'));
+    }
+
+    protected function LoginOrRegisterUser($data)
+    {
+
+        $user = User::where('email', '=', $data->email)->first();
+        if (!$user and $user->provider_id) {
+            $user = new User();
+            $user->name = $data->name;
+            $user->email = $data->email;
+            $user->password = Hash::make("password", ['rounds' => 12]);
+            $user->provider_id = $data->id;
+            $user->avatar = $data->avatar;
+            $user->save();
+        }
+        Auth::login($user);
     }
 }

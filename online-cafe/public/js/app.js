@@ -16588,8 +16588,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/testapi').then(function (response) {
-      console.log(response);
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/categories').then(function (response) {
+      console.log(response.data);
     });
   },
   props: ["user"]

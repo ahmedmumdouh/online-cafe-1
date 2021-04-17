@@ -26,8 +26,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000'
     export default {
         mounted() {
             console.log('Component mounted.');
-            axios.get('/api/testapi').then(response => {
-                console.log(response)
+            axios.get('/api/categories').then(response => {
+                console.log(response.data)
             })
         },
         props:["user"],

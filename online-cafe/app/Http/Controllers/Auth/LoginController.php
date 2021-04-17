@@ -91,7 +91,7 @@ class LoginController extends Controller
     {
 
         $user = User::where('email', '=', $data->email)->first();
-        if (!$user and $user->provider_id) {
+        if (!$user) {
             $user = new User();
             $user->name = $data->name;
             $user->email = $data->email;

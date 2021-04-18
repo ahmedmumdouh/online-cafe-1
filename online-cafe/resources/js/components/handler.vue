@@ -8,7 +8,7 @@
                     <div class="card-body">
                         I'm an example compo
                        
-                        <h3>Welcome to OS - {{user}}</h3>
+                        <h3>handler</h3>
     
                     </div>
                 </div>
@@ -26,10 +26,10 @@ axios.defaults.baseURL = 'http://localhost:8000'
     export default {
         mounted() {
             console.log('Component mounted.');
-            axios.get('/api/categories').then(response => {
+            axios.get('/api/user').then(response => {
                 console.log(response.data)
             })
         },
-        props:["user"],
+      
     }
 </script>

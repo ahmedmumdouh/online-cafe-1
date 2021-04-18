@@ -6,34 +6,72 @@
 
 require("./bootstrap");
 
-window.Vue = require("vue").default;
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// window.Vue = require("vue").default;
 
 // const app = new Vue({
 //     el: '#app',
 // });
 
+// let app = createApp({});
+// app.component("example", require("./components/ExampleComponent.vue").default);  // for tags
+// app.mount("#main");
+
+
+
+
+
 import { createApp } from "vue";
-// import example from "./components/ExampleComponent.vue";
-import admincomponent from './admincomponent.vue';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-createApp(admincomponent).mount("#main");
+import User from "./components/UserComponent.vue";
+import Admin from "./components/AdminComponent.vue";
+import handler from "./components/handler.vue";
+import test from "./components/testComponent.vue";
+
+import { createWebHistory , createRouter } from "vue-router";
+
+import axios from 'axios'
+axios.defaults.withCredentials =true
+axios.defaults.baseURL = 'http://localhost:8000'
+
+// routes
+
+const UserRoutes = [
+    {path:'/',component:User},
+    {path:'/:catchAll(.*)',component:handler},
+];
+
+const AdminRoutes = [
+    {path:'/',component:test},
+    {path:'/:catchAll(.*)',component:handler},
+];
+
+
+
+
+window.addEventListener('load',function(e){
+    const userRouter = createRouter({history:createWebHistory(),routes:UserRoutes});
+    const adminRouter = createRouter({history:createWebHistory(),routes:AdminRoutes});
+    
+    axios.get('/api/user').then(response => {
+        console.log(response.data.is_admin );
+        if( response.data.is_admin ){
+            createApp(Admin).use(adminRouter).mount('#main')
+        }
+        else{
+            createApp(User).use(userRouter).mount('#main')
+        }
+    })
+        
+})
+
+
+
+
+
+
+
+
+
+
+
+
+

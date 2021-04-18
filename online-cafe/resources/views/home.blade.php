@@ -20,6 +20,15 @@
         </div>
     </div>
 </div> -->
-<div id="main"></div>
+
+
+<div id="main">
+{{Auth::user()}}
+    <!-- <example user="{{Auth::user()}}" >
+        {% if isAdmin %}
+        // create admin compo 
+
+    </example> -->
+</div>
 
 @endsection

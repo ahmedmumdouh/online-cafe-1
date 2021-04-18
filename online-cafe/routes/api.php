@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController ;
+use App\Http\Controllers\api\AdminUserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,5 +29,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::apiResource('projects', 'ProjectsApiController');
     Route::apiResource("/categories",CategoryController::class);
 
+
+
+
     // ... Other routes
 });
+
+Route::post('/user',[AdminUserController::class,'store']); 
+Route::get('/user',[AdminUserController::class,'index']); 
+
+
+// Route::Resource("/addusers",AdminUserController::class);
+
+

@@ -1,18 +1,12 @@
 <template>
-<Navbar :user="user"/>
-    <div class="container">
+    <div class="container-md">
+        <Navbar :user="user"/>
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-                    <div class="card-body">
-                        <router-view col-md-12></router-view>
-                    </div>
-                </div>
+            <div class="col-12 py-4">
+                <router-view></router-view>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>

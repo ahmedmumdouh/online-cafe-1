@@ -58,7 +58,6 @@ class LoginController extends Controller
         return redirect(route('home'));
     }
 
-
     //handling google authentication redirect
     public function redirectToGoogle()
     {

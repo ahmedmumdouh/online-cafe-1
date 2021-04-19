@@ -22,16 +22,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
-import UserHome from "./components/user/HomeComponent.vue";
+import CreateOrder from "./components/user/CreateOrderComponenet.vue";
+import Home from "./components/user/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
-
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
 // routes
 
 const UserRoutes = [
-    { path: "/home", component: UserHome },
+    { path: "/home", component: Home },
+    { path: "/create-order", component: CreateOrder },
     { path: "/:catchAll(.*)", component: handler },
 ];
 

@@ -25,6 +25,4 @@
 <div id="main">
 </div>
 @endif
-
-{{ Auth::user() }}
 @endsection

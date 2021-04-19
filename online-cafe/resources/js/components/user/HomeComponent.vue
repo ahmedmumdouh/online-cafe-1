@@ -1,20 +1,7 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an Home compo
-                        <h3>Home </h3>
-    
-                    </div>
-                </div>
-            </div>
-        </div>
+       <latest-order-componenet/>
     </div>
-
 </template>
 
 <script>
@@ -22,10 +9,19 @@ import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
+import LatestOrderComponenet from './LatestOrderComponenet.vue';
+
     export default {
         mounted() {
             console.log('Home Component mounted.');
         },
-        
+        data(){
+            return {
+
+            }
+        },
+        components: {
+            LatestOrderComponenet,
+        }
     }
 </script>

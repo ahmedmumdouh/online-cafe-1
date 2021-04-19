@@ -16663,8 +16663,22 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function () {
         console.log("Error...");
       });
-    }
+    },
+    // end of getuser method
+    deleteUser: function deleteUser(id) {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().delete("http://localhost:8000/api/userdelete/".concat(id)).then(function (response) {
+        var i = _this2.users.map(function (data) {
+          return data.data;
+        }).indexOf(id);
+
+        _this2.users.splice(i, 1);
+      });
+    } // end of delete method 
+
   },
+  //end of methods
   created: function created() {
     this.getUsers();
   }
@@ -16821,14 +16835,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "#",
-  "class": "btn btn-danger"
-}, "edit")], -1
-/* HOISTED */
-);
-
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "#",
   "class": "btn btn-success"
 }, "Add New User", -1
@@ -16843,10 +16850,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.avatar), 1
     /* TEXT */
-    ), _hoisted_6, _hoisted_7]);
+    ), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td><a href=\"#\" class=\"btn btn-danger\">edit</a></td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+      type: "button",
+      "class": "btn btn-danger",
+      onClick: function onClick($event) {
+        return $options.deleteUser(user.id);
+      }
+    }, "Delete ", 8
+    /* PROPS */
+    , ["onClick"])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tfoot>\n<tr>\n<td colspan=\"4\"></td>\n\n <td></td>\n\n</tr>\n\n</tfoot> ")]), _hoisted_8])]);
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tfoot>\n<tr>\n<td colspan=\"4\"></td>\n\n <td></td>\n\n</tr>\n\n</tfoot> ")]), _hoisted_7])]);
 }
 
 /***/ }),

@@ -15,10 +15,16 @@
 
 <tr  v-for="user in users" :key="user.id">
     <td>{{user.name}}</td>
-    <td>123</td>
+    <td >123</td>
     <td>{{user.avatar}}</td>
      <td><a  href="#" class="btn btn-primary">view</a></td>
-     <td><a href="#" class="btn btn-danger">edit</a></td>
+     <!-- <td><a href="#" class="btn btn-danger">edit</a></td> -->
+
+      <td>
+       <a type="button"
+          class="btn btn-danger"
+         @click="deleteUser(user.id)">Delete </a>
+          </td>
     </tr>
 </tbody>
 
@@ -62,8 +68,17 @@ import axios from 'axios'
                 .catch(() => {
                     console.log("Error...");
                 });
-                     },
-             },
+                     }, // end of getuser method
+
+         deleteUser(id) {
+            axios
+                .delete(`http://localhost:8000/api/userdelete/${id}`)
+                .then((response) => {
+                    let i = this.users.map((data) => data.data).indexOf(id);
+                    this.users.splice(i, 1);
+                });
+                        }, // end of delete method 
+             }, //end of methods
 
      created() {
        

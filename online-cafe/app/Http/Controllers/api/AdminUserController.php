@@ -27,15 +27,17 @@ class AdminUserController extends Controller
             $user->password = $userRequeste->password;
             $user->avatar = $userRequeste->avatar;
             $user->save();
-            // return redirect()->route('user.index');
-            // SlugService::createSlug(Post::class, 'slug', $request->title);
             return response()->json('user created');
-        // }//////////////////////////////////////////////
        
-        // // $users = $userRequeste-> all();
-        // // User::create($users);
-        
-        // return response()-> json("user created");
+    }
+
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        return response()->json('user deleted!');
     }
 
      

@@ -1,5 +1,4 @@
 <template>
-      
 <div class="container">
 <div class="row">
 <table class="table table-striped table-bordered  table-hover  text-center col-12 ">
@@ -13,12 +12,13 @@
     </tr>
 </thead>
 <tbody>
-<tr >
-    <td>ghada</td>
+
+<tr  v-for="user in users" :key="user.id">
+    <td>{{user.name}}</td>
     <td>123</td>
-    <td>ghada.png</td>
- <td><a  href="#" class="btn btn-primary">view</a></td>
- <td><a href="#" class="btn btn-danger">edit</a></td>
+    <td>{{user.avatar}}</td>
+     <td><a  href="#" class="btn btn-primary">view</a></td>
+     <td><a href="#" class="btn btn-danger">edit</a></td>
     </tr>
 </tbody>
 
@@ -40,23 +40,41 @@
 </template>
 
 <script>
-export default {
-data(){
-    return{
-
-          }
-             }
-   
-,
-components:{
-
-           },
- methods:{
-
- }
 
 
-}
+import axios from 'axios'
+// axios.defaults.withCredentials =true
+// axios.defaults.baseURL = 'http://localhost:8000'
+
+    export default {
+     data(){
+         return{
+              users: [],
+
+                  }
+             },
+    methods:{
+
+      getUsers() {
+            axios
+                .get("http://localhost:8000/api/userindex")
+                .then((data) => (this.users = data.data))
+                .catch(() => {
+                    console.log("Error...");
+                });
+                     },
+             },
+
+     created() {
+       
+        this.getUsers();
+               },
+        }
+
+      
+
+
+
 
 </script>
 

@@ -25,6 +25,7 @@ import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
+import allusercomponent from "./components/allusercomponent.vue";
 
 import { createWebHistory , createRouter } from "vue-router";
 
@@ -41,7 +42,10 @@ const UserRoutes = [
 
 const AdminRoutes = [
     {path:'/',component:test},
+    {path:'/alluser',component:allusercomponent},
+
     {path:'/:catchAll(.*)',component:handler},
+
 ];
 
 
@@ -52,7 +56,8 @@ window.addEventListener('load',function(e){
     const adminRouter = createRouter({history:createWebHistory(),routes:AdminRoutes});
     
     axios.get('/api/user').then(response => {
-        console.log(response.data.is_admin );
+        
+        console.log(response.data );
         if( response.data.is_admin ){
             createApp(Admin).use(adminRouter).mount('#main')
         }

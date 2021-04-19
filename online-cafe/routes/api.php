@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/testapi', function(Request $request){
+Route::get('/testapi', function(Request $request){
     return response()->json(["message"=>"New post added successfully"]);
 });
 
@@ -34,9 +34,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ... Other routes
 });
+Route::post('/userstore',[AdminUserController::class,'store']); 
+Route::get('/userindex',[AdminUserController::class,'index']); 
+Route::derstroy('/userdelet',[AdminUserController::class,'index']); 
 
-Route::post('/user',[AdminUserController::class,'store']); 
-Route::get('/user',[AdminUserController::class,'index']); 
+
 
 
 // Route::Resource("/addusers",AdminUserController::class);

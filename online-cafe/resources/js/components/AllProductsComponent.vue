@@ -25,8 +25,8 @@
                 <td style="vertical-align: middle;">{{product.name}}</td>
                 <td>{{product.price}}</td>
                 <td>{{product.category_id.name}}</td>
-                <td style="width:25%"><img src="public/image/20210419052825.png" style="width:25% ;" :alt="product.name"></td>
-                 <!-- http://localhost:8000/images/20210419052825.png -->public\image\20210419052825.png
+                <td style="width:25%"><img :src="'localhost:8000/public/image/'+product.image" style="width:25% ;" :alt="product.name"></td>
+                 <!-- http://localhost:8000/images/20210419052825.png -->
                 <td>
                     <a class="btn btn-success" href="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -49,8 +49,9 @@
             </tr>
         </tbody>
     </table>
-
+ <img :src="'http://localhost:8000/image/20210419052825.png'" style="width:25% ;" >
     </div>
+   
 
 </template>
 
@@ -64,6 +65,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
                 return{                    
                     products:[],
                     categories:[],
+                    test:"http://localhost:8000/image/20210419052825.png",
                 }    
                 
             },

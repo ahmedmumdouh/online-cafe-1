@@ -17,8 +17,9 @@
     <td>{{user.name}}</td>
     <td >123</td>
     <td>{{user.avatar}}</td>
-     <td><a  href="#" class="btn btn-primary">view</a></td>
+     <!-- <td><a  href="#" class="btn btn-primary">view</a></td> -->
      <!-- <td><a href="#" class="btn btn-danger">edit</a></td> -->
+   <router-link :to="{name: 'edit', params: { id: user.id }}" class="btn btn-success">Edit</router-link>
 
       <td>
        <a type="button"

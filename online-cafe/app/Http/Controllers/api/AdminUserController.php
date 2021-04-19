@@ -47,7 +47,12 @@ public function update($id, Request $request)
 
         return response()->json('user updated!');
     }
-
+// show user with id
+public function show($id)
+    {
+        $user = User::find($id);
+        return response()->json($user);
+    }
      
 
 }

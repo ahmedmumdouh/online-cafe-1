@@ -26,6 +26,7 @@ import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
 import allusercomponent from "./components/allusercomponent.vue";
+import edituser from "./components/editeUserComponent.vue"
 
 import { createWebHistory , createRouter } from "vue-router";
 
@@ -44,7 +45,12 @@ const AdminRoutes = [
     {path:'/',component:test},
     {path:'/alluser',component:allusercomponent},
 
-    {path:'/:catchAll(.*)',component:handler},
+    { path:'/edit/:id',
+      name:'edit',
+      component:edituser
+           },
+
+{path:'/:catchAll(.*)',component:handler},
 
 ];
 

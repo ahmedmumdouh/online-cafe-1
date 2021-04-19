@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 Route::post('/userstore',[AdminUserController::class,'store']); 
 Route::get('/userindex',[AdminUserController::class,'index']); 
-Route::derstroy('/userdelet',[AdminUserController::class,'index']); 
+Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 
 
 
 

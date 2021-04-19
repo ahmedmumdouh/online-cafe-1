@@ -10,16 +10,15 @@ use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
 {
-
+ // list all user by index fun
    public function index(){
        $users = User::all();
        return response()-> json($users);
 
    }
-
+  // save users 
     public function store(Request $userRequeste)
     {    
-        ///////////////////////
         
             $user = new User();
             $user->name = $userRequeste->name;
@@ -31,13 +30,22 @@ class AdminUserController extends Controller
        
     }
 
-
+// delete user
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
 
         return response()->json('user deleted!');
+    }
+
+// update user 
+public function update($id, Request $request)
+    {
+        $user = User::find($id);
+        $user->update($request->all());
+
+        return response()->json('user updated!');
     }
 
      

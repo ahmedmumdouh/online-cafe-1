@@ -23,7 +23,7 @@
 
 
 <div id="main">
-{{Auth::user()}}
+<!-- {{Auth::user()}} -->
     <!-- <example user="{{Auth::user()}}" >
         {% if isAdmin %}
         // create admin compo 

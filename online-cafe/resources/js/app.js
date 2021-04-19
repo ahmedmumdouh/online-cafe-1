@@ -25,6 +25,8 @@ import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
+import AllProducts from './components/AllProductsComponent.vue'
+import AddProduct from './components/AddProductComponent.vue'
 
 import { createWebHistory , createRouter } from "vue-router";
 
@@ -36,11 +38,14 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
 const UserRoutes = [
     {path:'/',component:User},
-    {path:'/:catchAll(.*)',component:handler},
+    {path:'/products', name: 'allproducts', component: AllProducts},
+    {path:'/:catchAll(.*)',component: handler},
 ];
 
 const AdminRoutes = [
-    {path:'/',component:test},
+    {path:'/',component:Admin},
+    {path:'/products',component:AllProducts},
+    {path:'/add_product',component:AddProduct},
     {path:'/:catchAll(.*)',component:handler},
 ];
 

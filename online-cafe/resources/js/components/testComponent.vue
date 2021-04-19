@@ -25,7 +25,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
         mounted() {
-            console.log('Component mounted.');
+            console.log('Test Component mounted.');
             axios.get('/api/categories').then(response => {
                 console.log(response.data)
             })

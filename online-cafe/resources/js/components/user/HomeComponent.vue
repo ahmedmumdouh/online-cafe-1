@@ -1,12 +1,14 @@
 <template>
-<Navbar :user="user"/>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Example Component</div>
+
                     <div class="card-body">
-                        <router-view col-md-12></router-view>
+                        I'm an Home compo
+                        <h3>Home </h3>
+    
                     </div>
                 </div>
             </div>
@@ -17,29 +19,13 @@
 
 <script>
 import axios from 'axios'
-import Navbar from '../components/user/NavbarComponent.vue';
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
-        created() {
-            console.log('User Component mounted.');
-             axios.get('/api/user').then(response => {
-                this.user = response.data;
-            })
+        mounted() {
+            console.log('Home Component mounted.');
         },
-        data(){
-            return {
-                user: "",
-            }
-        },
-        components: {
-            Navbar,
-        }
-    
+        
     }
 </script>
-
-<style scoped>
-
-</style>

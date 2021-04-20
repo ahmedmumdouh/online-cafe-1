@@ -40,58 +40,98 @@
       </thead>
       <tbody>
         <tr>
-          <td><button type="button" class="btn btn-info">Mark</button></td>
+          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Mark</button></td>
           <th scope="row">1</th>
         </tr>
         <tr>
-          <td><button type="button" class="btn btn-info">Jaccob</button></td>
+          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Jaccob</button></td>
           <th scope="row">2</th>
         </tr>
         <tr>
-          <td><button type="button" class="btn btn-info">Larry</button></td>
+          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Larry</button></td>
           <th scope="row">3</th>
         </tr>
       </tbody>
     </table>
+    <div v-if="orderDisplay">
+      <table  class="table table-hover table-primary mt-5">
+        <thead >
+          <tr >
+            <th  scope="col">Order Date</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="(orderDetailsDisplay = true), (index = 0)"
+              >
+                2021-04-10
+              </button>
+            </th>
+            <td>25</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="(orderDetailsDisplay = true), (index = 1)"
+              >
+                2021-03-25
+              </button>
+            </th>
+            <td>100</td>
+          </tr>
+          <tr>
+            <th  scope="row">
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="(orderDetailsDisplay = true), (index = 2)"
+              >
+                2020-10-10
+              </button>
+            </th>
 
-    <table class="table table-hover table-primary mt-5">
-      <thead>
-        <tr>
-          <th scope="col">Order Date</th>
-          <th scope="col">Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">
-            <button type="button" class="btn btn-primary" @click="orderDetailsDisplay=true,index=0" > 2021-04-10</button>
-          </th>
-          <td>25</td>
-        </tr>
-        <tr>
-          <th scope="row">
-            <button type="button" class="btn btn-primary" @click="orderDetailsDisplay=true,index=1">2021-03-25</button>
-          </th>
-          <td>100</td>
-        </tr>
-        <tr>
-          <th scope="row">
-            <button type="button" class="btn btn-primary" @click="orderDetailsDisplay=true,index=2">2020-10-10</button>
-          </th>
+            <td>10</td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+            type="button"
+            class="btn btn-danger"
+            style="float:right"
+            @click="orderDisplay = false"
+          >
+            Hide
+          </button>
+    </div>
 
-          <td>10</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div v-if="orderDetailsDisplay==true" class="p-3 mb-2 text-primary" style="background-color: #e8e8e8">
+    <div
+      v-if="orderDetailsDisplay == true"
+      class="p-3 mb-2 mt-5 text-primary"
+      style="background-color: #e8e8e8"
+    >
       <div class="d-flex flex-row">
-        <div class="p-2"><h4>{{orderDetails[index]}}</h4></div>
-        <div  style="float:right" ><button type="button" class="btn btn-danger" @click="orderDetailsDisplay=false">Hide</button></div>
-    
-        
+        <div class="p-2">
+          <h4>{{ orderDetails[index] }}</h4>
+        </div>
+        <div style="float: right">
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="orderDetailsDisplay = false"
+          >
+            Hide
+          </button>
+        </div>
       </div>
-      </div>
+    </div>
+   
   </div>
 </template>
 
@@ -104,8 +144,9 @@ export default {
   data() {
     return {
       orderDetailsDisplay: false,
-      orderDetails:['Tea','Coffe','Orange Juice'],
-      index:0
+      orderDisplay: false,
+      orderDetails: ["Tea", "Coffe", "Orange Juice"],
+      index: 0,
     };
   },
   mounted() {},

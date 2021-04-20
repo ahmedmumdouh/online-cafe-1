@@ -47,7 +47,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
 ,
 components:{
    allusercomponent,
-   edituser
+//    edituser
 
            },
  methods:{

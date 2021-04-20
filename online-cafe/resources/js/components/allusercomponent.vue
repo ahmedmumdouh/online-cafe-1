@@ -44,7 +44,7 @@
 </tfoot> -->
 
  </table>
- <a href="#" class="btn btn-success">Add New User</a>
+  <td><router-link :to="'/userstore'"  class="btn btn-success">Add New user </router-link></td> 
 </div>
 </div>
 

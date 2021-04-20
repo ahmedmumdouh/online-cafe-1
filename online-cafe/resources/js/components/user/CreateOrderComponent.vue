@@ -8,8 +8,8 @@
                         <label for="" class="text text-center">{{ product.quantity }}</label>
                         </div> <!-- Product Quantity !-->
                     <div class="col-4 text-center m-auto">
-                        <button class="btn btn-success btn-m m-1" @click="increaseQuantity(product.id)">+</button>
-                        <button class="btn btn-warning btn-m m-1" @click="decreaseQuantity(product.id)">-</button>
+                        <button class="btn btn-success btn-m m-1" @click.prevent="increaseQuantity(product.id)">+</button>
+                        <button class="btn btn-warning btn-m m-1" @click.prevent="decreaseQuantity(product.id)">-</button>
                         </div> <!-- Action !-->
                     <div class="col-3 text-center m-auto w-auto"><label for="text" class="text">{{ formatPrice(product.price * product.quantity) }}</label></div> <!-- Product Price !-->
                     <div class="col-2 text-dark m-auto"> <button class="btn btn-danger"  @click="removeProduct(product.id)">X</button></div> <!-- Delete  Product !-->
@@ -65,12 +65,16 @@
             </div><!-- display products !-->
         </div>
     </div>
+    <h1>{{user}}</h1>
 </template>
 
 <script>
-import axios from 'axios'
+import services  from '../../services/orders';
 export default {
-    data() {
+    async created(){
+        this.getProducts();
+    }
+    ,data() {
         return {
             order: {
                 products: [],
@@ -90,6 +94,7 @@ export default {
                     ],
         }    
     },
+    props: ['user'],
     methods:{
         getProductFromOrder(productId){
             return this.order.products.find((product) => product.id === productId);
@@ -118,22 +123,36 @@ export default {
 
         },
         addProduct(productId){
-            const product = this.products.find(product => product.id === productId);
-            this.order.products.push({...product});
-            this.order.totalPrice += product.price;
+            const product2 = this.getProductFromOrder(productId)
+            if(product2){
+                product2.quantity += 1;
+                this.order.totalPrice += product2.price;
+            }else{
+                const product = this.products.find(product => product.id === productId);
+                this.order.products.push({...product});
+                this.order.totalPrice += product.price; 
+            }
+            
         },
         confirmOrder(){
             if(this.order.products.length > 0) {
                 // submitOrder(this.order);
-                console.log(this.order);
+                console.log("sending ");
+                this.submitOrder()
 
             }else {
                 console.log("NUll");
 
             }
         },
-        submitOrder(order){
+        async submitOrder(order){
+            const res =  await services.submitOrder(order);
+            console.log(res);
         },
+        async getProducts(){
+            const products = await services.getProducts();
+            console.log(products);
+        }
 
     },
 

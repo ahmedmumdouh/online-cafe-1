@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-       <latest-order-componenet/>
+        <div class="row">
+            <latest-order-componenet :user="user" />
+        </div>
     </div>
 </template>
 
@@ -10,14 +12,14 @@ axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
 import LatestOrderComponenet from './LatestOrderComponent.vue';
-
+import {user}  from '../../app';
     export default {
         mounted() {
             console.log('Home Component mounted.');
         },
         data(){
             return {
-
+                user: user,
             }
         },
         components: {

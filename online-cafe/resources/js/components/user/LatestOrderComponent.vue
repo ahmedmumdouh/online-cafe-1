@@ -11,7 +11,7 @@
                         <h3>Order Details</h3>
                     </div>
                     <div class="card-body">
-                        <h3>Order Details</h3>
+                        {{ user }}
                     </div>
                 </div>
             </div>
@@ -29,5 +29,6 @@ export default {
     methods: {
 
     },
+    props: ['user']
 }
 </script>

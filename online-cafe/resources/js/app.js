@@ -20,7 +20,6 @@ import axios from "axios";
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Admin from "./components/AdminComponent.vue";
-import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
 import User from "./components/UserComponent.vue";
 axios.defaults.withCredentials = true;
@@ -32,21 +31,25 @@ const loadUserGroupComponents = (componenet) => {
         /* webpack-ChunkName: 'userGroup' */ `./components/user/${componenet}.vue`
     );
 };
-
 const UserRoutes = [
-    { path: "/home", component: loadUserGroupComponents("HomeComponent") },
+    {
+        path: "/home",
+        name: "home",
+        component: loadUserGroupComponents("HomeComponent"),
+    },
     {
         path: "/create-order",
+        name: "create-order",
         component: loadUserGroupComponents("CreateOrderComponent"),
     },
-    { path: "/:catchAll(.*)", component: handler },
+    { path: "/:catchAll(.*)", component: import("./components/handler.vue") },
 ];
 
 const AdminRoutes = [
     { path: "/home", component: test },
-    { path: "/:catchAll(.*)", component: handler },
+    { path: "/:catchAll(.*)", component: import("./components/handler.vue") },
 ];
-
+export let user;
 window.addEventListener("load", function (e) {
     const userRouter = createRouter({
         history: createWebHistory(),
@@ -59,8 +62,10 @@ window.addEventListener("load", function (e) {
     axios.get("/api/user").then((response) => {
         if (response.data.is_admin) {
             createApp(Admin).use(adminRouter).mount("#main");
+            user = response.data;
         } else {
             createApp(User).use(userRouter).mount("#main");
+            user = response.data;
         }
     });
 });

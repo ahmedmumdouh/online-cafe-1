@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\OrderController;
+use App\Models\Order;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,9 +30,11 @@ Route::middleware('auth:sanctum')->get('/testapi', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::apiResource('projects', 'ProjectsApiController');
     Route::apiResource("/categories", CategoryController::class);
-    Route::get('/product', function () {
-        return "Test";
-    });
+
+
+
+    Route::apiResource('/order', OrderController::class);
+
 
     // ... Other routes
 });

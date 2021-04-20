@@ -29,7 +29,6 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
 // routes
-
 const UserRoutes = [
     { path: "/home", component: Home },
     { path: "/create-order", component: CreateOrder },

@@ -36,8 +36,6 @@
             </div>
         </nav>
 </template>
-
-
 <script>
 import axios from 'axios';
 axios.defaults.withCredentials =true;
@@ -51,7 +49,6 @@ export default {
     methods: {
         logout(){
             axios.post('/logout').then(res => {
-                console.log(res);
                 window.location = "/"
                 }).catch(err =>console.error(err));
         },

@@ -17,7 +17,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
         created() {
-            console.log('User Component mounted.');
+            console.log('User Component Created.');
              axios.get('/api/user').then(response => {
                 this.user = response.data;
             })

@@ -25,6 +25,8 @@ import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
+import ChecksComponent from "./components/ChecksComponent.vue";
+
 
 import { createWebHistory , createRouter } from "vue-router";
 
@@ -37,10 +39,12 @@ axios.defaults.baseURL = 'http://localhost:8000'
 const UserRoutes = [
     {path:'/',component:User},
     {path:'/:catchAll(.*)',component:handler},
+    
 ];
 
 const AdminRoutes = [
     {path:'/',component:test},
+    {path:'/checks',component:ChecksComponent},
     {path:'/:catchAll(.*)',component:handler},
 ];
 
@@ -50,7 +54,6 @@ const AdminRoutes = [
 window.addEventListener('load',function(e){
     const userRouter = createRouter({history:createWebHistory(),routes:UserRoutes});
     const adminRouter = createRouter({history:createWebHistory(),routes:AdminRoutes});
-    
     axios.get('/api/user').then(response => {
         console.log(response.data.is_admin );
         if( response.data.is_admin ){

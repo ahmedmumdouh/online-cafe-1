@@ -8,8 +8,7 @@
                     <div class="card-body">
                         I'm an example compo -->
                        
-                        <h3>Admin </h3>
-                        <router-link to="/products">All Products</router-link>
+                        
                         <!-- <router-link :to="{ name: 'allproducts' }">All Products</router-link> -->
                         <router-view col-md-12></router-view>
 <!--     

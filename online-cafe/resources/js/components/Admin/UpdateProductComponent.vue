@@ -3,7 +3,7 @@
 <template>
         <div class="card">
             <div class="card-header">
-                Add Product
+                Update Product
             </div>
              <form  @submit.prevent="onSubmit" >
             <div class="card-body">
@@ -61,7 +61,7 @@
                 
             </div>
             <div class="card-footer text-muted">
-                <button class="btn btn-primary btn-block" >Add Product</button>
+                <button class="btn btn-primary btn-block" >Update Product</button>
             </div>
             </form>
         </div>
@@ -71,11 +71,11 @@
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
+import urls from '../services/apiURLs.js'
 
     export default {
         data(){
                 return{                    
-                    products:[],
                     categories:[],
                     form:{
                         name:'',
@@ -88,19 +88,22 @@ axios.defaults.baseURL = 'http://localhost:8000'
             },
         mounted() {
             console.log('Component mounted.');
-            axios.get('/api/categories').then(categoryResponse => {
-                // axios.get('/api/products').then(productResponse => {
+            const that = this;
+            axios.get(`${urls.getCategoriesURL}`).then(categoryResponse => {
                 this.categories = categoryResponse.data;
-
-                //  this.products = this.products.map((product) =>{
-                //     product.category_id= this.categories.filter((cata) => parseInt(cata.id) == parseInt(product.category_id))[0] ; 
-                //     console.log(product);
-                //     return product
-                //     });
-                // })
-               
-                // console.log("result")
                 console.log(this.categories)
+                axios.get(`${urls.getProductURL}${that.$route.params.productId}`).then(productResponse => {
+                    this.form.name = productResponse.data.name;
+                    this.form.price = productResponse.data.price;
+                    this.form.category_id = productResponse.data.category_id;
+                    //  this.products = this.products.map((product) =>{
+                    //     product.category_id= this.categories.filter((cata) => parseInt(cata.id) == parseInt(product.category_id))[0] ; 
+                    //     console.log(product);
+                    //     return product
+                    //     });
+                    // })
+                    console.log(this.form)
+                })
             })
         },
         methods:{
@@ -118,29 +121,27 @@ axios.defaults.baseURL = 'http://localhost:8000'
             // },
             onSubmit(e) {
                 e.preventDefault();
-                let existingObj = this;
+                const existingObj = this;
 
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data'
                     }
-                }
-
-                // let data = new FormData();
-                // data.append('file', this.file);
-                // upload file              
+                }            
                 const formData = new FormData()
                 formData.append('image', this.form.image)
                 formData.append('name', this.form.name)
                 formData.append('price', this.form.price)
                 formData.append('category_id', this.form.category_id)
                 console.log([ ...formData ]);
-                axios.post('/api/products', formData,config).then(function (res) {
-                        existingObj.success = res.data.success;
-                    })
-                    .catch(function (err) {
-                        existingObj.output = err;
-                    });
+                // axios.put(`${urls.putProductURL}${existingObj.$route.params.productId}`, formData,config).then(function (res) {
+                //         existingObj.success = res.data.success;
+                //         // existingObj.$router.push({ name: 'allProducts' })
+                //         console.log(res);
+                //     })
+                //     .catch(function (err) {
+                //         existingObj.output = err;
+                //     });
             }  
         }
         

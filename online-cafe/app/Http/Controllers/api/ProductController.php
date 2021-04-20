@@ -108,7 +108,18 @@ class ProductController extends Controller
    
     public function update(Request $request, Product $product)
     {
-       $update = $product->update($request->all());
+        $input = $request->all();
+  
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['image'] = "$profileImage";
+        }
+    
+        // $add = Product::create($input);
+        
+       $update = $product->update($input);
         if ($update){
             return response()->json(["is_done"=>true]);
         }else{

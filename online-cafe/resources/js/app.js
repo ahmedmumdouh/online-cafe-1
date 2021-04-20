@@ -23,10 +23,13 @@ require("./bootstrap");
 import { createApp } from "vue";
 import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
+import Home from "./components/HomeComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
-import AllProducts from './components/AllProductsComponent.vue'
-import AddProduct from './components/AddProductComponent.vue'
+import AllProducts from './components/Admin/AllProductsComponent.vue'
+import AddProduct from './components/Admin/AddProductComponent.vue'
+import UpdateProduct from './components/Admin/UpdateProductComponent.vue'
+
 
 import { createWebHistory , createRouter } from "vue-router";
 
@@ -37,16 +40,16 @@ axios.defaults.baseURL = 'http://localhost:8000'
 // routes
 
 const UserRoutes = [
-    {path:'/',component:User},
-    {path:'/products', name: 'allproducts', component: AllProducts},
+    {path:'/home',component:Home},
     {path:'/:catchAll(.*)',component: handler},
 ];
 
 const AdminRoutes = [
-    {path:'/',component:Admin},
-    {path:'/products',component:AllProducts},
-    {path:'/add_product',component:AddProduct},
-    {path:'/:catchAll(.*)',component:handler},
+    {name: 'home', path:'/home',component:Home},
+    {name: 'allProducts', path:'/products',component:AllProducts},
+    {name: 'addProduct', path:'/add_product',component:AddProduct},
+    {name: 'updateProduct', path:'/update_product/:productId',component:UpdateProduct},
+    {name: 'handler', path:'/:catchAll(.*)',component:handler},
 ];
 
 
@@ -67,6 +70,12 @@ window.addEventListener('load',function(e){
     })
         
 })
+
+//  latest +  admin + user compo
+//  
+//      latest orders  ->              /home 
+// router view admin    -> admin comp  /home 
+// 
 
 
 

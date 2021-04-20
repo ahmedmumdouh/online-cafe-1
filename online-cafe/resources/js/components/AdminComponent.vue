@@ -4,8 +4,13 @@
 <div class="class col-12">
    <!-- <h1>table commponent </h1>  -->
    <!--put table component here-->
-   
-   <allusercomponent />
+
+   <!-- <allusercomponent /> -->
+   <router-link to='/alluser'>All user</router-link>
+
+   <!-- <edituser/> -->
+   <router-view> </router-view> 
+
 
 </div><!--end of col class-->
 </div> <!--end of class row-->
@@ -19,6 +24,7 @@
 
 <script>
 import allusercomponent from './allusercomponent.vue'
+import edituser from './editeUserComponent.vue'
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
@@ -40,7 +46,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
    
 ,
 components:{
-   allusercomponent
+   allusercomponent,
+   edituser
 
            },
  methods:{

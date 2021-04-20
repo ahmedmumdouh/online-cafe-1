@@ -19,7 +19,8 @@
     <td>{{user.avatar}}</td>
      <!-- <td><a  href="#" class="btn btn-primary">view</a></td> -->
      <!-- <td><a href="#" class="btn btn-danger">edit</a></td> -->
-   <router-link :to="{name: 'edit', params: { id: user.id }}" class="btn btn-success">Edit</router-link>
+
+  <td><router-link :to="'/edit/'+user.id"  class="btn btn-success">Edit</router-link></td> 
 
       <td>
        <a type="button"
@@ -27,7 +28,10 @@
          @click="deleteUser(user.id)">Delete </a>
           </td>
     </tr>
+
 </tbody>
+
+
 
    <!-- <tfoot>
 <tr>
@@ -48,10 +52,9 @@
 
 <script>
 
-
 import axios from 'axios'
-// axios.defaults.withCredentials =true
-// axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.withCredentials =true
+axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
      data(){
@@ -79,11 +82,13 @@ import axios from 'axios'
                     this.users.splice(i, 1);
                 });
                         }, // end of delete method 
+
              }, //end of methods
 
-     created() {
+     created(){
        
         this.getUsers();
+
                },
         }
 

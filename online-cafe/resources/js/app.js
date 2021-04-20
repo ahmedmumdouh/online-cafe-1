@@ -21,6 +21,7 @@ require("./bootstrap");
 
 
 import { createApp } from "vue";
+
 import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
@@ -36,19 +37,21 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
 // routes
 
+
+
 const UserRoutes = [
     {path:'/',component:User},
     {path:'/:catchAll(.*)',component:handler},
 ];
 
 const AdminRoutes = [
-    {path:'/',component:test},
-    {path:'/alluser',component:allusercomponent},
+    {path:'/',component:Admin},
+    {path:'/alluser',component:allusercomponent , name:'alluser'},
 
-    { path:'/edit/:id',
-      name:'edit',
+    {   name:'edit',
+        path:'/edit/:id',
       component:edituser
-           },
+                       },     
 
 {path:'/:catchAll(.*)',component:handler},
 

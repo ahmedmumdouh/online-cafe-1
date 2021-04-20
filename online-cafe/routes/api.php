@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::post('/userstore',[AdminUserController::class,'store']); 
 Route::get('/userindex',[AdminUserController::class,'index']); 
 Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 
-Route::patch('/useredite/{id}',[AdminUserController::class,'update']); 
+Route::patch('/useredit/{id}',[AdminUserController::class,'update']); 
 Route::get('/usershow/{id}',[AdminUserController::class,'show']); 
 
 

@@ -22,16 +22,23 @@ import { createRouter, createWebHistory } from "vue-router";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
-import CreateOrder from "./components/user/CreateOrderComponenet.vue";
-import Home from "./components/user/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
 // routes
+const loadUserGroupComponents = (componenet) => {
+    return import(
+        /* webpack-ChunkName: 'userGroup' */ `./components/user/${componenet}.vue`
+    );
+};
+
 const UserRoutes = [
-    { path: "/home", component: Home },
-    { path: "/create-order", component: CreateOrder },
+    { path: "/home", component: loadUserGroupComponents("HomeComponent") },
+    {
+        path: "/create-order",
+        component: loadUserGroupComponents("CreateOrderComponent"),
+    },
     { path: "/:catchAll(.*)", component: handler },
 ];
 

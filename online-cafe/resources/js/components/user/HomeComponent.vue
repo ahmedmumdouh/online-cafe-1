@@ -9,7 +9,7 @@ import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
-import LatestOrderComponenet from './LatestOrderComponenet.vue';
+import LatestOrderComponenet from './LatestOrderComponent.vue';
 
     export default {
         mounted() {

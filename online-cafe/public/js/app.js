@@ -16746,9 +16746,7 @@ __webpack_require__.r(__webpack_exports__);
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://localhost:8000';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {
-      user: {}
-    };
+    return {};
   },
   created: function created() {
     var _this = this;
@@ -17132,11 +17130,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.user.name = $event;
+      return _ctx.user.name = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.user.name]])]), _hoisted_6], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.user.name]])]), _hoisted_6], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }
@@ -17215,14 +17213,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window
 (axios__WEBPACK_IMPORTED_MODULE_8___default().defaults.baseURL) = 'http://localhost:8000'; // routes
 
 var UserRoutes = [{
-  path: '/',
+  path: '/home',
   component: _components_UserComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default
 }, {
   path: '/:catchAll(.*)',
   component: _components_handler_vue__WEBPACK_IMPORTED_MODULE_3__.default
 }];
 var AdminRoutes = [{
-  path: '/',
+  path: '/home',
   component: _components_AdminComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default
 }, {
   path: '/alluser',
@@ -17252,11 +17250,10 @@ window.addEventListener('load', function (e) {
   axios__WEBPACK_IMPORTED_MODULE_8___default().get('/api/user').then(function (response) {
     console.log(response.data);
 
-    if (response.data.is_admin) {
+    if (true) {
+      console.log("is_admin");
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_components_AdminComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default).use(adminRouter).mount('#main');
-    } else {
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_components_UserComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default).use(userRouter).mount('#main');
-    }
+    } else {}
   });
 });
 

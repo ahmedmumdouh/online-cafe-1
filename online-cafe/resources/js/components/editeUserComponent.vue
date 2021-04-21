@@ -33,8 +33,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
     export default {
         data() {
             return {
-                user: {}
-            }
+
+}
         },
         created() {
             axios

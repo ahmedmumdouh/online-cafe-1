@@ -15,8 +15,9 @@ use App\Http\Controllers\api\AdminUserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// middleware('auth:sanctum')->get
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -25,15 +26,15 @@ Route::get('/testapi', function(Request $request){
 });
 
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+// Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::apiResource('projects', 'ProjectsApiController');
-    Route::apiResource("/categories",CategoryController::class);
+    // Route::apiResource("/categories",CategoryController::class);
 
 
 
 
     // ... Other routes
-});
+// });
 Route::post('/userstore',[AdminUserController::class,'store']); 
 Route::get('/userindex',[AdminUserController::class,'index']); 
 Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 

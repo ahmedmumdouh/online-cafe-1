@@ -41,12 +41,12 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
 
 const UserRoutes = [
-    {path:'/',component:User},
+    {path:'/home',component:User},
     {path:'/:catchAll(.*)',component:handler},
 ];
 
 const AdminRoutes = [
-    {path:'/',component:Admin},
+    {path:'/home',component:Admin},
 
     {path:'/alluser',
     component:allusercomponent ,
@@ -76,10 +76,14 @@ window.addEventListener('load',function(e){
     axios.get('/api/user').then(response => {
         
         console.log(response.data );
-        if( response.data.is_admin ){
+        if( true ){
+            console.log("is_admin")
+
             createApp(Admin).use(adminRouter).mount('#main')
         }
         else{
+            console.log("user")
+
             createApp(User).use(userRouter).mount('#main')
         }
     })

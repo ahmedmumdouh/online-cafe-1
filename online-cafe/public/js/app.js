@@ -17457,7 +17457,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* PROPS */
     , ["src", "alt"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [product.available == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
       key: 0,
-      "class": "btn btn-warning",
+      "class": "btn btn-warning mr-1",
       onClick: function onClick($event) {
         return $options.visable(product.id);
       }
@@ -17465,14 +17465,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* PROPS */
     , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), product.available == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
       key: 1,
-      "class": "btn btn-info",
+      "class": "btn btn-info mr-1",
       onClick: function onClick($event) {
         return $options.visable(product.id);
       }
     }, [_hoisted_9], 8
     /* PROPS */
     , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-      "class": "btn btn-success ",
+      "class": "btn btn-success mr-1",
       to: {
         name: 'updateProduct',
         params: {

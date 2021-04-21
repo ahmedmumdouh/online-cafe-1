@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1>Checks</h1>
-    <form>
+    <form action="/api/checks" method="POST" @submit.prevent="submitform">
       <div class="form-row">
         <div class="col">
           <label for="start_date">Start Date</label>
-          <input type="date" class="form-control" name="start" />
+          <input type="date" class="form-control" name="start" v-model="start" />
         </div>
         <div class="col">
           <label for="end_date">End Date</label>
-          <input type="date" class="form-control" name="end" />
+          <input type="date" class="form-control" name="end" v-model="end" />
         </div>
       </div>
       <br /><br />
@@ -19,7 +19,8 @@
           <select
             class="form-control"
             id="exampleFormControlSelect1"
-            name="user"
+            name="selectedUser"
+            v-model="selectedUser"
           >
             <option v-for="user in users" :key="user.id"> {{user.name}}</option>
             
@@ -27,6 +28,8 @@
           </select>
         </div>
       </div>
+      <br>
+      <button type="submit" class="btn btn-warning" style="float:right">Submit</button>
     </form>
     <br /><br />
     <table class="table table-striped">
@@ -147,7 +150,10 @@ export default {
       orderDetails: ["Tea", "Coffe", "Orange Juice"],
       index: 0,
       users:[],
-      items:[1,2,3]
+      start:'',
+      end:'',
+      selectedUser:'',
+      
     };
   },
   //mounted() {},
@@ -163,6 +169,17 @@ export default {
                     console.log("Error...");
                 });
                      },
+    submitform() {
+            axios
+                .post("/api/checks",{selectedUser:this.selectedUser , start:this.start , end:this.end})
+                .then(response => {
+                    console.log(response.data);
+                }) 
+                .catch(() => {
+                    console.log("Error...");
+                });
+           
+                    },
      
   },
   created(){

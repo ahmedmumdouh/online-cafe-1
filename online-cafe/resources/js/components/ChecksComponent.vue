@@ -5,7 +5,12 @@
       <div class="form-row">
         <div class="col">
           <label for="start_date">Start Date</label>
-          <input type="date" class="form-control" name="start" v-model="start" />
+          <input
+            type="date"
+            class="form-control"
+            name="start"
+            v-model="start"
+          />
         </div>
         <div class="col">
           <label for="end_date">End Date</label>
@@ -22,43 +27,51 @@
             name="selectedUser"
             v-model="selectedUser"
           >
-            <option v-for="user in users" :key="user.id"> {{user.name}}</option>
-            
+            <option v-for="user in users" :key="user.id">
+              {{ user.name }}
+            </option>
+
             <option>All</option>
           </select>
         </div>
       </div>
-      <br>
-      <button type="submit" class="btn btn-warning" style="float:right">Submit</button>
+      <br />
+      <button type="submit" class="btn btn-warning" style="float: right">
+        Submit
+      </button>
     </form>
     <br /><br />
+
     <table class="table table-striped">
-      <thead>
+      <thead class="bg-info">
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Total Amount</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Mark</button></td>
-          <th scope="row">1</th>
-        </tr>
-        <tr>
-          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Jaccob</button></td>
-          <th scope="row">2</th>
-        </tr>
-        <tr>
-          <td><button type="button" class="btn btn-info" @click="orderDisplay = true">Larry</button></td>
-          <th scope="row">3</th>
-        </tr>
-      </tbody>
+     
+        <tbody v-if="userDisplay == true">
+          <tr>
+            <td>
+              <button
+                type="button"
+                class="btn btn-info"
+                @click="orderDisplay = true"
+              >
+                {{ user.name }}
+              </button>
+            </td>
+            <th >100</th>
+          </tr>
+        </tbody>
+     
     </table>
+
     <div v-if="orderDisplay">
-      <table  class="table table-hover table-primary mt-5">
-        <thead >
-          <tr >
-            <th  scope="col">Order Date</th>
+      <table class="table table-hover table-primary mt-5">
+        <thead>
+          <tr>
+            <th scope="col">Order Date</th>
             <th scope="col">Amount</th>
           </tr>
         </thead>
@@ -88,7 +101,7 @@
             <td>100</td>
           </tr>
           <tr>
-            <th  scope="row">
+            <th scope="row">
               <button
                 type="button"
                 class="btn btn-primary"
@@ -103,13 +116,13 @@
         </tbody>
       </table>
       <button
-            type="button"
-            class="btn btn-danger"
-            style="float:right"
-            @click="orderDisplay = false"
-          >
-            Hide
-          </button>
+        type="button"
+        class="btn btn-danger"
+        style="float: right"
+        @click="orderDisplay = false"
+      >
+        Hide
+      </button>
     </div>
 
     <div
@@ -132,8 +145,7 @@
         </div>
       </div>
     </div>
-  
-  
+    
   </div>
 </template>
 
@@ -147,45 +159,47 @@ export default {
     return {
       orderDetailsDisplay: false,
       orderDisplay: false,
+      userDisplay: false,
       orderDetails: ["Tea", "Coffe", "Orange Juice"],
       index: 0,
-      users:[],
-      start:'',
-      end:'',
-      selectedUser:'',
-      
+      users: [],
+      start: "",
+      end: "",
+      selectedUser: "",
+      user: {},
     };
   },
   //mounted() {},
-  methods:
-  {
+  methods: {
     getUsers() {
-            axios
-                .get("/api/checks")
-                .then(response => {
-                    this.users = response.data;
-                }) 
-                .catch(() => {
-                    console.log("Error...");
-                });
-                     },
+      axios
+        .get("/api/checks")
+        .then((response) => {
+          this.users = response.data;
+        })
+        .catch(() => {
+          console.log("Error...");
+        });
+    },
     submitform() {
-            axios
-                .post("/api/checks",{selectedUser:this.selectedUser , start:this.start , end:this.end})
-                .then(response => {
-                    console.log(response.data);
-                }) 
-                .catch(() => {
-                    console.log("Error...");
-                });
-           
-                    },
-     
+      axios
+        .post("/api/checks", {
+          selectedUser: this.selectedUser,
+          start: this.start,
+          end: this.end,
+        })
+        .then((response) => {
+          this.userDisplay=true;
+          this.user = response.data;
+          
+        })
+        .catch(() => {
+          console.log("Error...");
+        });
+    },
   },
-  created(){
-       
-        this.getUsers();
-
-               },
+  created() {
+    this.getUsers();
+  },
 };
 </script>

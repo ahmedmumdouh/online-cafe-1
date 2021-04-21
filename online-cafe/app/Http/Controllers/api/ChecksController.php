@@ -23,17 +23,16 @@ class ChecksController extends Controller
     public function store(Request $request)
     {
 
-        // $input=$request->input('name');
-        // $start=$request->input('start');
-        // $end=$request->input('end');
+         $input=$request->input('selectedUser');
+         $start=$request->input('start');
+         $end=$request->input('end');
         
-
-        // $user = User::find($input);
+        $user = User::where('name', $input)->first();
         
         // $data = array("user"=>$user, "start"=>$start, "end"=>$end);
 
         
-        return $request->all();
+        return $user;
 
     }
 }

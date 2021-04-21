@@ -7,12 +7,15 @@ export default{
     "deleteProductURL": "api/products/",
     "postProductURL": "api/products/",
     "putProductURL": "api/products/",
+    "putProductAvailableURL": "api/products/available/",
 
     "getCategoriesURL": "api/categories",
     "getCategoryURL": "api/categories/",
     "deleteCategoryURL": "api/categories/",
     "postCategoryURL": "api/categories/",
     "putCategoryURL": "api/categories/",
+    
+
 }
 
 
@@ -46,5 +49,7 @@ export default{
 // |        | PUT|PATCH | api/products/{product}    | products.update    | App\Http\Controllers\a
 //                         |
 // |        | DELETE    | api/products/{product}    | products.destroy   | App\Http\Controllers\a
+// 
+// |        | PUT       | api/products/available/{product}
 //                         |
 // |        | GET|HEAD  | api/testapi     

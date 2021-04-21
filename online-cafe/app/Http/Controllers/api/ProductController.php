@@ -43,6 +43,7 @@ class ProductController extends Controller
 
     function store(Request $request){
        
+        // error_log($request->all());
         // $request->validate([
         //     'image' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
         //  ]);
@@ -97,9 +98,9 @@ class ProductController extends Controller
 
         // $add = Product::create($request->all());
         if ($add){
-            return response()->json(["is_done"=>true]);
+            return response()->json(["is_done"=>$request]);
         }else{
-            return response()->json(["is_done"=>false]);
+            return response()->json(["is_done"=>$request]);
 
         }
     }
@@ -108,6 +109,7 @@ class ProductController extends Controller
    
     public function update(Request $request, Product $product)
     {
+ 
         $input = $request->all();
   
         if ($image = $request->file('image')) {
@@ -116,16 +118,14 @@ class ProductController extends Controller
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
-    
-        // $add = Product::create($input);
-        
-       $update = $product->update($input);
+        $update = $product->update($input);       
         if ($update){
-            return response()->json(["is_done"=>true]);
+            return response()->json(["succes"=>$input]);
         }else{
-            return response()->json(["is_done"=>false]);
+            return response()->json(["error"=>$input]);
 
         }   
+       
     }
 
    
@@ -141,5 +141,17 @@ class ProductController extends Controller
         }  
     
     }
+
+    public function available(Request $request, Product $product){
+        // Page::where('id', $id)->update(array('image' => 'asdasd'));
+        $update = $product->update($request->all());
+        if ($update){
+            return response()->json(["message"=>$request]);
+        }else{
+            return response()->json(["message"=>$request]);
+
+        }   
+    }
+   
     
 }

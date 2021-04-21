@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="validatedInputGroupPrepend">Price</span>
                             </div>
-                            <input type="number" v-model.number="form.price" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" required>
+                            <input type="number" v-model.number="form.price" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" min="1" required>
                             </div>
                             <div class="invalid-feedback">
                             
@@ -41,7 +41,7 @@
      
                      
                      
-                        <select class="custom-select" id="validatedInputGroupSelect" v-model="form.category_id"  required>
+                        <select class="custom-select" id="validatedInputGroupSelect"   required>
                             <option v-for="category in categories" :key="category.id" :value="category.id" :selected="category.id === form.category_id" >{{category.name}}</option>
                             
                         </select>
@@ -78,10 +78,10 @@ import urls from '../services/apiURLs.js'
                 return{                    
                     categories:[],
                     form:{
-                        name:'',
-                        price:0,
-                        category_id:1,
-                        image:null
+                        name: '',
+                        price: 0,
+                        category_id: 1,
+                        image: null
                     }
                 }    
                 
@@ -129,19 +129,23 @@ import urls from '../services/apiURLs.js'
                     }
                 }            
                 const formData = new FormData()
+                // formData.append('id', existingObj.$route.params.productId)
+                formData.append("_method", "put");
                 formData.append('image', this.form.image)
                 formData.append('name', this.form.name)
                 formData.append('price', this.form.price)
                 formData.append('category_id', this.form.category_id)
-                console.log([ ...formData ]);
-                // axios.put(`${urls.putProductURL}${existingObj.$route.params.productId}`, formData,config).then(function (res) {
-                //         existingObj.success = res.data.success;
-                //         // existingObj.$router.push({ name: 'allProducts' })
-                //         console.log(res);
-                //     })
-                //     .catch(function (err) {
-                //         existingObj.output = err;
-                //     });
+                for (var pair of formData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]); 
+                }
+                axios.post(`${urls.putProductURL}${existingObj.$route.params.productId}`, formData, config).then(function (res) {
+                        existingObj.success = res.data.success;
+                        existingObj.$router.push({ name: 'allProducts' })
+                        console.log(res);
+                    })
+                    .catch(function (err) {
+                        existingObj.output = err;
+                    });
             }  
         }
         

@@ -40,8 +40,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
 // routes
 
 const UserRoutes = [
-    {path:'/home',component:Home},
-    {path:'/:catchAll(.*)',component: handler},
+    {name: 'home',path:'/home',component:Home},
+    {name: 'handler',path:'/:catchAll(.*)',component: handler},
 ];
 
 const AdminRoutes = [

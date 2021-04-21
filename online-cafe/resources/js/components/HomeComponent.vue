@@ -1,14 +1,12 @@
 <template>
     <div class="container">
-        <!-- <div v-if="user.is_admin == 1"> -->
-            <h3>Admin </h3>
-            <router-link :to="{name: 'allProducts'}">All Products</router-link>
-        <!-- </div> -->
-        <!-- <div v-if="user.is_admin == 0"> -->
-            <!-- <h3>User </h3> -->
-
-        <!-- </div>  -->
+        <div v-if="user==1">
+    
+        </div>
         
+        <div v-if="user==0">
+            
+        </div>
     </div>
 
 </template>
@@ -20,13 +18,13 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
         data(){
-            user:[]
+            user:0
         },
         mounted() {
             console.log('Component mounted.');
             axios.get('/api/user').then(response => {
                 console.log(response.data.is_admin);
-                this.user = response.data ;
+                this.user = response.data.is_admin ;
             })
         },
         

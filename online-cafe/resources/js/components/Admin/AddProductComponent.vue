@@ -130,10 +130,13 @@ import urls from '../services/apiURLs.js'
                 formData.append('name', this.form.name)
                 formData.append('price', this.form.price)
                 formData.append('category_id', this.form.category_id)
-                // console.log([ ...formData ]);
+                  for (var pair of formData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]); 
+                }
                 axios.post(`${urls.postProductURL}`, formData,config).then(function (res) {
                         existingObj.success = res.data.success;
-                        existingObj.$router.push({ name: 'allProducts' })
+                        // existingObj.$router.push({ name: 'allProducts' })
+                        console.log(res);
                     })
                     .catch(function (err) {
                         existingObj.output = err;

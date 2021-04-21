@@ -1,21 +1,11 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example compo
-                       
-                        <h3>Uesr-</h3>
-                        <router-view col-md-12></router-view>
+       
+        <h3>User </h3>
+        <router-link :to="{name: 'home'}">home</router-link>              
+        <router-view col-md-12></router-view>
     
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>        
 
 </template>
 

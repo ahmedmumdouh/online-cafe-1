@@ -1,21 +1,9 @@
 <template>
     <div class="container">
-        <!-- <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+        <h3>Admin </h3>
+        <router-link :to="{name: 'allProducts'}">All Products</router-link>
+        <router-view col-md-12></router-view>
 
-                    <div class="card-body">
-                        I'm an example compo -->
-                       
-                        
-                        <!-- <router-link :to="{ name: 'allproducts' }">All Products</router-link> -->
-                        <router-view col-md-12></router-view>
-<!--     
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
 </template>

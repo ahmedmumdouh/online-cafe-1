@@ -16884,12 +16884,18 @@ var _hoisted_11 = {
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create Order");
 
 var _hoisted_13 = {
+  "class": "p-2"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("My-Order");
+
+var _hoisted_15 = {
   "class": "navbar-nav ml-auto"
 };
-var _hoisted_14 = {
+var _hoisted_16 = {
   "class": "nav-item dropdown"
 };
-var _hoisted_15 = {
+var _hoisted_17 = {
   id: "navbarDropdown",
   "class": "nav-link dropdown-toggle",
   href: "#",
@@ -16898,7 +16904,7 @@ var _hoisted_15 = {
   "aria-haspopup": "true",
   "aria-expanded": "false"
 };
-var _hoisted_16 = {
+var _hoisted_18 = {
   "class": "dropdown-menu dropdown-menu-right",
   "aria-labelledby": "navbarDropdown"
 };
@@ -16948,14 +16954,24 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     _: 1
     /* STABLE */
 
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side Of Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Authentication Links "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/my-order",
+    "class": "navbar-brand links"
+  }, {
+    "default": _withId(function () {
+      return [_hoisted_14];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side Of Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Authentication Links "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $props.user.avatar,
     alt: $props.user.name
   }, null, 8
   /* PROPS */
-  , ["src", "alt"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.name), 1
+  , ["src", "alt"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     "class": "dropdown-item",
     href: "/logout",
     onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
@@ -17019,6 +17035,10 @@ var UserRoutes = [{
   path: "/create-order",
   name: "create-order",
   component: loadUserGroupComponents("CreateOrderComponent")
+}, {
+  path: "/my-order",
+  name: "my-order",
+  component: loadUserGroupComponents("AllOrdersComponenet")
 }, {
   path: "/:catchAll(.*)",
   component: __webpack_require__.e(/*! import() */ "resources_js_components_handler_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/handler.vue */ "./resources/js/components/handler.vue"))
@@ -56547,6 +56567,10 @@ function compileToFunction(template, options) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./AllOrdersComponenet.vue": [
+		"./resources/js/components/user/AllOrdersComponenet.vue",
+		"resources_js_components_user_AllOrdersComponenet_vue"
+	],
 	"./CreateOrderComponent.vue": [
 		"./resources/js/components/user/CreateOrderComponent.vue",
 		"resources_js_components_user_CreateOrderComponent_vue"
@@ -56689,7 +56713,7 @@ module.exports = webpackAsyncContext;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_handler_vue":1,"resources_js_components_user_CreateOrderComponent_vue":1,"resources_js_components_user_HomeComponent_vue":1,"resources_js_components_user_LatestOrderComponent_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_handler_vue":1,"resources_js_components_user_AllOrdersComponenet_vue":1,"resources_js_components_user_CreateOrderComponent_vue":1,"resources_js_components_user_HomeComponent_vue":1,"resources_js_components_user_LatestOrderComponent_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

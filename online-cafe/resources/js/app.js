@@ -42,6 +42,11 @@ const UserRoutes = [
         name: "create-order",
         component: loadUserGroupComponents("CreateOrderComponent"),
     },
+    {
+        path: "/my-order",
+        name: "my-order",
+        component: loadUserGroupComponents("AllOrdersComponenet"),
+    },
     { path: "/:catchAll(.*)", component: import("./components/handler.vue") },
 ];
 

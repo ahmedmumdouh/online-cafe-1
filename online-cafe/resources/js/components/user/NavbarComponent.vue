@@ -16,6 +16,9 @@
                         <li class="p-2">
                             <router-link to="/create-order" class="navbar-brand links">Create Order</router-link>
                         </li>
+                         <li class="p-2">
+                            <router-link to="/my-order" class="navbar-brand links">My-Order</router-link>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

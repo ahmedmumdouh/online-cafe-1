@@ -23,6 +23,7 @@
             </div>
         </div>
     </div>
+    
 </template>
  
 <script>
@@ -33,6 +34,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
     export default {
         data() {
             return {
+                user:{name:'',}
+
 
 }
         },

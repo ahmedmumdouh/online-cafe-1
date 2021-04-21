@@ -18,10 +18,7 @@
 
                   <!--  <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>  -->
                 </select>
-
             </div>
-
-          
             <button type="submit" name="submit" class="btn btn-primary">create</button>
         </form>
     </div>

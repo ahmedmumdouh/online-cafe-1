@@ -17,15 +17,36 @@ class AdminUserController extends Controller
 
    }
   // save users 
-    public function store(Request $userRequeste)
+    public function store(Request $request)
     {    
         
-            $user = new User();
-            $user->name = $userRequeste->name;
-            $user->email = $userRequeste->email;
-            $user->password = $userRequeste->password;
-            $user->avatar = $userRequeste->avatar;
-            $user->save();
+            // $user = new User();
+            // $user->name = $userRequeste->name;
+            // $user->email = $userRequeste->email;
+            // $user->password = $userRequeste->password;
+            // $user->avatar = $userRequeste->avatar;
+            // $user->save();
+////////////////////////////////////////
+$input = $request->all();
+  
+if ($image = $request->file('image')) {
+    $destinationPath = 'image/';
+    $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+    $image->move($destinationPath, $profileImage);
+    $input['image'] = "$profileImage";
+}
+
+$add = User::create($input);
+  if ($add){
+    return response()->json(["is_done"=>true]);
+  }else{
+    return response()->json(["is_done"=>false]);
+
+  }
+}
+
+
+
             return response()->json('user created');
        
     }

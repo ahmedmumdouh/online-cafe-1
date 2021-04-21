@@ -17,7 +17,7 @@ class AdminUserController extends Controller
 
    }
   // save users 
-    public function store(Request $request)
+    public function store(Request $userRequeste)
     {    
         
             $user = new User();

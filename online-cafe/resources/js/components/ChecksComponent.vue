@@ -21,10 +21,8 @@
             id="exampleFormControlSelect1"
             name="user"
           >
-            <option>User 1</option>
-            <option>User 2</option>
-            <option>User 3</option>
-            <option>User 4</option>
+            <option v-for="user in users" :key="user.id"> {{user.name}}</option>
+            
             <option>All</option>
           </select>
         </div>
@@ -131,7 +129,8 @@
         </div>
       </div>
     </div>
-   
+  
+  
   </div>
 </template>
 
@@ -147,8 +146,29 @@ export default {
       orderDisplay: false,
       orderDetails: ["Tea", "Coffe", "Orange Juice"],
       index: 0,
+      users:[],
+      items:[1,2,3]
     };
   },
-  mounted() {},
+  //mounted() {},
+  methods:
+  {
+    getUsers() {
+            axios
+                .get("/api/checks")
+                .then(response => {
+                    this.users = response.data;
+                }) 
+                .catch(() => {
+                    console.log("Error...");
+                });
+                     },
+     
+  },
+  created(){
+       
+        this.getUsers();
+
+               },
 };
 </script>

@@ -67,7 +67,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
       getUsers() {
             axios
-                .get("http://localhost:8000/api/userindex")
+                .get("/api/userindex")
                 .then((data) => (this.users = data.data))
                 .catch(() => {
                     console.log("Error...");
@@ -76,7 +76,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
          deleteUser(id) {
             axios
-                .delete(`http://localhost:8000/api/userdelete/${id}`)
+                .delete(`/api/userdelete/${id}`)
                 .then((response) => {
                     let i = this.users.map((data) => data.data).indexOf(id);
                     this.users.splice(i, 1);

@@ -16700,7 +16700,7 @@ __webpack_require__.r(__webpack_exports__);
     getUsers: function getUsers() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("http://localhost:8000/api/userindex").then(function (data) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/userindex").then(function (data) {
         return _this.users = data.data;
       })["catch"](function () {
         console.log("Error...");
@@ -16710,7 +16710,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteUser: function deleteUser(id) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().delete("http://localhost:8000/api/userdelete/".concat(id)).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().delete("/api/userdelete/".concat(id)).then(function (response) {
         var i = _this2.users.map(function (data) {
           return data.data;
         }).indexOf(id);

@@ -47,7 +47,7 @@ const UserRoutes = [
 
 const AdminRoutes = [
     {path:'/',component:Admin},
-    
+
     {path:'/alluser',
     component:allusercomponent ,
      name:'alluser'},
@@ -60,8 +60,6 @@ const AdminRoutes = [
    { name:'store',
    path:'/userstore',
    component:storeuser
-
-
    },
 
 {path:'/:catchAll(.*)',component:handler},

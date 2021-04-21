@@ -24,10 +24,10 @@ Route::middleware('auth')->get('/testapi', function(Request $request){
     return response()->json(["message"=>"New post added successfully"]);
 });
 
-Route::put("/products/available/{product}",[ProductController::class,'available']);
+
 // Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("/products",ProductController::class);
     Route::apiResource("/categories",CategoryController::class);
-
+    Route::put("/products/available/{product}",[ProductController::class,'available']);
     // ... Other routes
 // });

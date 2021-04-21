@@ -111,14 +111,19 @@ class ProductController extends Controller
     {
  
         $input = $request->all();
-  
         if ($image = $request->file('image')) {
             $destinationPath = 'image/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $input['image'] = "$profileImage";
         }
-        $update = $product->update($input);       
+        $update = $product->update($input);   
+        // $update = $product->update([
+        //     'name' => $input['name'],
+        //     'price' => $input['price'],
+        //     'image' => $input['image'],
+        //     'category_id' => $input['category_id']
+        // ]);    
         if ($update){
             return response()->json(["succes"=>$input]);
         }else{

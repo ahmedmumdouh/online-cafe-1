@@ -25,7 +25,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="validatedInputGroupPrepend">Price</span>
                             </div>
-                            <input type="number" v-model.number="form.price" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend" required>
+                            <input type="number" v-model.number="form.price" class="form-control is-invalid" aria-describedby="validatedInputGroupPrepend"  min="1" required>
                             </div>
                             <div class="invalid-feedback">
                             
@@ -53,9 +53,12 @@
 
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
-                        <label class="custom-file-label"  for="validatedCustomFile">Choose Cover Image ...</label>
-                        <div class="invalid-feedback"></div>
-                    </div>`
+                        <label class="custom-file-label"  for="validatedCustomFile">{{imageName}}</label>
+                        <div class="invalid-feedback">Cover Photo</div> 
+                        <div id="preview" style="margin-top: 1%;">
+                            <img v-if="url" :src="url" />
+                        </div>
+                    </div>
                     
                     
                 
@@ -80,10 +83,12 @@ import urls from '../services/apiURLs.js'
                     categories:[],
                     form:{
                         name:'',
-                        price:0,
+                        price:1,
                         category_id:1,
                         image:null
-                    }
+                    },
+                    imageName:'Upload Cover Photo',
+                    url: null,
                 }    
                 
             },
@@ -106,6 +111,8 @@ import urls from '../services/apiURLs.js'
         methods:{
             onChange(e) {
                 this.form.image = e.target.files[0];
+                this.imageName = e.target.files[0].name; 
+                this.url = URL.createObjectURL(this.form.image);
                 console.log(this.form);
             },
             // createImage(file) {
@@ -135,7 +142,7 @@ import urls from '../services/apiURLs.js'
                 }
                 axios.post(`${urls.postProductURL}`, formData,config).then(function (res) {
                         existingObj.success = res.data.success;
-                        // existingObj.$router.push({ name: 'allProducts' })
+                        existingObj.$router.push({ name: 'allProducts' })
                         console.log(res);
                     })
                     .catch(function (err) {
@@ -148,5 +155,14 @@ import urls from '../services/apiURLs.js'
 </script>
 
 <style scoped>
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
 </style>

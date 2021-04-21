@@ -52,10 +52,14 @@
                     </div>
 
                     <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
-                        <label class="custom-file-label"  for="validatedCustomFile">Choose Cover Image ...</label>
-                        <div class="invalid-feedback"></div>
-                    </div>`
+                        <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  >
+                        <label class="custom-file-label"  for="validatedCustomFile">{{imageName}}</label>
+                        <div class="invalid-feedback">Cover Photo</div>
+                        <div id="preview" style="margin-top: 1%;">
+                            <img v-if="url" :src="url" />
+                            <img v-if="url==null" :src="imageServerURL+imageName" />
+                        </div>
+                    </div>
                     
                     
                 
@@ -81,8 +85,12 @@ import urls from '../services/apiURLs.js'
                         name: '',
                         price: 0,
                         category_id: 1,
-                        image: null
-                    }
+                        image: null,
+                        available:1,
+                    },
+                    imageName:'',
+                    url: null,
+                    imageServerURL:urls.imageServerURL,
                 }    
                 
             },
@@ -96,6 +104,8 @@ import urls from '../services/apiURLs.js'
                     this.form.name = productResponse.data.name;
                     this.form.price = productResponse.data.price;
                     this.form.category_id = productResponse.data.category_id;
+                    this.imageName = productResponse.data.image;
+                    // this.form.available = productResponse.data.available;
                     //  this.products = this.products.map((product) =>{
                     //     product.category_id= this.categories.filter((cata) => parseInt(cata.id) == parseInt(product.category_id))[0] ; 
                     //     console.log(product);
@@ -109,6 +119,8 @@ import urls from '../services/apiURLs.js'
         methods:{
             onChange(e) {
                 this.form.image = e.target.files[0];
+                this.imageName = e.target.files[0].name; 
+                this.url = URL.createObjectURL(this.form.image);
                 console.log(this.form);
             },
             // createImage(file) {
@@ -129,12 +141,13 @@ import urls from '../services/apiURLs.js'
                     }
                 }            
                 const formData = new FormData()
-                // formData.append('id', existingObj.$route.params.productId)
+                // formData.append('available', this.form.available)
                 formData.append("_method", "put");
-                formData.append('image', this.form.image)
+                if(this.form.image != null)
+                    formData.append('image', this.form.image)
                 formData.append('name', this.form.name)
                 formData.append('price', this.form.price)
-                formData.append('category_id', this.form.category_id)
+                formData.append('category_id', this.form.category_id.id)
                 for (var pair of formData.entries()) {
                     console.log(pair[0]+ ', ' + pair[1]); 
                 }
@@ -153,5 +166,14 @@ import urls from '../services/apiURLs.js'
 </script>
 
 <style scoped>
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
 </style>

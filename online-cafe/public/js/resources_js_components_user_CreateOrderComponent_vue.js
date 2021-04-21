@@ -25,6 +25,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_orders__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/orders */ "./resources/js/services/orders.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app */ "./resources/js/app.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -38,6 +39,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     var _this = this;
@@ -47,7 +49,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _this.getProducts();
+              _this.getData();
 
             case 1:
             case "end":
@@ -63,37 +65,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         products: [],
         notes: "",
         totalPrice: 0,
-        room: null
+        room: null,
+        user: _app__WEBPACK_IMPORTED_MODULE_2__.user
       },
-      products: [{
-        id: 1,
-        name: "Tea",
-        quantity: 1,
-        price: 5
-      }, {
-        id: 2,
-        name: "Water",
-        quantity: 1,
-        price: 2.5
-      }, {
-        id: 3,
-        name: "Cofe",
-        quantity: 1,
-        price: 7
-      }],
-      rooms: [{
-        id: 1,
-        name: "room1"
-      }, {
-        id: 2,
-        name: "room2"
-      }, {
-        id: 3,
-        name: "room3"
-      }]
+      products: [],
+      rooms: []
     };
   },
-  props: ['user'],
   methods: {
     getProductFromOrder: function getProductFromOrder(productId) {
       return this.order.products.find(function (product) {
@@ -107,8 +85,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     decreaseQuantity: function decreaseQuantity(productId) {
       var product = this.getProductFromOrder(productId);
-      if (this.order.totalPrice > 0) this.order.totalPrice -= product.price;
-      if (product.quantity > 0) product.quantity -= 1;
+
+      if (product.quantity > 0) {
+        product.quantity -= 1;
+        this.order.totalPrice -= product.price;
+      }
     },
     formatPrice: function formatPrice(price) {
       var formater = Intl.NumberFormat('eg-SA', {
@@ -118,11 +99,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return formater.format(price);
     },
     removeProduct: function removeProduct(productId) {
-      var porductIndex = this.order.products.findIndex(function (product) {
-        return product === productId;
-      });
-      this.order.totalPrice -= this.getProductFromOrder(productId).price * this.getProductFromOrder(productId).quantity;
-      this.order.products.splice(porductIndex, 1);
+      // const productIndex = this.order.products.findIndex((product) => product.id === productId);
+      var productIndex;
+
+      for (var index = 0; index < this.order.products.length; index++) {
+        if (this.order.products[index].id == productId) {
+          productIndex = index;
+          break;
+        }
+      }
+
+      console.log("removing", productIndex);
+      var product = this.getProductFromOrder(productId);
+
+      if (productIndex !== -1) {
+        console.log("removing", productIndex);
+        this.order.totalPrice -= product.price * product.quantity;
+        this.order.products.splice(productIndex, 1);
+      } else {
+        console.log("Error removing INdex -1");
+      }
     },
     addProduct: function addProduct(productId) {
       var product2 = this.getProductFromOrder(productId);
@@ -134,42 +130,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         var product = this.products.find(function (product) {
           return product.id === productId;
         });
-        this.order.products.push(_objectSpread({}, product));
+        this.order.products.push(_objectSpread({
+          "quantity": 1
+        }, product));
         this.order.totalPrice += product.price;
       }
     },
     confirmOrder: function confirmOrder() {
+      var _this2 = this;
+
       if (this.order.products.length > 0) {
-        // submitOrder(this.order);
-        console.log("sending ");
+        // attach the room object to order insted of name
+        var room = this.rooms.find(function (room) {
+          return room.name == _this2.order.room;
+        });
+        this.order.room = room;
         this.submitOrder();
       } else {
-        console.log("NUll");
+        console.log("Order With No Products Selected");
       }
     },
-    submitOrder: function submitOrder(order) {
+    submitOrder: function submitOrder() {
+      var _this3 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return _services_orders__WEBPACK_IMPORTED_MODULE_1__.default.submitOrder(order);
+                _context2.prev = 0;
+                _context2.next = 3;
+                return _services_orders__WEBPACK_IMPORTED_MODULE_1__.default.submitOrder(_this3.order);
 
-              case 2:
+              case 3:
                 res = _context2.sent;
-                console.log(res);
+                console.log(res.data);
+                _context2.next = 10;
+                break;
 
-              case 4:
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log("Submiting Order error \n \n \n ", _context2.t0);
+
+              case 10:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[0, 7]]);
       }))();
     },
     getProducts: function getProducts() {
+      var _this4 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var products;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -181,7 +196,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 products = _context3.sent;
-                console.log(products);
+                _this4.products = products.data;
 
               case 4:
               case "end":
@@ -189,6 +204,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    getRooms: function getRooms() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var products;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return _services_orders__WEBPACK_IMPORTED_MODULE_1__.default.getRooms();
+
+              case 2:
+                products = _context4.sent;
+                _this5.rooms = products.data;
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    getData: function getData() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _this6.getRooms();
+
+                _this6.getProducts();
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -354,9 +413,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* TEXT */
     )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Product Price !"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": "btn btn-danger",
-      onClick: function onClick($event) {
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
         return $options.removeProduct(product.id);
-      }
+      }, ["prevent"])
     }, "X", 8
     /* PROPS */
     , ["onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Delete  Product !")]);
@@ -433,7 +492,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["onClick"])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" display products !")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user), 1
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" display products !")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h1", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.user), 1
   /* TEXT */
   )], 64
   /* STABLE_FRAGMENT */
@@ -455,7 +514,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getOrdersURL: "/api/order",
-  postOrderURL: "/api/order"
+  postOrderURL: "/api/order",
+  getProducts: "/api/product",
+  getRooms: "/api/room"
 });
 
 /***/ }),
@@ -484,8 +545,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-(axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.baseURL) = "http://localhost:8000";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   submitOrder: function submitOrder(order) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -497,6 +556,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.postOrderURL), {
                 body: {
                   order: order
+                },
+                header: {
+                  Accept: "application/json"
                 }
               });
 
@@ -518,10 +580,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getOrdersURL));
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getProducts));
 
             case 2:
-              return _context2.abrupt("return", _context2.sent);
+              return _context2.abrupt("return", products = _context2.sent);
 
             case 3:
             case "end":
@@ -529,6 +591,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }, _callee2);
+    }))();
+  },
+  getRooms: function getRooms() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getRooms));
+
+            case 2:
+              return _context3.abrupt("return", products = _context3.sent);
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
     }))();
   }
 });

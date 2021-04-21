@@ -12,9 +12,6 @@
 <script>
 import axios from 'axios'
 import Navbar from '../components/user/NavbarComponent.vue';
-axios.defaults.withCredentials =true
-axios.defaults.baseURL = 'http://localhost:8000'
-
     export default {
         created() {
             console.log('User Component Created.');

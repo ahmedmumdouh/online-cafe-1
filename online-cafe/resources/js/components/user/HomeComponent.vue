@@ -8,9 +8,6 @@
 
 <script>
 import axios from 'axios'
-axios.defaults.withCredentials =true
-axios.defaults.baseURL = 'http://localhost:8000'
-
 import LatestOrderComponenet from './LatestOrderComponent.vue';
 import {user}  from '../../app';
     export default {

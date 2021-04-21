@@ -12,7 +12,7 @@
                         <button class="btn btn-warning btn-m m-1" @click.prevent="decreaseQuantity(product.id)">-</button>
                         </div> <!-- Action !-->
                     <div class="col-3 text-center m-auto w-auto"><label for="text" class="text">{{ formatPrice(product.price * product.quantity) }}</label></div> <!-- Product Price !-->
-                    <div class="col-2 text-dark m-auto"> <button class="btn btn-danger"  @click="removeProduct(product.id)">X</button></div> <!-- Delete  Product !-->
+                    <div class="col-2 text-dark m-auto"> <button class="btn btn-danger"  @click.prevent="removeProduct(product.id)">X</button></div> <!-- Delete  Product !-->
                 </div>
                 
                 
@@ -70,9 +70,10 @@
 
 <script>
 import services  from '../../services/orders';
+import {user} from '../../app';
 export default {
     async created(){
-        this.getProducts();
+        this.getData();
     }
     ,data() {
         return {
@@ -81,20 +82,12 @@ export default {
                 notes: "",
                 totalPrice: 0,
                 room: null,
+                user: user,
             },
-            products: [
-                {id: 1, name: "Tea", quantity: 1 ,price: 5 }, 
-                {id: 2, name: "Water", quantity: 1 ,price: 2.5 }, 
-                {id: 3, name: "Cofe", quantity: 1 ,price: 7 }
-                ],
-            rooms: [
-                    {id: 1, name: "room1"},
-                    {id: 2, name: "room2"},
-                    {id: 3, name: "room3"},
-                    ],
+            products: [],
+            rooms: [],
         }    
     },
-    props: ['user'],
     methods:{
         getProductFromOrder(productId){
             return this.order.products.find((product) => product.id === productId);
@@ -107,8 +100,11 @@ export default {
         },
         decreaseQuantity(productId){
             const product = this.getProductFromOrder(productId);
-            if(this.order.totalPrice > 0) this.order.totalPrice -= product.price;
-            if(product.quantity > 0)  product.quantity -= 1
+            if(product.quantity > 0)  {
+                product.quantity -= 1
+                this.order.totalPrice -= product.price;
+            }
+            
         },
         formatPrice(price){
             const formater = Intl.NumberFormat('eg-SA',{
@@ -117,9 +113,24 @@ export default {
             return formater.format(price);
         },
         removeProduct(productId){
-            const porductIndex = this.order.products.findIndex((product) => product === productId);
-            this.order.totalPrice -= this.getProductFromOrder(productId).price *  this.getProductFromOrder(productId).quantity;
-            this.order.products.splice(porductIndex, 1);
+            // const productIndex = this.order.products.findIndex((product) => product.id === productId);
+            let productIndex;
+            for(let index = 0; index < this.order.products.length; index++){
+                if(this.order.products[index].id == productId) {
+                    productIndex = index;
+                    break;
+                }
+            }
+                            console.log("removing", productIndex);
+
+            const product = this.getProductFromOrder(productId);
+            if(productIndex !== -1){
+                console.log("removing", productIndex);
+                this.order.totalPrice -= (product.price *  product.quantity);
+                this.order.products.splice(productIndex, 1);
+            }else{
+                console.log("Error removing INdex -1");
+            }
 
         },
         addProduct(productId){
@@ -129,29 +140,43 @@ export default {
                 this.order.totalPrice += product2.price;
             }else{
                 const product = this.products.find(product => product.id === productId);
-                this.order.products.push({...product});
+                this.order.products.push({"quantity": 1,...product});
                 this.order.totalPrice += product.price; 
             }
             
         },
         confirmOrder(){
             if(this.order.products.length > 0) {
-                // submitOrder(this.order);
-                console.log("sending ");
+                // attach the room object to order insted of name
+                const room = this.rooms.find(room => room.name == this.order.room);
+                this.order.room = room;
                 this.submitOrder()
 
             }else {
-                console.log("NUll");
-
+                console.log("Order With No Products Selected");
             }
         },
-        async submitOrder(order){
-            const res =  await services.submitOrder(order);
-            console.log(res);
+        async submitOrder(){
+            try {
+                const res =  await services.submitOrder(this.order);
+                 console.log(res.data);
+            } catch (error) {
+                console.log("Submiting Order error \n \n \n ", error);
+            }
+            
+           
         },
         async getProducts(){
             const products = await services.getProducts();
-            console.log(products);
+            this.products = products.data;
+        },
+         async getRooms(){
+            const products = await services.getRooms();
+            this.rooms = products.data;
+        },
+         async getData(){
+            this.getRooms();
+            this.getProducts();
         }
 
     },

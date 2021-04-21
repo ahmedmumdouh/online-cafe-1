@@ -16,8 +16,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LatestOrderComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LatestOrderComponent.vue */ "./resources/js/components/user/LatestOrderComponent.vue");
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app */ "./resources/js/app.js");
 
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://localhost:8000';
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

@@ -1,9 +1,12 @@
 <template>
     <div class="container">
-        <h3>Admin </h3>
-        <router-link :to="{name: 'allProducts'}">All Products</router-link>
-        <router-view col-md-12></router-view>
-
+        <div v-if="user==1">
+    
+        </div>
+        
+        <div v-if="user==0">
+            
+        </div>
     </div>
 
 </template>
@@ -14,10 +17,14 @@ axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
+        data(){
+            user:0
+        },
         mounted() {
             console.log('Component mounted.');
-            axios.get('/api/categories').then(response => {
-                console.log(response.data)
+            axios.get('/api/user').then(response => {
+                console.log(response.data.is_admin);
+                this.user = response.data.is_admin ;
             })
         },
         

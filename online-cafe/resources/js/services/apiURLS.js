@@ -2,6 +2,6 @@ export default {
     getOrdersURL: "/api/order",
     getLatestOrderURL: "/api/order/latest",
     postOrderURL: "/api/order",
-    getProducts: "/api/product",
+    getProducts: "/api/products",
     getRooms: "/api/room",
 };

@@ -19,9 +19,14 @@ require("./bootstrap");
 import axios from "axios";
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import AddProduct from "./components/Admin/AddProductComponent.vue";
+import AllProducts from "./components/Admin/AllProductsComponent.vue";
+import UpdateProduct from "./components/Admin/UpdateProductComponent.vue";
 import Admin from "./components/AdminComponent.vue";
-import test from "./components/testComponent.vue";
+import handler from "./components/handler.vue";
+import Home from "./components/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
+
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -51,8 +56,15 @@ const UserRoutes = [
 ];
 
 const AdminRoutes = [
-    { path: "/home", component: test },
-    { path: "/:catchAll(.*)", component: import("./components/handler.vue") },
+    { name: "home", path: "/home", component: Home },
+    { name: "allProducts", path: "/products", component: AllProducts },
+    { name: "addProduct", path: "/add_product", component: AddProduct },
+    {
+        name: "updateProduct",
+        path: "/update_product/:productId",
+        component: UpdateProduct,
+    },
+    { name: "handler", path: "/:catchAll(.*)", component: handler },
 ];
 export let user;
 window.addEventListener("load", function (e) {

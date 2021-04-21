@@ -12,9 +12,15 @@ export default {
         });
     },
     async getProducts() {
-        return (products = await axios.get(`${urls.getProducts}`));
+        return await axios.get(`${urls.getProducts}`);
     },
     async getRooms() {
-        return (products = await axios.get(`${urls.getRooms}`));
+        return await axios.get(`${urls.getRooms}`);
+    },
+    async getOrders(userId) {
+        return await axios.get(`${urls.getOrdersURL}?user_id=${userId}`);
+    },
+    async getLatestOrder(userId) {
+        return await axios.get(`${urls.getLatestOrderURL}?user_id=${userId}`);
     },
 };

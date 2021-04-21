@@ -32,9 +32,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::apiResource('projects', 'ProjectsApiController');
     Route::apiResource("/categories", CategoryController::class);
 
-
-
+    Route::get("/order/latest", [OrderController::class, 'latest'])->name('latestOrder');
     Route::apiResource('/order', OrderController::class);
+
     Route::apiResource('/room', RoomController::class);
 
     Route::get("/product", function () {

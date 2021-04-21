@@ -5,13 +5,24 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\User;
 
 class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        return Order::all();
+        $orders = Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->paginate(5);
+        return $orders;
     }
+
+    public function latest(Request $request)
+    {
+        $order =  Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->first();
+        $products = $order->products;
+
+        return response()->json(["order" => $order, "products" => $products]);
+    }
+
 
     public function show(Order $order)
     {
@@ -31,6 +42,7 @@ class OrderController extends Controller
             foreach ($requset->body['order']['products'] as $product) {
 
                 $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
+                error_log($order);
             }
             return response()->json(["message" => "created successfully", "data" => $order]);
         } else {

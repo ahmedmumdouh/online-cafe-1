@@ -46,7 +46,7 @@
                 <div class="row justify-content-center">
                     <div class="card m-2 p-2" style="width: 12rem;" v-for="product in products" :key="product.id">
                         <img
-                                src="../../../images/tea.jpg"
+                                :src="product.image"
                                 class="card-img-top img"
                                 style="height: 80%;"
                                 alt="..."
@@ -65,7 +65,6 @@
             </div><!-- display products !-->
         </div>
     </div>
-    <h1>{{user}}</h1>
 </template>
 
 <script>
@@ -160,6 +159,7 @@ export default {
             try {
                 const res =  await services.submitOrder(this.order);
                  console.log(res.data);
+                 window.location = "/home";
             } catch (error) {
                 console.log("Submiting Order error \n \n \n ", error);
             }
@@ -169,10 +169,13 @@ export default {
         async getProducts(){
             const products = await services.getProducts();
             this.products = products.data;
+            console.log(products.data);
         },
          async getRooms(){
             const products = await services.getRooms();
             this.rooms = products.data;
+            console.log(products.data);
+
         },
          async getData(){
             this.getRooms();

@@ -1,14 +1,15 @@
 <template>
     <div class="container">
         <div class="row">
-            <latest-order-componenet :user="user" />
+            <LatestOrderComponenet/>
+            <CreatedOrderComponent/>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
 import LatestOrderComponenet from './LatestOrderComponent.vue';
+import CreatedOrderComponent from '../user/CreateOrderComponent';
 import {user}  from '../../app';
     export default {
         mounted() {
@@ -21,6 +22,7 @@ import {user}  from '../../app';
         },
         components: {
             LatestOrderComponenet,
+            CreatedOrderComponent,
         }
     }
 </script>

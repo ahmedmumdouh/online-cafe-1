@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController ;
 use App\Http\Controllers\api\AdminUserController;
+use App\Http\Controllers\api\RoomController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,19 +28,25 @@ Route::get('/testapi', function(Request $request){
 
 
 // Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Route::apiResource('projects', 'ProjectsApiController');
-    // Route::apiResource("/categories",CategoryController::class);
+//     // Route::apiResource('projects', 'ProjectsApiController');
+//     // Route::apiResource("/categories",CategoryController::class);
+//         // Route::apiResource("/rooms",RoomController::class);
 
 
 
 
-    // ... Other routes
+
+//     // ... Other routes
 // });
 Route::post('/userstore',[AdminUserController::class,'store']); 
 Route::get('/userindex',[AdminUserController::class,'index']); 
 Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 
 Route::patch('/useredit/{id}',[AdminUserController::class,'update']); 
 Route::get('/usershow/{id}',[AdminUserController::class,'show']); 
+Route::get("/rooms",[RoomController::class,'index']);
+Route::post("/roomstore",[RoomController::class,'store']);
+
+
 
 
 

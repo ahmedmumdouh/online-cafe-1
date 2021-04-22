@@ -22,13 +22,14 @@
                         </div>
                     </div>
 
-            <!-- <div class="form-group">
-                <lable>Room number</lable>
-                <select name="room_id" class="form-control " > 
+           
+<!-- /////////////////////////////////////////////////// -->
 
-                    <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>  
-                </select> 
-            </div> -->
+        <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
+            <option v-for="room in rooms" :key="room.id" :value="room.id" :selected="room.id === form.rooms" >{{room.name}}</option>
+            
+        </select>
+
             <br>            
             <br>
             <br>
@@ -54,16 +55,20 @@ axios.defaults.baseURL = 'http://localhost:8000'
         data() {
             return {
                 // user: {}
+                rooms:[],
               form:{
                         name:'',
                         email:'',
-                        avatar:''
+                        avatar:'',
+                        rooms:[],
                     },
                     imageName:'Upload Cover Photo',
                     url: null,
             }
         },
-     
+          mounted(){
+               this.getRooms();
+          },
         methods: {
 
           onChange(e) {
@@ -95,7 +100,19 @@ axios.defaults.baseURL = 'http://localhost:8000'
                     .catch(function (err) {
                         existingObj.output = err;
                     });
-            }  
+            } ,
+
+              getRooms() {
+            axios
+                .get("/api/rooms")
+                .then((data) => (this.rooms = data.data))
+                .then(console.log(room        s))
+                .catch(() => {
+                    console.log("Error...");
+                });
+                     }, 
+                 
+            
         }
 
 

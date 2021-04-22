@@ -16573,71 +16573,9 @@ module.exports = {
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Admin/addUserComponent.vue?vue&type=script&lang=js ***!
   \****************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://localhost:8000';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      // user: {}
-      form: {
-        name: '',
-        email: '',
-        avatar: ''
-      },
-      imageName: 'Upload Cover Photo',
-      url: null
-    };
-  },
-  methods: {
-    onChange: function onChange(e) {
-      this.form.avatar = e.target.files[0];
-      this.imageName = e.target.files[0].name;
-      this.url = URL.createObjectURL(this.form.avatar);
-      console.log(this.form);
-    },
-    onSubmit: function onSubmit(e) {
-      e.preventDefault();
-      var existingObj = this;
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-      var formData = new FormData();
-      formData.append('avatar', this.form.avatar);
-      formData.append('name', this.form.name);
-      formData.append('email', this.form.email);
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/userstore", formData, config).then(function (res) {
-        existingObj.success = res.data.success;
-        existingObj.$router.push({
-          name: 'alluser'
-        });
-        console.log(res);
-      })["catch"](function (err) {
-        existingObj.output = err;
-      });
-    }
-  } // adduser() {
-  //         console.log(this.user);
-  //         // console.log(this.$route.params.id)
-  //     axios
-  //         .post("/api/userstore", this.user)
-  //         .then((res) => {
-  //             this.$router.push({ name:'alluser'});
-  //         });
-  // }
-
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/resources/js/components/Admin/addUserComponent.vue: Unexpected token, expected \",\" (63:46)\n\n\u001b[0m \u001b[90m 61 |\u001b[39m                 \u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m\"/api/rooms\"\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m 62 |\u001b[39m                 \u001b[33m.\u001b[39mthen((data) \u001b[33m=>\u001b[39m (\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mrooms \u001b[33m=\u001b[39m data\u001b[33m.\u001b[39mdata))\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 63 |\u001b[39m                 \u001b[33m.\u001b[39mthen(console\u001b[33m.\u001b[39mlog(room        s))\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 64 |\u001b[39m                 \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 65 |\u001b[39m                     console\u001b[33m.\u001b[39mlog(\u001b[32m\"Error...\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 66 |\u001b[39m                 })\u001b[33m;\u001b[39m\u001b[0m\n    at Parser._raise (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:776:17)\n    at Parser.raiseWithData (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:769:17)\n    at Parser.raise (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:737:17)\n    at Parser.unexpected (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:9735:16)\n    at Parser.expect (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:9721:28)\n    at Parser.parseCallExpressionArguments (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:10890:14)\n    at Parser.parseCoverCallAndAsyncArrowHead (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:10816:29)\n    at Parser.parseSubscript (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:10752:19)\n    at Parser.parseSubscripts (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:10725:19)\n    at Parser.parseExprSubscripts (/media/ghada/Ghada Data/opensouresData/laravl/project/online-cafe/online-cafe/node_modules/@babel/parser/lib/index.js:10714:17)");
 
 /***/ }),
 
@@ -16895,12 +16833,12 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-function render(_ctx, _cache, $props, $setup, $data, $options) {
+function render(_ctx, _cache) {
   var _component_lable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("lable");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-      return $options.onSubmit && $options.onSubmit.apply($options, arguments);
+    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return _ctx.onSubmit && _ctx.onSubmit.apply(_ctx, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_lable, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -16914,11 +16852,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-control",
     name: "name",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.form.name = $event;
+      return _ctx.form.name = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_lable, null, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_lable, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_6];
     }),
@@ -16930,30 +16868,50 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-control",
     name: "email",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.form.email = $event;
+      return _ctx.form.email = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.form.email]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "file",
     name: "avatar",
     "class": "custom-file-input",
     onChange: _cache[3] || (_cache[3] = function () {
-      return $options.onChange && $options.onChange.apply($options, arguments);
+      return _ctx.onChange && _ctx.onChange.apply(_ctx, arguments);
     }),
     id: "validatedCustomFile",
     accept: "image/*",
     required: ""
   }, null, 32
   /* HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.imageName), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.imageName), 1
   /* TEXT */
-  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [$data.url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_ctx.url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
     key: 0,
-    src: $data.url
+    src: _ctx.url
   }, null, 8
   /* PROPS */
-  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group\">\n                <lable>Room number</lable>\n                <select name=\"room_id\" class=\"form-control \" > "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("  <option v-for=\"room in rooms\" :value=\"room.id\">{{room['number']}}</option>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </select>\n            </div> "), _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15, _hoisted_16, _hoisted_17, _hoisted_18], 32
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /////////////////////////////////////////////////// "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+    "class": "custom-select",
+    id: "validatedInputGroupSelect",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return _ctx.form.rooms = $event;
+    }),
+    multiple: "",
+    required: ""
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.rooms, function (room) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+      key: room.id,
+      value: room.id,
+      selected: room.id === _ctx.form.rooms
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(room.name), 9
+    /* TEXT, PROPS */
+    , ["value", "selected"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.form.rooms]]), _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15, _hoisted_16, _hoisted_17, _hoisted_18], 32
   /* HYDRATE_EVENTS */
   )])]);
 }

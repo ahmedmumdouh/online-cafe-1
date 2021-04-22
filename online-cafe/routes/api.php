@@ -30,21 +30,20 @@ Route::get('/testapi', function(Request $request){
 // Route::group(['middleware' => ['auth:sanctum']], function () {
 //     // Route::apiResource('projects', 'ProjectsApiController');
 //     // Route::apiResource("/categories",CategoryController::class);
-//         // Route::apiResource("/rooms",RoomController::class);
-
-
-
-
-
+        Route::apiResource("/rooms",RoomController::class);
 //     // ... Other routes
 // });
+//user api 
+
 Route::post('/userstore',[AdminUserController::class,'store']); 
 Route::get('/userindex',[AdminUserController::class,'index']); 
 Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 
 Route::patch('/useredit/{id}',[AdminUserController::class,'update']); 
 Route::get('/usershow/{id}',[AdminUserController::class,'show']); 
-Route::get("/rooms",[RoomController::class,'index']);
-Route::post("/roomstore",[RoomController::class,'store']);
+
+// room api 
+// Route::get("/rooms",[RoomController::class,'index']);
+// Route::post("/roomstore",[RoomController::class,'store']);
 
 
 

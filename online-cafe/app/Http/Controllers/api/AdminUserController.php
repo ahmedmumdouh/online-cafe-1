@@ -9,15 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Http\Response;
-
-
 class AdminUserController extends Controller
 {
  // list all user by index fun
+
    public function index(){
        $users = User::all();
-       
-       return response()-> json($users);
+       $userArr=[];
+        
+    foreach($users as $user){   
+        $user->rooms =  $user->rooms ;
+        $userArr[] = $user ;
+    }
+       return $userArr;
+    //    return response()-> json($users);
 
    }
   // save users 

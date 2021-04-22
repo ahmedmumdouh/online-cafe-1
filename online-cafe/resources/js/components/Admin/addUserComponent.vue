@@ -24,10 +24,10 @@
 
             <!-- <div class="form-group">
                 <lable>Room number</lable>
-                <select name="room_id" class="form-control " > -->
+                <select name="room_id" class="form-control " > 
 
-                  <!--  <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>  -->
-                <!-- </select>
+                    <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>  
+                </select> 
             </div> -->
             <br>            
             <br>

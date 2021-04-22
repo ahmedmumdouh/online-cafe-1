@@ -39,9 +39,6 @@ class RoomController extends Controller
 
         }
     }
-
-
-   
     public function update(Request $request, Room $room)
     {
        $update = $room->update($request->all());

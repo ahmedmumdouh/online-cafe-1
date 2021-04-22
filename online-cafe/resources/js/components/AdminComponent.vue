@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import allusercomponent from './allusercomponent.vue'
-import edituser from './editeUserComponent.vue'
+// import allusercomponent from './Admin/allusercomponent.vue'
+import edituser from './Admin/editeUserComponent.vue'
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
@@ -46,7 +46,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
    
 ,
 components:{
-   allusercomponent,
+//    allusercomponent,
 //    edituser
 
            },

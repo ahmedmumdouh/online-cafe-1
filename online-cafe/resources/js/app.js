@@ -25,10 +25,10 @@ import { createApp } from "vue";
 import User from "./components/UserComponent.vue";
 import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
-import test from "./components/testComponent.vue";
-import allusercomponent from "./components/allusercomponent.vue";
-import edituser from "./components/editeUserComponent.vue"
-import storeuser from "./components/addUserComponent.vue"
+// import test from "./components/testComponent.vue";
+import allusercomponent from "./components/Admin/allusercomponent.vue";
+import edituser from "./components/Admin/editeUserComponent.vue"
+import storeuser from "./components/Admin/addUserComponent.vue"
 
 import { createWebHistory , createRouter } from "vue-router";
 

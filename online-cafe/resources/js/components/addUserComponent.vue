@@ -1,7 +1,7 @@
 <template>
     <div class="container">
     <div class="row">
-        <form v-on:submit.prevent="adduser">
+        <form v-on:submit.prevent="onSubmit">
             <div class="form-group">
                 <lable>Name</lable>
                 <input type="text" class="form-control" name="name" v-model="form.name" />
@@ -14,7 +14,7 @@
 
 
             <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
+                        <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
                         <label class="custom-file-label"  for="validatedCustomFile">{{imageName}}</label>
                         <div class="invalid-feedback">Cover Photo</div> 
                         <div id="preview" style="margin-top: 1%;">
@@ -29,7 +29,15 @@
                   <!--  <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>  -->
                 <!-- </select>
             </div> -->
-            <button type="submit" name="submit" class="btn btn-primary">create</button>
+            <br>            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <button type="submit" name="submit" class="btn btn-primary mg-5">create</button>
         </form>
     </div>
 </div>
@@ -46,11 +54,10 @@ axios.defaults.baseURL = 'http://localhost:8000'
         data() {
             return {
                 // user: {}
-                
-
               form:{
                         name:'',
-                        image:null
+                        email:'',
+                        avatar:''
                     },
                     imageName:'Upload Cover Photo',
                     url: null,
@@ -60,9 +67,9 @@ axios.defaults.baseURL = 'http://localhost:8000'
         methods: {
 
           onChange(e) {
-                this.form.image = e.target.files[0];
+                this.form.avatar = e.target.files[0];
                 this.imageName = e.target.files[0].name; 
-                this.url = URL.createObjectURL(this.form.image);
+                this.url = URL.createObjectURL(this.form.avatar);
                 console.log(this.form);
             },
 
@@ -75,8 +82,10 @@ axios.defaults.baseURL = 'http://localhost:8000'
                     }
                 }            
                 const formData = new FormData()
-                formData.append('image', this.form.image)
+                formData.append('avatar', this.form.avatar)
                 formData.append('name', this.form.name)
+               formData.append('email', this.form.email)
+
               
                 axios.post("/api/userstore", formData,config).then(function (res) {
                         existingObj.success = res.data.success;

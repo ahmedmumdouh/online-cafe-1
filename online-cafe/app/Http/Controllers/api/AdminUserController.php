@@ -6,6 +6,8 @@ use App\Models\Room;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 // use Illuminate\Http\Response;
 
 
@@ -14,11 +16,12 @@ class AdminUserController extends Controller
  // list all user by index fun
    public function index(){
        $users = User::all();
+       
        return response()-> json($users);
 
    }
   // save users 
-    public function store(Request $userRequeste)
+    public function store(Request $request)
     {    
         
             // $user = new User();
@@ -30,14 +33,16 @@ class AdminUserController extends Controller
 ////////////////////////////////////////
 $input = $request->all();
   
-if ($image = $request->file('image')) {
+if ($image = $request->file('avatar')) {
     $destinationPath = 'image/';
-    $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+    // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+    $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
     $image->move($destinationPath, $profileImage);
-    $input['image'] = "$profileImage";
+    $input['avatar'] = "$profileImage";
 }
 
 $add = User::create($input);
+dd($add);
   if ($add){
     return response()->json(["is_done"=>true]);
   }else{

@@ -16,7 +16,8 @@
 <tr  v-for="user in users" :key="user.id">
     <td>{{user.name}}</td>
     <td >123</td>
-    <td>{{user.avatar}}</td>
+    <td><img :src="`${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px"/> </td>
+    <!-- <td>{{user.avatar}}</td> -->
      <!-- <td><a  href="#" class="btn btn-primary">view</a></td> -->
      <!-- <td><a href="#" class="btn btn-danger">edit</a></td> -->
 

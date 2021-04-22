@@ -4,4 +4,5 @@ export default {
     postOrderURL: "/api/order",
     getProducts: "/api/products",
     getRooms: "/api/room",
+    getOrderProducts: "api/order/products",
 };

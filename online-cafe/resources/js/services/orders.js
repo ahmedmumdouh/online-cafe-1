@@ -17,10 +17,18 @@ export default {
     async getRooms() {
         return await axios.get(`${urls.getRooms}`);
     },
-    async getOrders(userId) {
-        return await axios.get(`${urls.getOrdersURL}?user_id=${userId}`);
+    async getOrders(userId, pageNumber) {
+        return await axios.get(
+            `${urls.getOrdersURL}?user_id=${userId}&page=${pageNumber}`
+        );
     },
     async getLatestOrder(userId) {
         return await axios.get(`${urls.getLatestOrderURL}?user_id=${userId}`);
+    },
+    async getOrderProducts(orderId) {
+        return await axios.get(`${urls.getOrderProducts}/${orderId}`);
+    },
+    async getOrdersWithPagination(userId, URL) {
+        return await axios.get(`${URL}&user_id=${userId}`);
     },
 };

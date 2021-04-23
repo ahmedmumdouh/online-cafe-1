@@ -755,6 +755,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _apiURLS__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./apiURLS */ "./resources/js/services/apiURLS.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -831,19 +833,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee3);
     }))();
   },
-  getOrders: function getOrders(userId, pageNumber) {
+  getOrders: function getOrders(userId, params) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getOrdersURL, "?user_id=").concat(userId, "&page=").concat(pageNumber));
+              if (!Number.isInteger(params)) {
+                _context4.next = 4;
+                break;
+              }
 
-            case 2:
-              return _context4.abrupt("return", _context4.sent);
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getOrdersURL, "?user_id=").concat(userId, "&page=").concat(params));
 
             case 3:
+              return _context4.abrupt("return", _context4.sent);
+
+            case 4:
+              if (!(_typeof(params) === "object" && params != null)) {
+                _context4.next = 8;
+                break;
+              }
+
+              _context4.next = 7;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getOrdersURL, "?user_id=").concat(userId, "&start_date=").concat(params.start_date, "&end_date=").concat(params.end_date));
+
+            case 7:
+              return _context4.abrupt("return", _context4.sent);
+
+            case 8:
+              if (params) {
+                _context4.next = 12;
+                break;
+              }
+
+              _context4.next = 11;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_apiURLS__WEBPACK_IMPORTED_MODULE_2__.default.getOrdersURL, "?user_id=").concat(userId));
+
+            case 11:
+              return _context4.abrupt("return", _context4.sent);
+
+            case 12:
             case "end":
               return _context4.stop();
           }
@@ -891,19 +922,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee6);
     }))();
   },
-  getOrdersWithPagination: function getOrdersWithPagination(userId, URL) {
+  getNextOrPrevOrdersWithPagination: function getNextOrPrevOrdersWithPagination(userId, URL, params) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              _context7.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(URL, "&user_id=").concat(userId));
+              if (!(_typeof(params) === "object" && params != null)) {
+                _context7.next = 6;
+                break;
+              }
 
-            case 2:
-              return _context7.abrupt("return", _context7.sent);
+              _context7.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(URL, "&user_id=").concat(userId, "&start_date=").concat(params.start_date, "&end_date=").concat(params.end_date));
 
             case 3:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 6:
+              _context7.next = 8;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(URL, "&user_id=").concat(userId));
+
+            case 8:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 9:
             case "end":
               return _context7.stop();
           }

@@ -12,7 +12,16 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->paginate(5);
+        $request->validate(['user_id' => ['required']], ["user_id.require" => 'userID is required']);
+
+        if ($request['start_date'] && $request['end_date']) {
+            error_log($request['start_date']);
+
+            $orders = Order::where("user_id", $request['user_id'])->where("created_at", ">=", $request['start_date'])->where("created_at", "<=", $request['end_date'])->orderBy("created_at", "desc")->paginate(5);
+        } else {
+            $orders = Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->paginate(5);
+        }
+        if (!$orders)  return response()->json(["data" => []]);
         return $orders;
     }
 

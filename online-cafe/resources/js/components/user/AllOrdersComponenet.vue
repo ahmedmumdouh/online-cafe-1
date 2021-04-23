@@ -18,7 +18,19 @@
             </div>
 
             <div class="col-sm-2 d-inline-block"> <!-- End Date -->
-                <button id="get-orders"  class="btn btn-info">Get</button>
+                <button id="get-orders"  @click.prevent="getOrderByDate()" class="btn btn-info">Get</button>
+            </div>
+        </div>
+
+        <div class="row" v-if="dateErrorMessages">
+            <div class="alert alert-danger m-auto">
+                <p class="p-1">{{dateErrorMessages}}</p>
+            </div>
+        </div>
+
+        <div class="row" v-if="dateInfoMessages">
+            <div class="alert alert-info m-auto">
+                <p class="p-1">{{dateInfoMessages}}</p>
             </div>
         </div>
         <!-- Date Filter End -->
@@ -38,7 +50,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="order in orders.data" :key="order.id">
-                        <td @click="displayDetails(order.id)">{{order.created_at}}</td>
+                        <td @click="displayDetails(order.id)">{{changeDateFormat(order.created_at)}}</td>
                         <td @click="displayDetails(order.id)">{{order.status}}</td>
                         <td @click="displayDetails(order.id)">{{formatPrice(order.total_price)}}</td>
                         <td><button @click="cancleOrder(order.id)" class="btn btn-danger" v-if="order.status=== 'processing'">Cancle</button></td>
@@ -118,10 +130,12 @@ export default {
         return{
             orders: "",
             user: user,
-            startDate: "",
-            endDate: "",
+            startDate: null,
+            endDate: null,
             numberOfPages: 0,
             orderDetails: false,
+            dateErrorMessages: null,
+            dateInfoMessages: null,
         }
     },
     methods: {
@@ -147,20 +161,52 @@ export default {
             return await service.getOrderProducts(orderId); 
         },
         async getPreviousPage(){
-            const orders = await service.getOrdersWithPagination(user.id, this.orders.prev_page_url);
-            this.orders = orders.data;
+            let date = {start_date: this.startDate, end_date: this.endDate}
+            if(!this.startDate || !this.endDate) date = null;
+            const orders = await service.getNextOrPrevOrdersWithPagination(user.id, this.orders.prev_page_url, date);
+            this.updateCurrentOrders(orders);
 
         },
         async getNextPage(){
-            const orders = await service.getOrdersWithPagination(user.id, this.orders.next_page_url);
-            this.orders = orders.data;
+
+            let date = {start_date: this.startDate, end_date: this.endDate}
+            // check if the user is select a date or not 
+            if(!this.startDate || !this.endDate) date = null;
+            const orders = await service.getNextOrPrevOrdersWithPagination(user.id, this.orders.next_page_url, date);
+            this.updateCurrentOrders(orders);
 
         },
         async getPage(pageNumber){
-            const orders = await service.getOrders(user.id,pageNumber);
+            const orders = await service.getOrders(this.user.id,pageNumber);
+            this.updateCurrentOrders(orders);
+        },
+        async getOrderByDate(){
+            // verify the two date is not null, but the max date as the last created one,
+            if(!this.startDate || !this.endDate) return this.dateErrorMessages = "The two date fields are required!";
+
+            const date = {start_date: this.startDate, end_date: this.endDate}
+            const orders = await service.getOrders(this.user.id,date);
+            this.cleareDateMessages();
+            // is there any order this the give date 
+            if(orders.data.data.length > 0){
+                this.updateCurrentOrders(orders);
+            }else{
+                this.dateInfoMessages = "No Orders within this date!"
+            }
+        },
+        changeDateFormat(date){
+            const newDate = new Date(date);
+            return newDate.toLocaleString();
+        },
+        cleareDateMessages(){
+            this.dateErrorMessages = null;
+            this.dateInfoMessages = null;
+        },
+        updateCurrentOrders(orders){
             this.orders = orders.data;
-        }
-        
+            this.numberOfPages = Math.ceil(orders.data.total / orders.data.per_page);
+            
+        },
     }
 }
 </script>

@@ -16589,7 +16589,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {},
-  mounted: function mounted() {},
+  beforeCreate: function beforeCreate() {},
   components: {
     AdminNavBarComponent: _Admin_AdminNavBarComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default
   }
@@ -16638,7 +16638,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       categoryErr: ""
     };
   },
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     var _this = this;
 
     console.log('Component mounted.');
@@ -16755,7 +16755,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   // props: ['user'],
-  created: function created() {
+  beforeCreate: function beforeCreate() {
     var that = this;
     console.log('Component mounted.');
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user').then(function (response) {
@@ -16794,7 +16794,7 @@ __webpack_require__.r(__webpack_exports__);
       imageServerURL: _services_apiURLs_js__WEBPACK_IMPORTED_MODULE_1__.default.imageServerURL
     };
   },
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     var _this = this;
 
     console.log('Component mounted.');
@@ -16893,7 +16893,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       imageServerURL: _services_apiURLs_js__WEBPACK_IMPORTED_MODULE_1__.default.imageServerURL
     };
   },
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     var _this = this;
 
     console.log('Component mounted.');
@@ -16902,10 +16902,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       _this.categories = categoryResponse.data;
       console.log(_this.categories);
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_services_apiURLs_js__WEBPACK_IMPORTED_MODULE_1__.default.getProductURL).concat(that.$route.params.productId)).then(function (productResponse) {
+        _this.imageName = productResponse.data.image;
         _this.form.name = productResponse.data.name;
         _this.form.price = productResponse.data.price;
-        _this.form.category_id = productResponse.data.category_id;
-        _this.imageName = productResponse.data.image; // this.form.available = productResponse.data.available;
+        _this.form.category_id = productResponse.data.category_id; // this.form.available = productResponse.data.available;
         //  this.products = this.products.map((product) =>{
         //     product.category_id= this.categories.filter((cata) => parseInt(cata.id) == parseInt(product.category_id))[0] ; 
         //     console.log(product);
@@ -16963,7 +16963,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("".concat(_services_apiURLs_js__WEBPACK_IMPORTED_MODULE_1__.default.putProductURL).concat(existingObj.$route.params.productId), formData, config).then(function (res) {
-        existingObj.success = res.data.success;
         existingObj.$router.push({
           name: 'allProducts'
         });
@@ -16997,7 +16996,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     user: 0;
   },
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     var _this = this;
 
     console.log('hi');
@@ -17027,7 +17026,7 @@ __webpack_require__.r(__webpack_exports__);
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.withCredentials) = true;
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = 'http://localhost:8000';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
+  beforeCreate: function beforeCreate() {
     console.log('Component mounted.');
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user').then(function (response) {
       console.log(response.data);
@@ -17987,7 +17986,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     src: $data.url
   }, null, 8
   /* PROPS */
-  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.url == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.url == null && $data.imageName != '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
     key: 1,
     src: $data.imageServerURL + $data.imageName
   }, null, 8

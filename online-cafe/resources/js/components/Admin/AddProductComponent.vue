@@ -133,7 +133,7 @@ import urls from '../services/apiURLs.js'
                 }    
                 
             },
-        mounted() {
+        beforeCreate() {
             console.log('Component mounted.');
             axios.get(`${urls.getCategoriesURL}`).then(categoryResponse => {
                 this.categories = categoryResponse.data;

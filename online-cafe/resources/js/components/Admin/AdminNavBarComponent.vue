@@ -67,7 +67,7 @@ export default {
         },
     },
     // props: ['user'],
-    created(){
+    beforeCreate(){
         const that = this ;
             console.log('Component mounted.');
             axios.get('/api/user').then(response => {

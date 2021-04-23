@@ -15,7 +15,7 @@ axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
-        mounted() {
+        beforeCreate() {
             console.log('Component mounted.');
             axios.get('/api/user').then(response => {
                 console.log(response.data)

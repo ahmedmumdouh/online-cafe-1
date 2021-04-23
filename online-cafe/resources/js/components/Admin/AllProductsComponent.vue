@@ -74,7 +74,7 @@ import urls from '../services/apiURLs.js'
                 }    
                 
             },
-        mounted() {
+        beforeCreate() {
             console.log('Component mounted.');
             axios.get(`${urls.getProductsURL}`).then(productResponse => {
             this.products = productResponse.data;

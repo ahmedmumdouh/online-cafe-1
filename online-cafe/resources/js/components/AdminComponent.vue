@@ -15,7 +15,7 @@ import AdminNavBarComponent from './Admin/AdminNavBarComponent.vue'
     export default {
         data(){
         },
-        mounted() {
+        beforeCreate() {
            
         },
         components:{

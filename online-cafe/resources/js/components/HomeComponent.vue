@@ -20,7 +20,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
         data(){
             user:0
         },
-        mounted() {
+        beforeCreate() {
             console.log('hi');
             axios.get('/api/user').then(response => {
                 console.log(response.data.is_admin);

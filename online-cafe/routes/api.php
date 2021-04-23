@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\RoomController;
-use App\Models\Product;
+use App\Models\User;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\ProductController;
 /*
@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/order/products/{id}", [OrderController::class, 'getOrderProducts'])->name('orderProducts');
     Route::apiResource('/order', OrderController::class);
 
+    Route::get("/users", function () {
+        return User::all();
+    });
 
     Route::apiResource('/room', RoomController::class);
     Route::apiResource("/products", ProductController::class);

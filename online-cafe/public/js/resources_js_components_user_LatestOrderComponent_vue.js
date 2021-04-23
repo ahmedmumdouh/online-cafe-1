@@ -184,7 +184,8 @@ __webpack_require__.r(__webpack_exports__);
   postOrderURL: "/api/order",
   getProducts: "/api/products",
   getRooms: "/api/room",
-  getOrderProducts: "api/order/products"
+  getOrderProducts: "api/order/products",
+  getAllUsers: "api/users"
 });
 
 /***/ }),

@@ -1,30 +1,42 @@
 <template>
     <div class="container">
+        <!-- Dispaly all User For Admin Start-->
+        <div class="row" v-if="allUsers">
+            <div class="col-lg-12 align-baseline m-2">
+                <label for="all-users" class="col-lg-form-label text">Select User </label>
+                 <select required v-model="order.user" name="all-users" class="m-2">
+                            <option v-for="user in allUsers" :key="user.id">{{user.name}}</option>
+                </select>
+             </div>
+        </div>
+        <!-- Dispaly all User For Admin end-->
         <div class="row">
-            <form class="col-4 p-3" @submit.prevent="confirmOrder()">
+            <form class="col-lg-4 p-3" @submit.prevent="confirmOrder()">
                 <div class="row  align-content-center" v-for="product in order.products" :key="product.id"> <!-- contorles -->
-                    <div class="col-2 text-dark m-auto"><label for="" class="text">{{ product.name }}</label></div> <!-- Product name !-->
-                    <div class="col-1 text-success m-auto">
+                    <div class="col-lg-2 text-dark m-auto"><label for="" class="text">{{ product.name }}</label></div> <!-- Product name !-->
+                    <div class="col-lg-1 text-success m-auto">
                         <label for="" class="text text-center">{{ product.quantity }}</label>
                         </div> <!-- Product Quantity !-->
-                    <div class="col-4 text-center m-auto">
+                    <div class="col-lg-4 text-center m-auto">
                         <button class="btn btn-success btn-m m-1" @click.prevent="increaseQuantity(product.id)">+</button>
                         <button class="btn btn-warning btn-m m-1" @click.prevent="decreaseQuantity(product.id)">-</button>
                         </div> <!-- Action !-->
-                    <div class="col-3 text-center m-auto w-auto"><label for="text" class="text">{{ formatPrice(product.price * product.quantity) }}</label></div> <!-- Product Price !-->
-                    <div class="col-2 text-dark m-auto"> <button class="btn btn-danger"  @click.prevent="removeProduct(product.id)">X</button></div> <!-- Delete  Product !-->
+                    <div class="col-lg-5 text-dark m-auto align-baseline ">
+                        <label for="text" class="text">{{ formatPrice(product.price * product.quantity) }}</label>
+                     <button class="btn btn-danger"  @click.prevent="removeProduct(product.id)">X</button>
+                     </div> <!-- Delete  Product !-->
                 </div>
                 
                 
                 <div class="row py-3"> <!-- Notes -->
-                    <div class="col-12">
+                    <div class="col-lg-12">
                      <label for="notes" class="text" >Notes</label>
                         <textarea name="notes" id="order-notes" cols="35" rows="10" v-model="order.notes"></textarea>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12">
                         <label for="notes" class="text " >Rooms</label>
                         <select required v-model="order.room" name="rooms" id="rooms" class="float-right">
                             <option v-for="room in rooms" :key="room.id">{{room.name}}</option>
@@ -33,7 +45,7 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12">
                         <div class="d-flex flex-column float-right mr-2 text-center
                         "> 
                             <label for="total-price">{{ formatPrice(order.totalPrice) }}</label>
@@ -42,7 +54,7 @@
                     </div>
                 </div>
             </form> <!-- create order  -->
-            <div id="products" class="col-8 py-3 ">
+            <div id="products" class="col-lg-8 py-3 ">
                 <div class="row justify-content-center">
                     <div class="card m-2 p-2" style="width: 12rem;" v-for="product in products" :key="product.id">
                         <img
@@ -69,10 +81,14 @@
 
 <script>
 import services  from '../../services/orders';
+import userServices from '../../services/users';
 import {user} from '../../app';
 export default {
     async created(){
         this.getData();
+        if(user.is_admin){
+            this.getAllUsers();
+        }
     }
     ,data() {
         return {
@@ -85,9 +101,15 @@ export default {
             },
             products: [],
             rooms: [],
+            allUsers: null,
         }    
     },
     methods:{
+        async getAllUsers(){
+            const users = await userServices.getAllUsers();
+
+            this.allUsers = users.data;
+        },
         getProductFromOrder(productId){
             return this.order.products.find((product) => product.id === productId);
         },

@@ -5,4 +5,5 @@ export default {
     getProducts: "/api/products",
     getRooms: "/api/room",
     getOrderProducts: "api/order/products",
+    getAllUsers: "api/users",
 };

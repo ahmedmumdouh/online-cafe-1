@@ -68,42 +68,33 @@ dd($add);
     }
 
 // update user 
-// public function update($id, Request $request)
-    // {
-        public function update(Request $request, User $user)
-        {
-            $input = $request->all();
-            if ($image = $request->file('avatar')) {
-                $destinationPath = 'image/';
-                // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
-                $image->move($destinationPath, $profileImage);
-                $input['avatar'] = "$profileImage";
-            }
-            $update = $user->update($input);   
-            // $update = $product->update([
-            //     'name' => $input['name'],
-            //     'price' => $input['price'],
-            //     'image' => $input['image'],
-            //     'category_id' => $input['category_id']
-            // ]);    
-            if ($update){
-                return response()->json(["succes"=>$input]);
-            }else{
-                return response()->json(["error"=>$input]);
-    
-            }   
-           
+public function update($id, Request $request)
+    {
+        $user = User::find($id);
+
+        $input = $request->all();
+        if ($image = $request->file('avatar')) {
+            $destinationPath = 'image/';
+            $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
+            $image->move($destinationPath, $profileImage);
+            $input['avatar'] = "$profileImage";
         }
+        $update = $user->update($input);   
+        
+        if ($update){
+            return response()->json(["succes"=>$input]);
+        }else{
+            return response()->json(["error"=>$input]);
+
+        }   
+        // $url = "";
+      
+    }
 
 
 
 
-        // $user = User::find($id);
-        // $user->update($request->all());
-
-        // return response()->json('user updated!');
-    // }
+      
 // show user with id
 public function show($id)
     {

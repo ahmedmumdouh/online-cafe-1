@@ -25,10 +25,10 @@
            
 <!-- /////////////////////////////////////////////////// -->
 
-        <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
+       <!-- <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
             <option v-for="room in rooms" :key="room.id" :value="room.id" :selected="room.id === form.rooms" >{{room.name}}</option>
             
-        </select>
+        </select> -->
 
             <br>            
             <br>
@@ -92,25 +92,27 @@ axios.defaults.baseURL = 'http://localhost:8000'
                formData.append('email', this.form.email)
 
               
-                axios.post("/api/userstore", formData,config).then(function (res) {
-                        existingObj.success = res.data.success;
-                        existingObj.$router.push({ name: 'alluser' })
-                        console.log(res);
-                    })
+                axios.post("/api/userstore", formData,config).then((res) => {
+                    this.$router.push({
+                        name: "alluser",
+                    });
+                    //  this.user = res.data;
+                })
+                
                     .catch(function (err) {
                         existingObj.output = err;
                     });
             } ,
 
-              getRooms() {
-            axios
-                .get("/api/rooms")
-                .then((data) => (this.rooms = data.data))
-                .then(console.log(room        s))
-                .catch(() => {
-                    console.log("Error...");
-                });
-                     }, 
+            //   getRooms() {
+            // axios
+            //     .get("/api/rooms")
+            //     .then((data) => (this.rooms = data.data))
+            //     .then(console.log(rooms))
+            //     .catch(() => {
+            //         console.log("Error...");
+            //     });
+            //          }, 
                  
             
         }

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div >
         <div v-if="user==1">
     
         </div>
@@ -21,7 +21,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
             user:0
         },
         mounted() {
-            console.log('Component mounted.');
+            console.log('hi');
             axios.get('/api/user').then(response => {
                 console.log(response.data.is_admin);
                 this.user = response.data.is_admin ;

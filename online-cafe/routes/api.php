@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController ;
 use App\Http\Controllers\api\ProductController ;
+use App\Http\Controllers\api\RoomController ;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,7 +17,7 @@ use App\Http\Controllers\api\ProductController ;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -29,5 +30,6 @@ Route::middleware('auth')->get('/testapi', function(Request $request){
     Route::apiResource("/products",ProductController::class);
     Route::apiResource("/categories",CategoryController::class);
     Route::put("/products/available/{product}",[ProductController::class,'available']);
+    Route::apiResource("/rooms",RoomController::class);
     // ... Other routes
 // });

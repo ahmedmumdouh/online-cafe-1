@@ -29,15 +29,10 @@ class AdminUserController extends Controller
     public function store(Request $request)
     {    
         
-            // $user = new User();
-            // $user->name = $userRequeste->name;
-            // $user->email = $userRequeste->email;
-            // $user->password = $userRequeste->password;
-            // $user->avatar = $userRequeste->avatar;
-            // $user->save();
-////////////////////////////////////////
-$input = $request->all();
-  
+    $input = $request->all();
+   
+ 
+    
 if ($image = $request->file('avatar')) {
     $destinationPath = 'image/';
     // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -46,9 +41,19 @@ if ($image = $request->file('avatar')) {
     $input['avatar'] = "$profileImage";
 }
 
-$add = User::create($input);
-dd($add);
+   $add = User::create($input);
+
+    
   if ($add){
+       
+    $user = User::find($add->id);
+    $rooms = array_map('intval', explode(',', $input['rooms']));
+
+    foreach($rooms as $room)
+    {
+        
+    $user->rooms()->attach($room);
+    }
     return response()->json(["is_done"=>true]);
   }else{
     return response()->json(["is_done"=>false]);
@@ -71,8 +76,8 @@ dd($add);
 public function update($id, Request $request)
     {
         $user = User::find($id);
-
         $input = $request->all();
+
         if ($image = $request->file('avatar')) {
             $destinationPath = 'image/';
             $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
@@ -81,7 +86,17 @@ public function update($id, Request $request)
         }
         $update = $user->update($input);   
         
-        if ($update){
+   if ($update){
+                 
+    $user->rooms()->detach();
+
+      $rooms = array_map('intval', explode(',', $input['rooms']));
+
+    foreach($rooms as $room)
+    {
+
+    $user->rooms()->attach($room);
+    }
             return response()->json(["succes"=>$input]);
         }else{
             return response()->json(["error"=>$input]);

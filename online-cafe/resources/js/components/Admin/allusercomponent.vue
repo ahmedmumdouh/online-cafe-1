@@ -5,7 +5,7 @@
 <thead>
     <tr>
         <th >Name</th>
-        <th>Room</th>
+        <th>Rooms</th>
         <th>Image</th>
          <td>Edit</td>
         <td>Delete</td>
@@ -13,9 +13,18 @@
 </thead>
 <tbody>
 
-<tr  v-for="user in users" :key="user.id">
+<tr v-for="user in users" :key="user.id">
     <td>{{user.name}}</td>
-    <td >123</td>
+    <td>
+    <details>
+  <summary>Rooms</summary>
+ <ul >
+ <li v-for="room in user.rooms" :key="room.id">
+     {{ room.name }}
+ </li>
+ </ul>
+</details>
+    </td>
     <td><img :src="`${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px"/> </td>
     <!-- <td>{{user.avatar}}</td> -->
      <!-- <td><a  href="#" class="btn btn-primary">view</a></td> -->

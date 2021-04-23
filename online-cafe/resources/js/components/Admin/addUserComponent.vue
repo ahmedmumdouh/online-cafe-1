@@ -12,6 +12,16 @@
                 <input type="email" class="form-control" name="email" v-model="form.email" />
             </div>
 
+             <div class="form-group">
+                <lable>Password</lable>
+                <input type="password" class="form-control" name="password" v-model="form.password" />
+            </div>
+
+             <div class="form-group">
+                <lable>Password Cofirm</lable>
+                <input type="password" class="form-control" name="password" v-model="form.confirmpassword" />
+            </div>
+
 
             <div class="custom-file mb-3">
                         <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
@@ -23,12 +33,12 @@
                     </div>
 
            
-<!-- /////////////////////////////////////////////////// -->
+        <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-       <!-- <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
-            <option v-for="room in rooms" :key="room.id" :value="room.id" :selected="room.id === form.rooms" >{{room.name}}</option>
-            
-        </select> -->
+        <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
+         <option v-for="room in rooms" :key="room.id" :value="room.id" :selected="room.id === form.rooms" >{{room.name}}</option>
+             
+        </select> 
 
             <br>            
             <br>
@@ -60,6 +70,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
                         name:'',
                         email:'',
                         avatar:'',
+                        password:'',
+                        confirmpassword:'' , 
                         rooms:[],
                     },
                     imageName:'Upload Cover Photo',
@@ -79,43 +91,49 @@ axios.defaults.baseURL = 'http://localhost:8000'
             },
 
              onSubmit(e) {
-                e.preventDefault();
                 const existingObj = this;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data'
                     }
-                }            
-                const formData = new FormData()
-                formData.append('avatar', this.form.avatar)
-                formData.append('name', this.form.name)
-               formData.append('email', this.form.email)
+                }  
+                if(this.form.confirmpassword===this.form.password){
+                    const formData = new FormData()
+                    formData.append('avatar', this.form.avatar)
+                    formData.append('name', this.form.name)
+                    formData.append('email', this.form.email)
+                    formData.append('password', this.form.password)
+                    formData.append('rooms', this.form.rooms)
+                    axios.post("/api/userstore", formData,config)
+                    .then((res) => {
+                    console.log(res.data)
+                        existingObj.$router.push({
+                            name: "alluser",
+                        });
+                    }).catch(function (err) {
+                            existingObj.output = err;
+                        });
+                }          
+               
+            e.preventDefault();
 
-              
-                axios.post("/api/userstore", formData,config).then((res) => {
-                    this.$router.push({
-                        name: "alluser",
-                    });
-                    //  this.user = res.data;
-                })
-                
-                    .catch(function (err) {
-                        existingObj.output = err;
-                    });
-            } ,
+             },
 
-            //   getRooms() {
-            // axios
-            //     .get("/api/rooms")
-            //     .then((data) => (this.rooms = data.data))
-            //     .then(console.log(rooms))
-            //     .catch(() => {
-            //         console.log("Error...");
-            //     });
-            //          }, 
-                 
-            
-        }
+              getRooms() {
+                const that = this ;
+                // console.log('hhhhhhhhhhhhhhh')
+            axios
+                .get("/api/rooms")
+                .then((data) => {
+                    that.rooms = data.data
+                    console.log(data.data)
+                    })
+                   
+                .catch(() => {
+                    console.log("Error...");
+                });
+                     }}, 
+                        
 
 
 

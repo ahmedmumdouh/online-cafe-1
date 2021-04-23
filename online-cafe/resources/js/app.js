@@ -16,76 +16,73 @@ require("./bootstrap");
 // app.component("example", require("./components/ExampleComponent.vue").default);  // for tags
 // app.mount("#main");
 
-
-
-
-
+import axios from "axios";
 import { createApp } from "vue";
-import User from "./components/UserComponent.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import AddProduct from "./components/Admin/AddProductComponent.vue";
+import AllProducts from "./components/Admin/AllProductsComponent.vue";
+import UpdateProduct from "./components/Admin/UpdateProductComponent.vue";
 import Admin from "./components/AdminComponent.vue";
-import Home from "./components/HomeComponent.vue";
 import handler from "./components/handler.vue";
-import test from "./components/testComponent.vue";
-import AllProducts from './components/Admin/AllProductsComponent.vue'
-import AddProduct from './components/Admin/AddProductComponent.vue'
-import UpdateProduct from './components/Admin/UpdateProductComponent.vue'
+import Home from "./components/HomeComponent.vue";
+import User from "./components/UserComponent.vue";
 
-
-import { createWebHistory , createRouter } from "vue-router";
-
-import axios from 'axios'
-axios.defaults.withCredentials =true
-axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:8000";
 
 // routes
-
+const loadUserGroupComponents = (componenet) => {
+    return import(
+        /* webpack-ChunkName: 'userGroup' */ `./components/User/${componenet}.vue`
+    );
+};
 const UserRoutes = [
-    {name: 'home',path:'/home',component:Home},
-    {name: 'handler',path:'/:catchAll(.*)',component: handler},
+    {
+        path: "/home",
+        name: "home",
+        component: loadUserGroupComponents("HomeComponent"),
+    },
+    {
+        path: "/create-order",
+        name: "create-order",
+        component: loadUserGroupComponents("CreateOrderComponent"),
+    },
+    {
+        path: "/my-order",
+        name: "my-order",
+        component: loadUserGroupComponents("AllOrdersComponenet"),
+    },
+    { path: "/:catchAll(.*)", component: import("./components/handler.vue") },
 ];
 
 const AdminRoutes = [
-    {name: 'home', path:'/home',component:Home},
-    {name: 'allProducts', path:'/products',component:AllProducts},
-    {name: 'addProduct', path:'/add_product',component:AddProduct},
-    {name: 'updateProduct', path:'/update_product/:productId',component:UpdateProduct},
-    {name: 'handler', path:'/:catchAll(.*)',component:handler},
+    { name: "home", path: "/home", component: Home },
+    { name: "allProducts", path: "/products", component: AllProducts },
+    { name: "addProduct", path: "/add_product", component: AddProduct },
+    {
+        name: "updateProduct",
+        path: "/update_product/:productId",
+        component: UpdateProduct,
+    },
+    { name: "handler", path: "/:catchAll(.*)", component: handler },
 ];
-
-
-
-
-window.addEventListener('load',function(e){
-    const userRouter = createRouter({history:createWebHistory(),routes:UserRoutes});
-    const adminRouter = createRouter({history:createWebHistory(),routes:AdminRoutes});
-    
-    axios.get('/api/user').then(response => {
-        console.log(response.data.is_admin );
-        if( response.data.is_admin ){
-            createApp(Admin).use(adminRouter).mount('#main')
+export let user;
+window.addEventListener("load", function (e) {
+    const userRouter = createRouter({
+        history: createWebHistory(),
+        routes: UserRoutes,
+    });
+    const adminRouter = createRouter({
+        history: createWebHistory(),
+        routes: AdminRoutes,
+    });
+    axios.get("/api/user").then((response) => {
+        if (response.data.is_admin) {
+            createApp(Admin).use(adminRouter).mount("#main");
+            user = response.data;
+        } else {
+            createApp(User).use(userRouter).mount("#main");
+            user = response.data;
         }
-        else{
-            createApp(User).use(userRouter).mount('#main')
-        }
-    })
-        
-})
-
-//  latest +  admin + user compo
-//  
-//      latest orders  ->              /home 
-// router view admin    -> admin comp  /home 
-// 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    });
+});

@@ -11,7 +11,7 @@
 
 <script>
 import axios from 'axios'
-import Navbar from '../components/user/NavbarComponent.vue';
+import Navbar from '../components/User/NavbarComponent';
     export default {
         created() {
             console.log('User Component Created.');

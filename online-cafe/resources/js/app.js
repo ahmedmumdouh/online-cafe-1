@@ -33,7 +33,7 @@ axios.defaults.baseURL = "http://localhost:8000";
 // routes
 const loadUserGroupComponents = (componenet) => {
     return import(
-        /* webpack-ChunkName: 'userGroup' */ `./components/user/${componenet}.vue`
+        /* webpack-ChunkName: 'userGroup' */ `./components/User/${componenet}.vue`
     );
 };
 const UserRoutes = [

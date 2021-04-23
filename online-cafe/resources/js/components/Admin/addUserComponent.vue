@@ -97,7 +97,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
                         'content-type': 'multipart/form-data'
                     }
                 }  
-                if(this.form.confirmpassword===this.form.password){
+                if(this.form.confirmpassword==this.form.password){
                     const formData = new FormData()
                     formData.append('avatar', this.form.avatar)
                     formData.append('name', this.form.name)

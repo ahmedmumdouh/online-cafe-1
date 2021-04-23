@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 // use Illuminate\Http\Response;
 class AdminUserController extends Controller
@@ -30,9 +32,8 @@ class AdminUserController extends Controller
     {    
         
     $input = $request->all();
-   
- 
-    
+    $input['password']=Hash::make($input['password']);
+
 if ($image = $request->file('avatar')) {
     $destinationPath = 'image/';
     // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();

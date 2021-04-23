@@ -16620,7 +16620,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
 
-      if (this.form.confirmpassword === this.form.password) {
+      if (this.form.confirmpassword == this.form.password) {
         var formData = new FormData();
         formData.append('avatar', this.form.avatar);
         formData.append('name', this.form.name);

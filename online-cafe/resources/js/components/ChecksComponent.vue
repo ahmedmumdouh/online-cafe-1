@@ -58,7 +58,7 @@
                 class="btn btn-info"
                 @click="orderDisplay = true"
               >
-                {{ user.name }}
+                {{ data_of_user['user'].name }}
               </button>
             </td>
             <th >100</th>
@@ -76,43 +76,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">
+          
+          <tr v-for="order in data_of_user['orders']" :key="order.id">
+            <td>
               <button
                 type="button"
                 class="btn btn-primary"
                 @click="(orderDetailsDisplay = true), (index = 0)"
               >
-                2021-04-10
+                {{order.created_at}}
               </button>
-            </th>
-            <td>25</td>
+            </td>
+            <th>{{order.total_price}}</th>
           </tr>
-          <tr>
-            <th scope="row">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="(orderDetailsDisplay = true), (index = 1)"
-              >
-                2021-03-25
-              </button>
-            </th>
-            <td>100</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="(orderDetailsDisplay = true), (index = 2)"
-              >
-                2020-10-10
-              </button>
-            </th>
-
-            <td>10</td>
-          </tr>
+          
+          
         </tbody>
       </table>
       <button
@@ -166,7 +144,7 @@ export default {
       start: "",
       end: "",
       selectedUser: "",
-      user: {},
+      data_of_user: [],
     };
   },
   //mounted() {},
@@ -190,7 +168,7 @@ export default {
         })
         .then((response) => {
           this.userDisplay=true;
-          this.user = response.data;
+          this.data_of_user = response.data;
           
         })
         .catch(() => {

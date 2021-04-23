@@ -6,7 +6,7 @@
 
                     <div class="card-body">
                         
-
+                        
                         <router-view col-md-12></router-view>
     
                     </div>

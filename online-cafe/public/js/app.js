@@ -16615,11 +16615,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      specificOrder: {}
     };
   },
-  methods: {},
-  created: function created() {}
+  methods: {
+    getOrder: function getOrder() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/checkOrder", {
+        orderId: this.id
+      }).then(function (response) {
+        _this.specificOrder = response.data;
+      })["catch"](function () {
+        console.log("Error...");
+      });
+    }
+  },
+  created: function created() {
+    this.getOrder();
+  }
 });
 
 /***/ }),
@@ -16684,15 +16699,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.orderDetailsDisplay = true;
-      this.selectedOrderId = order_id; // for (let i = 0; i < this.data_of_user["orders"].length; i++) {
-      //     if(this.data_of_user["orders"][i].id==this.selectedOrderId)
-      //     {
-      //          this.selectedOrder=this.data_of_user["orders"][i];
-      //          console.log(this.selectedOrder.products);
-      //          break;
-      //     }
-      //   } 
-
+      this.selectedOrderId = order_id;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/checks/products", {
         selectedOrderId: this.selectedOrderId
       }).then(function (response) {
@@ -16841,8 +16848,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<h1>Order</h1><br><table class=\"table table-striped mt-3\"><thead class=\"bg-info\"><tr><th scope=\"col\">Order Date</th><th scope=\"col\">Name</th><th scope=\"col\">Room</th><th scope=\"col\">Status</th><th scope=\"col\">Action</th></tr></thead><tbody></tbody></table>", 3);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.id);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [_hoisted_1]);
 }
 
 /***/ }),

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ChecksController;
+use App\Http\Controllers\CheckOrderController;
 use Illuminate\Support\Facades\Auth;
 
 /*

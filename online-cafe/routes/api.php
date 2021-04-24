@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController ;
 use App\Http\Controllers\api\ChecksController ;
+use App\Http\Controllers\api\CheckOrderController ;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,6 +40,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('/checks',[ChecksController::class,'index']);
 Route::post('/checks',[ChecksController::class,'store']);
 Route::post('/checks/products',[ChecksController::class,'getProducts']);
+
+Route::post('/checkOrder',[CheckOrderController::class,'index']);
+
 
 
 

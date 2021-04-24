@@ -185,14 +185,7 @@ export default {
     {
       this.orderDetailsDisplay=true;
       this.selectedOrderId=order_id;
-      // for (let i = 0; i < this.data_of_user["orders"].length; i++) {
-      //     if(this.data_of_user["orders"][i].id==this.selectedOrderId)
-      //     {
-      //          this.selectedOrder=this.data_of_user["orders"][i];
-      //          console.log(this.selectedOrder.products);
-      //          break;
-      //     }
-      //   } 
+      
       
       axios
         .post("/api/checks/products", {

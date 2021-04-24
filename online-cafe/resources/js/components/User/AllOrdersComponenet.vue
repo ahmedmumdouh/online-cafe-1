@@ -88,42 +88,19 @@
                 </div>
             </div>
         </div>
-        <!-- Order Details  End -->
-     
-        <!-- Pagination Start -->
-        <div class="row justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li :class="['page-item', orders.prev_page_url == null ?'disabled' : '']">
-                    <a class="page-link" href="#" @click.prevent="getPreviousPage()"  aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li   v-for="index in numberOfPages" :key="index" class="page-item"><a @click.prevent="getPage(index)" class="page-link" href="#">{{index}}</a></li>
-                    
-                    <li :class="['page-item', orders.next_page_url == null ?'disabled' : '']">
-                    <a class="page-link" href="#" @click.prevent="getNextPage()" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <!-- Pagination End -->
-
-
+        <PaginationComponent :links="orders.links" @paginate="getData"/>
     </div>
 </template>
 
 <script>
 import {user} from '../../app';
 import service from '../../services/orders';
+import PaginationComponent from '../PaginationComponent.vue';
 
 export default {
     async created(){
         const orders = await service.getOrders(user.id);
         this.orders = orders.data;
-        this.numberOfPages = Math.ceil(orders.data.total / orders.data.per_page)
     },
     data(){
         return{
@@ -131,11 +108,13 @@ export default {
             user: user,
             startDate: null,
             endDate: null,
-            numberOfPages: 0,
             orderDetails: false,
             dateErrorMessages: null,
             dateInfoMessages: null,
         }
+    },
+    components: {
+        PaginationComponent,
     },
     methods: {
         formatPrice(price){
@@ -159,26 +138,10 @@ export default {
         async getOrderProducts(orderId){
             return await service.getOrderProducts(orderId); 
         },
-        async getPreviousPage(){
-            let date = {start_date: this.startDate, end_date: this.endDate}
-            if(!this.startDate || !this.endDate) date = null;
-            const orders = await service.getNextOrPrevOrdersWithPagination(user.id, this.orders.prev_page_url, date);
-            this.updateCurrentOrders(orders);
-
-        },
-        async getNextPage(){
-
-            let date = {start_date: this.startDate, end_date: this.endDate}
-            // check if the user is select a date or not 
-            if(!this.startDate || !this.endDate) date = null;
-            const orders = await service.getNextOrPrevOrdersWithPagination(user.id, this.orders.next_page_url, date);
-            this.updateCurrentOrders(orders);
-
-        },
-        async getPage(pageNumber){
-            const orders = await service.getOrders(this.user.id,pageNumber);
+        async getData(orders){
             this.updateCurrentOrders(orders);
         },
+
         async getOrderByDate(){
             // verify the two date is not null, but the max date as the last created one,
             if(!this.startDate || !this.endDate) return this.dateErrorMessages = "The two date fields are required!";
@@ -202,7 +165,10 @@ export default {
             this.dateInfoMessages = null;
         },
         updateCurrentOrders(orders){
+            console.log(orders.data ," Updateing")
             this.orders = orders.data;
+            console.log(this.orders ," this.order")
+
             this.numberOfPages = Math.ceil(orders.data.total / orders.data.per_page);
             
         },

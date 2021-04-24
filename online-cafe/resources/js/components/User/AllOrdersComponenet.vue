@@ -60,7 +60,7 @@
         <!-- Orders  End -->
 
         <!--  -->
-            <PaginationComponent :links="orders.links" @paginate="getData"/>
+            <PaginationComponent v-if="orders.links" :links="orders.links" @paginate="getData"/>
         <!--  -->
        <!-- Order start  End -->
         <div class="row justify-content-center">

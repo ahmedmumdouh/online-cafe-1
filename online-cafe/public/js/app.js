@@ -16901,8 +16901,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-success",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.changeStatus($data.specificOrder['order'].id);
-    })
-  }, " Finish Order ")])])])])]);
+    }),
+    disabled: $data.specificOrder['order'].status == 'done'
+  }, " Finish Order ", 8
+  /* PROPS */
+  , ["disabled"])])])])])]);
 }
 
 /***/ }),

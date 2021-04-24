@@ -23,6 +23,7 @@
                 type="button"
                 class="btn btn-success"
                 @click="changeStatus(specificOrder['order'].id)"
+                :disabled="specificOrder['order'].status == 'done'"
                
               >
                 Finish Order

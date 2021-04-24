@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Room;
 
 class CheckOrderController extends Controller
 {
@@ -15,7 +16,26 @@ class CheckOrderController extends Controller
     {
         $order_id=$request->input('orderId');
         $order=Order::find($order_id);
-        return $order;
+        $user=$order->user;
+        $room=Room::find($order->room_id);
+
+        $data = array("order"=>$order, "user"=>$user , "room"=>$room);
+        return $data;
+        
+        
 
     }
+    public function update(Request $request)
+    {
+        $order_id=$request->input('orderId');
+        $order=Order::find($order_id);
+        $order->status='done';
+        $order->save();
+        return $order;
+        
+        
+
+    }
+
+
 }

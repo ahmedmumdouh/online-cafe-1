@@ -42,6 +42,7 @@ Route::post('/checks',[ChecksController::class,'store']);
 Route::post('/checks/products',[ChecksController::class,'getProducts']);
 
 Route::post('/checkOrder',[CheckOrderController::class,'index']);
+Route::put('/checkOrder',[CheckOrderController::class,'update']);
 
 
 

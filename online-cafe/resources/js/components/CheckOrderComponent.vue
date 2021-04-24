@@ -14,6 +14,22 @@
           </tr>
         </thead>
         <tbody>
+            <tr>
+                <td>{{specificOrder["order"].created_at}}</td>
+                <td>{{specificOrder["user"].name}}</td>
+                <td>{{specificOrder["room"].name}}</td>
+                <td>{{specificOrder["order"].status}}</td>
+                <td><button
+                type="button"
+                class="btn btn-success"
+                @click="changeStatus(specificOrder['order'].id)"
+               
+              >
+                Finish Order
+              </button></td>
+
+
+            </tr>
         </tbody>
 </table>
 </div>
@@ -29,7 +45,7 @@ export default {
   data() {
     return {
         id:this.$route.params.id,
-        specificOrder:{},
+        specificOrder:[],
       
     };
   },
@@ -45,6 +61,21 @@ export default {
         .catch(() => {
           console.log("Error...");
         });
+    },
+    changeStatus(ID){
+         axios
+        .put("/api/checkOrder",{orderId:this.id})
+        .then((response) => {
+          alert("done");
+          location.reload();
+          
+          
+        })
+        .catch(() => {
+          console.log("Error...");
+        });
+        
+
     },
     
   },

@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Checks</h1>
+    <br>
     <form action="/api/checks" method="POST" @submit.prevent="submitform">
       <div class="form-row">
         <div class="col">
@@ -88,6 +89,7 @@
               </button>
             </td>
             <th>{{order.total_price}}</th>
+            <th><router-link v-bind:to="'/checkOrder/'+order.id">Details</router-link></th>
           </tr>
           
           
@@ -106,18 +108,20 @@
     <div
       v-if="orderDetailsDisplay == true"
       class="p-3 mb-2 mt-5 text-primary"
-      style="background-color: #e8e8e8"
+      style="background-color: #F0F0F0"
     >
       <div class="d-flex flex-row">
-        <div class="p-2">
-          <h4 v-for="product in selectedOrderProducts" :key="product.id">{{product.name}} |Quantity {{product.pivot.quantity}}</h4>
+        <div class="p-2" v-for="product in selectedOrderProducts" :key="product.id" style="display:inline">
+          <h4 >{{product.name}} </h4>
+          <p >{{product.pivot.quantity}}</p>
         </div>
-        <div style="float: right">
-          
-        </div>
+
+        
+        
       </div>
+    
     </div>
-    <button
+    <button v-if="orderDetailsDisplay==true"
             type="button"
             class="btn btn-danger"
             style="float:right"

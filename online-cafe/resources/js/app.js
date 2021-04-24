@@ -26,6 +26,7 @@ import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import test from "./components/testComponent.vue";
 import ChecksComponent from "./components/ChecksComponent.vue";
+import CheckOrderComponent from "./components/CheckOrderComponent"
 
 
 import { createWebHistory , createRouter } from "vue-router";
@@ -45,6 +46,7 @@ const UserRoutes = [
 const AdminRoutes = [
     {path:'/',component:test},
     {path:'/checks',component:ChecksComponent},
+    {path:'/checkOrder/:id',component:CheckOrderComponent},
     {path:'/:catchAll(.*)',component:handler},
 ];
 

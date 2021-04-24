@@ -1,8 +1,8 @@
 <template>
-    <div class="container-md">
-        <Navbar :user="user"/>
+    <div>
+        <Navbar  v-if="user" :user="user"/>
         <div class="row justify-content-center">
-            <div class="col-12 py-4">
+            <div class="container col-12 py-4">
                 <router-view></router-view>
             </div>
         </div>
@@ -12,6 +12,7 @@
 <script>
 import axios from 'axios'
 import Navbar from '../components/User/NavbarComponent';
+
     export default {
         created() {
             console.log('User Component Created.');
@@ -21,7 +22,7 @@ import Navbar from '../components/User/NavbarComponent';
         },
         data(){
             return {
-                user: "",
+                user: null,
             }
         },
         components: {

@@ -17,7 +17,13 @@ export default {
     async getRooms() {
         return await axios.get(`${urls.getRooms}`);
     },
-    async getOrders(userId, params) {
+    async getOrders(userId, params, date) {
+        if (typeof date === "object" && date != null) {
+            console.log(date);
+            return await axios.get(
+                `${urls.getOrdersURL}?user_id=${userId}&start_date=${date.start_date}&end_date=${date.end_date}&page=${params}`
+            );
+        }
         if (Number.isInteger(params)) {
             return await axios.get(
                 `${urls.getOrdersURL}?user_id=${userId}&page=${params}`

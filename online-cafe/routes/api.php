@@ -37,5 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 //Route::apiResource("/checks",ChecksController::class);
 Route::get('/checks',[ChecksController::class,'index']);
 Route::post('/checks',[ChecksController::class,'store']);
+Route::post('/checks/products',[ChecksController::class,'getProducts']);
+
+
 
     

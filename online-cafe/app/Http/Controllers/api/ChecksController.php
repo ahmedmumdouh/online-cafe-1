@@ -27,17 +27,33 @@ class ChecksController extends Controller
          $start=$request->input('start');
          $end=$request->input('end');
         
+         
+        
         $user = User::where('name', $input)->first();
         $id=$user->id;
         $orders=Order::where('user_id', $id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get();
-       
+        
 
        
         
           $data = array("user"=>$user, "orders"=>$orders);
-
         
-        return $data;
+          return $data;
+       
+        
+
+    }
+
+    public function getProducts(Request $request)
+    {
+
+        $order_id=$request->input('selectedOrderId');
+        $order=Order::find($order_id);
+        $products=$order->products;
+        
+        return $products;
+       
+        
 
     }
 }

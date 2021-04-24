@@ -82,7 +82,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                @click="(orderDetailsDisplay = true), (index = 0)"
+                @click="orderClicked(order.id)"
               >
                 {{order.created_at}}
               </button>
@@ -110,7 +110,7 @@
     >
       <div class="d-flex flex-row">
         <div class="p-2">
-          <h4>{{ orderDetails[index] }}</h4>
+          <h4 v-for="product in selectedOrderProducts" :key="product.id">{{product.name}}</h4>
         </div>
         <div style="float: right">
           <button
@@ -138,13 +138,13 @@ export default {
       orderDetailsDisplay: false,
       orderDisplay: false,
       userDisplay: false,
-      orderDetails: ["Tea", "Coffe", "Orange Juice"],
-      index: 0,
       users: [],
       start: "",
       end: "",
       selectedUser: "",
       data_of_user: [],
+      selectedOrderId:"",
+      selectedOrderProducts:[],
     };
   },
   //mounted() {},
@@ -175,6 +175,32 @@ export default {
           console.log("Error...");
         });
     },
+    orderClicked(order_id)
+    {
+      this.orderDetailsDisplay=true;
+      this.selectedOrderId=order_id;
+      // for (let i = 0; i < this.data_of_user["orders"].length; i++) {
+      //     if(this.data_of_user["orders"][i].id==this.selectedOrderId)
+      //     {
+      //          this.selectedOrder=this.data_of_user["orders"][i];
+      //          console.log(this.selectedOrder.products);
+      //          break;
+      //     }
+      //   } 
+      
+      axios
+        .post("/api/checks/products", {
+          selectedOrderId: this.selectedOrderId,
+        })
+        .then((response) => {
+          this.selectedOrderProducts=response.data
+          
+        })
+        .catch(() => {
+          console.log("Error...");
+        });
+    }
+    
   },
   created() {
     this.getUsers();

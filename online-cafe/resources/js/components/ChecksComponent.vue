@@ -110,19 +110,21 @@
     >
       <div class="d-flex flex-row">
         <div class="p-2">
-          <h4 v-for="product in selectedOrderProducts" :key="product.id">{{product.name}}</h4>
+          <h4 v-for="product in selectedOrderProducts" :key="product.id">{{product.name}} |Quantity {{product.pivot.quantity}}</h4>
         </div>
         <div style="float: right">
-          <button
+          
+        </div>
+      </div>
+    </div>
+    <button
             type="button"
             class="btn btn-danger"
+            style="float:right"
             @click="orderDetailsDisplay = false"
           >
             Hide
           </button>
-        </div>
-      </div>
-    </div>
     
   </div>
 </template>

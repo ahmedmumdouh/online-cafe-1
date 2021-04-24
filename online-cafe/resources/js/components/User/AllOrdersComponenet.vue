@@ -13,12 +13,9 @@
                 <label for="endDate" class="col-sm-2 col-form-label" aria-placeholder="Date To">Date To</label>
 
             <div class="col-sm-3 d-inline-block"> <!-- End Date -->
-                <input v-model="endDate" name="endDate" type="date" class="form-check-input">
+                <input v-model="endDate" @change="getOrderByDate()" name="endDate" type="date" class="form-check-input">
             </div>
 
-            <div class="col-sm-2 d-inline-block"> <!-- End Date -->
-                <button id="get-orders"  @click.prevent="getOrderByDate()" class="btn btn-info">Get</button>
-            </div>
         </div>
 
         <div class="row" v-if="dateErrorMessages">
@@ -129,8 +126,10 @@ export default {
             this.orderDetails = this.getOrderFromAllOrders(orderId);
             this.orderDetails.products = products.data;            
         },
-        cancleOrder(orderId){
-            
+        async cancleOrder(orderId){
+            const res = await service.cancleOrder(orderId);
+            const order = this.getOrderFromAllOrders(orderId)
+            if(res.status == 200) order.status = "done";            
         },
         getOrderFromAllOrders(orderId){
             return this.orders.data.find((order) => order.id === orderId);
@@ -165,12 +164,8 @@ export default {
             this.dateInfoMessages = null;
         },
         updateCurrentOrders(orders){
-            console.log(orders.data ," Updateing")
             this.orders = orders.data;
-            console.log(this.orders ," this.order")
 
-            this.numberOfPages = Math.ceil(orders.data.total / orders.data.per_page);
-            
         },
     }
 }

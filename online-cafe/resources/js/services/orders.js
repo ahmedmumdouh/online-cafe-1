@@ -36,4 +36,7 @@ export default {
     async getPage(URL) {
         return await axios.get(URL);
     },
+    async cancleOrder(orderId) {
+        return axios.get(`${urls.cancelOrderURL}/${orderId}`);
+    },
 };

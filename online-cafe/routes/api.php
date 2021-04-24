@@ -30,6 +30,7 @@ Route::middleware('auth')->get('/testapi', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/order/latest", [OrderController::class, 'latest'])->name('latestOrder');
+    Route::get("/order/cancel/{id}", [OrderController::class, 'cancelOrder'])->name('latestOrder');
     Route::get("/order/products/{id}", [OrderController::class, 'getOrderProducts'])->name('orderProducts');
     Route::apiResource('/order', OrderController::class);
 

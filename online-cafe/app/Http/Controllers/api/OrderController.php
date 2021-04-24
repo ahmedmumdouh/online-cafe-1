@@ -36,7 +36,15 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+
         return response()->json($order);
+    }
+
+    public function cancelOrder(Order $order)
+    {
+        if (!$order) return response()->json(["message" => "Invalid order id"], 401);
+        $order->status = "done";
+        return response()->json(["message" => "canceled"]);
     }
     public function store(Request $requset)
     {

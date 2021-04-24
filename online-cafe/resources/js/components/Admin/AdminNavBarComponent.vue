@@ -31,7 +31,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item dropdown">
-                            <img :src="user.avatar" :alt="user.name" />
+                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name " />
+                            <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " />
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{ user.name}}</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/logout" @click.prevent="logout()">
@@ -53,10 +54,13 @@
 import axios from 'axios';
 axios.defaults.withCredentials =true;
 axios.defaults.baseURL = 'http://localhost:8000';
+import urls from '../services/apiURLs' ; 
 export default {
     data() {
         return {
-           user:''
+        //    user:null,
+           expression :true,
+           imageServerURL:'',
         }
     },
     methods: {
@@ -66,15 +70,22 @@ export default {
                 }).catch(err =>console.error(err));
         },
     },
-    // props: ['user'],
-    beforeCreate(){
-        const that = this ;
-            console.log('Component mounted.');
-            axios.get('/api/user').then(response => {
-                console.log(response.data)
-                that.user = response.data;
-                console.log(that.user)
-            })
+    props: ['user'],
+    beforeMount(){
+        // const that = this ;
+        //     console.log('Component mounted.');
+        //     axios.get('/api/user').then(response => {
+        //         console.log(response.data)
+        //         that.user = response.data;
+        //         console.log(that.user)
+
+                
+        //     })
+            console.log(this.user.avatar);
+                this.imageServerURL = urls.imageServerURL ;
+                const regex = /^http/ig;
+                this.expression = this.user.avatar.match(regex) ? true:false ;
+        
         
     }
 }

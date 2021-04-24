@@ -18,8 +18,9 @@ class CheckOrderController extends Controller
         $order=Order::find($order_id);
         $user=$order->user;
         $room=Room::find($order->room_id);
+        $products=$order->products;
 
-        $data = array("order"=>$order, "user"=>$user , "room"=>$room);
+        $data = array("order"=>$order, "user"=>$user , "room"=>$room ,"products"=>$products);
         return $data;
         
         

@@ -33,6 +33,31 @@
             </tr>
         </tbody>
 </table>
+<br><br>
+<h1>Order Details</h1>
+    <br>
+<table class="table table-striped mt-3">
+        <thead class="bg-info">   
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            
+
+          </tr>
+        </thead>
+        <tbody>
+            <tr v-for="product in specificOrder['products']" :key="product.id">
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.pivot.quantity}}</td>
+                
+
+            </tr>
+            <tr ><td ><h3 style="color:#00FF80">Total Price={{specificOrder["order"].total_price}}</h3></td></tr>
+        </tbody>
+</table>
+
 </div>
 
 </template>

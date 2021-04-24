@@ -26,17 +26,21 @@ class ChecksController extends Controller
          $input=$request->input('selectedUser');
          $start=$request->input('start');
          $end=$request->input('end');
+         $totalAmountForUser=0;
         
          
         
         $user = User::where('name', $input)->first();
         $id=$user->id;
         $orders=Order::where('user_id', $id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get();
-        
+        foreach($orders as $order)
+        {
+            $totalAmountForUser=$totalAmountForUser+$order->total_price;
+        }
 
        
         
-          $data = array("user"=>$user, "orders"=>$orders);
+          $data = array("user"=>$user, "orders"=>$orders,"totalAmount"=>$totalAmountForUser);
         
           return $data;
        

@@ -62,7 +62,7 @@
                 {{ data_of_user['user'].name }}
               </button>
             </td>
-            <th >100</th>
+            <th >{{ data_of_user['totalAmount'] }}</th>
           </tr>
         </tbody>
      

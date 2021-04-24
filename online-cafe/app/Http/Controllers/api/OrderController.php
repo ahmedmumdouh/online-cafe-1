@@ -17,9 +17,9 @@ class OrderController extends Controller
         if ($request['start_date'] && $request['end_date']) {
             error_log($request['start_date']);
 
-            $orders = Order::where("user_id", $request['user_id'])->where("created_at", ">=", $request['start_date'])->where("created_at", "<=", $request['end_date'])->orderBy("created_at", "desc")->paginate(5);
+            $orders = Order::where("user_id", $request['user_id'])->where("created_at", ">=", $request['start_date'])->where("created_at", "<=", $request['end_date'])->orderBy("created_at", "desc")->paginate(5)->withQueryString();
         } else {
-            $orders = Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->paginate(5);
+            $orders = Order::where("user_id", $request['user_id'])->orderBy("created_at", "desc")->paginate(5)->withQueryString();
         }
         if (!$orders)  return response()->json(["data" => []]);
         return $orders;

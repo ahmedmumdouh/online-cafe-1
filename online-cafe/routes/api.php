@@ -3,9 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\CategoryController ;
-use App\Http\Controllers\api\ProductController ;
-use App\Http\Controllers\api\RoomController ;
+use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\RoomController;
+use App\Models\User;
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,15 +23,23 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth')->get('/testapi', function(Request $request){
-    return response()->json(["message"=>"New post added successfully"]);
+Route::middleware('auth')->get('/testapi', function (Request $request) {
+    return response()->json(["message" => "New post added successfully"]);
 });
 
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource("/products",ProductController::class);
-    Route::apiResource("/categories",CategoryController::class);
-    Route::put("/products/available/{product}",[ProductController::class,'available']);
-    Route::apiResource("/rooms",RoomController::class);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get("/order/latest", [OrderController::class, 'latest'])->name('latestOrder');
+    Route::get("/order/products/{id}", [OrderController::class, 'getOrderProducts'])->name('orderProducts');
+    Route::apiResource('/order', OrderController::class);
+
+    Route::get("/users", function () {
+        return User::all();
+    });
+
+    Route::apiResource('/rooms', RoomController::class);
+    Route::apiResource("/products", ProductController::class);
+    Route::apiResource("/categories", CategoryController::class);
+    Route::put("/products/available/{product}", [ProductController::class, 'available']);
     // ... Other routes
-// });
+});

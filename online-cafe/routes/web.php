@@ -40,4 +40,4 @@ Route::get('/login/facebook/callback', [LoginController::class, 'handlFacebookCa
 
 Route::get('{any}', function () {
     return view('home');
-})->where('any','.*');
+})->where('any', '.*');

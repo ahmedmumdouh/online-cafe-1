@@ -15,7 +15,7 @@
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
-
+import {user} from '../app.js'
     export default {
         data(){
             user:0

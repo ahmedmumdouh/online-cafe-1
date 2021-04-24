@@ -58,7 +58,6 @@ class LoginController extends Controller
         return redirect(route('home'));
     }
 
-
     //handling google authentication redirect
     public function redirectToGoogle()
     {
@@ -95,7 +94,6 @@ class LoginController extends Controller
             $user = new User();
             $user->name = $data->name;
             $user->email = $data->email;
-            $user->password = Hash::make("password", ['rounds' => 12]);
             $user->provider_id = $data->id;
             $user->avatar = $data->avatar;
             $user->save();

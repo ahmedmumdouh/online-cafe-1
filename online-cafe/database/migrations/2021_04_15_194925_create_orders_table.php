@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
                 ->onDelete('cascade');
             $table->foreignId('room_id')->constrained()
                 ->onDelete('cascade');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->enum('status', ['processing', 'out_for_delivery', 'done']);
             $table->integer('total_price');
 

@@ -7,13 +7,13 @@
             <label for="startDate" class="col-sm-2 col-form-label">Date From</label>
 
             <div class="col-sm-3 d-inline-block"> <!-- Start Date -->
-                <input v-model="startDate" name="startDate" aria-placeholder="Date From" type="date" class="form-check-input">
+                <input v-model="startDate" name="startDate" aria-placeholder="Date From" type="datetime-local" class="form-check-input">
             </div>
 
                 <label for="endDate" class="col-sm-2 col-form-label" aria-placeholder="Date To">Date To</label>
 
             <div class="col-sm-3 d-inline-block"> <!-- End Date -->
-                <input v-model="endDate" name="endDate" type="date" class="form-check-input">
+                <input v-model="endDate" name="endDate" type="datetime-local" class="form-check-input">
             </div>
 
             <div class="col-sm-2 d-inline-block"> <!-- End Date -->
@@ -52,7 +52,7 @@
                         <td @click="displayDetails(order.id)">{{changeDateFormat(order.created_at)}}</td>
                         <td @click="displayDetails(order.id)">{{order.status}}</td>
                         <td @click="displayDetails(order.id)">{{formatPrice(order.total_price)}}</td>
-                        <td><button @click="cancleOrder(order.id)" class="btn btn-danger" v-if="order.status=== 'processing'">Cancle</button></td>
+                        <td><button @click="cancleOrder(order.id)" class="btn btn-danger" v-if="order.status=== 'processing'">Cancel</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -66,9 +66,9 @@
                     <div class="card-header">Order Details </div>
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                    <div class="card m-2 p-2" style="width: 12rem;" v-for="product in orderDetails.products" :key="product.id">
+                                    <div class="card m-2 " style="width: 12rem;" v-for="product in orderDetails.products" :key="product.id">
                                         <img
-                                                :src="product.image"
+                                                :src="imageServerURL+product.image"
                                                 class="card-img-top img"
                                                 style="height: 80%;"
                                                 alt="..."
@@ -97,8 +97,10 @@ import {user} from '../../app';
 import service from '../../services/orders';
 import PaginationComponent from '../PaginationComponent.vue';
 
+import urls from '../services/apiURLs';
 export default {
     async created(){
+        this.imageServerURL = urls.imageServerURL ;
         const orders = await service.getOrders(user.id);
         this.orders = orders.data;
     },
@@ -111,6 +113,7 @@ export default {
             orderDetails: false,
             dateErrorMessages: null,
             dateInfoMessages: null,
+            imageServerURL:''
         }
     },
     components: {

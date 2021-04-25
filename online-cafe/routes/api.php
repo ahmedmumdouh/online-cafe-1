@@ -19,7 +19,7 @@ use App\Http\Controllers\api\ProductController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return User::all();
     });
 
-    Route::apiResource('/room', RoomController::class);
+    Route::apiResource('/rooms', RoomController::class);
     Route::apiResource("/products", ProductController::class);
     Route::apiResource("/categories", CategoryController::class);
     Route::put("/products/available/{product}", [ProductController::class, 'available']);

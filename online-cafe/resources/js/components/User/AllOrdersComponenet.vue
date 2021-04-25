@@ -59,12 +59,15 @@
         </div>
         <!-- Orders  End -->
 
+        <!--  -->
+            <PaginationComponent v-if="orders.links" :links="orders.links" @paginate="getData"/>
+        <!--  -->
        <!-- Order start  End -->
         <div class="row justify-content-center">
             <div class="col-md-8" v-if="orderDetails">
                 <div class="card">
                     <div class="card-header">Order Details </div>
-                            <div class="card-body">
+                            <div class="card-body p-0">
                                 <div class="row justify-content-center">
                                     <div class="card m-2 " style="width: 12rem;" v-for="product in orderDetails.products" :key="product.id">
                                         <img
@@ -73,9 +76,23 @@
                                                 style="height: 80%;"
                                                 alt="..."
                                         />
-                                        <div class="card-body align-baseline"  style="position: relative;">
+                                        <!-- <div class="card-body align-baseline"  style="position: relative;">
                                             <h3 class="card-title blue-text">{{product.pivot.quantity}} {{product.name}}</h3>
                                             <h6 class="card-text details-value">{{ formatPrice(product.price) }}</h6>
+                                        </div> -->
+
+                                          <div class="d-flex w-100 justify-content-between mb-3 align-baseline">
+                                            <div class="row col-6 ">
+                                                <div style="align-self: center; font-family: fantasy; font-size: x-large; padding-left: 7%;color: crimson;"> {{product.name}}</div> 
+                                            
+                                                
+                                            </div>
+                                            
+                                            <div class="row col-6">
+                                                <div class="" style="align-self: center;">{{ formatPrice(product.price) }}</div>
+                                                <div class="" style="align-self: center;">Qty: {{product.pivot.quantity}}</div>
+                                                
+                                            </div>
                                         </div>
                                         
                                     </div>
@@ -86,9 +103,10 @@
                                 
                     </div>
                 </div>
+              
             </div>
         </div>
-        <PaginationComponent :links="orders.links" @paginate="getData"/>
+        
     </div>
 </template>
 

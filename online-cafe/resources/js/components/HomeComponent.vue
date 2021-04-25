@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div >
         <div v-if="user==1">
     
         </div>
@@ -20,8 +20,12 @@ import {user} from '../app.js'
         data(){
             user:0
         },
-        beforeMount() {
-            this.user = user ;
+        beforeCreate() {
+            console.log('hi');
+            axios.get('/api/user').then(response => {
+                console.log(response.data.is_admin);
+                this.user = response.data.is_admin ;
+            })
         },
         
     }

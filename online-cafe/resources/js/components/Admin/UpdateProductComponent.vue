@@ -57,7 +57,7 @@
                         <div class="invalid-feedback">Cover Photo</div>
                         <div id="preview" style="margin-top: 1%;">
                             <img v-if="url" :src="url" />
-                            <img v-if="url==null" :src="imageServerURL+imageName" />
+                            <img v-if="url==null && imageName!='' " :src="imageServerURL+imageName" />
                         </div>
                     </div>
                     
@@ -94,17 +94,18 @@ import urls from '../services/apiURLs.js'
                 }    
                 
             },
-        mounted() {
+        beforeCreate() {
             console.log('Component mounted.');
             const that = this;
             axios.get(`${urls.getCategoriesURL}`).then(categoryResponse => {
                 this.categories = categoryResponse.data;
                 console.log(this.categories)
                 axios.get(`${urls.getProductURL}${that.$route.params.productId}`).then(productResponse => {
+                    this.imageName = productResponse.data.image;
                     this.form.name = productResponse.data.name;
                     this.form.price = productResponse.data.price;
                     this.form.category_id = productResponse.data.category_id;
-                    this.imageName = productResponse.data.image;
+                    
                     // this.form.available = productResponse.data.available;
                     //  this.products = this.products.map((product) =>{
                     //     product.category_id= this.categories.filter((cata) => parseInt(cata.id) == parseInt(product.category_id))[0] ; 
@@ -152,7 +153,6 @@ import urls from '../services/apiURLs.js'
                     console.log(pair[0]+ ', ' + pair[1]); 
                 }
                 axios.post(`${urls.putProductURL}${existingObj.$route.params.productId}`, formData, config).then(function (res) {
-                        existingObj.success = res.data.success;
                         existingObj.$router.push({ name: 'allProducts' })
                         console.log(res);
                     })

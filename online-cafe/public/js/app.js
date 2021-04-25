@@ -16607,7 +16607,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user'],
   beforeMount: function beforeMount() {
     console.log(this.user.avatar);
-    this.imageServerURL = _services_apiURLs__WEBPACK_IMPORTED_MODULE_0__.default.baseURL;
+    this.imageServerURL = _services_apiURLs__WEBPACK_IMPORTED_MODULE_0__.default.imageServerURL;
     var regex = /^http/ig;
     this.expression = this.user.avatar.match(regex) ? true : false;
   }
@@ -16733,7 +16733,7 @@ __webpack_require__.r(__webpack_exports__);
   beforeMount: function beforeMount() {
     // this.user = user ;
     console.log(this.user.avatar);
-    this.imageServerURL = _services_apiURLs__WEBPACK_IMPORTED_MODULE_1__.default.baseURL;
+    this.imageServerURL = _services_apiURLs__WEBPACK_IMPORTED_MODULE_1__.default.imageServerURL;
     var regex = /^http/ig;
     this.expression = this.user.avatar.match(regex) ? true : false;
   }
@@ -17144,8 +17144,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     src: $props.user.avatar,
     alt: $props.user.name,
     style: {
-      "width": "25%",
-      "margin-left": "100%"
+      "width": "95px",
+      "margin-left": "100%",
+      "height": "124px"
     }
   }, null, 8
   /* PROPS */
@@ -17154,8 +17155,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     src: $data.imageServerURL + $props.user.avatar,
     alt: $props.user.name,
     style: {
-      "width": "25%",
-      "margin-left": "100%"
+      "width": "95px",
+      "margin-left": "100%",
+      "height": "124px"
     }
   }, null, 8
   /* PROPS */

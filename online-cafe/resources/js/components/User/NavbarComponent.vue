@@ -22,8 +22,8 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item dropdown">
-                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name " style=" width: 25%; margin-left: 100%;" />
-                            <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " style=" width: 25%; margin-left: 100%;  " />
+                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name " style=" width: 95px; margin-left: 100%; height: 124px;" />
+                            <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " style=" width: 95px; margin-left: 100%; height: 124px; " />
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" style="margin-left: 100%;" aria-haspopup="true" aria-expanded="false" >{{ user.name}}</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="left: 100%;">
                                 <a class="dropdown-item" href="/logout" @click.prevent="logout()">
@@ -62,7 +62,7 @@ export default {
     beforeMount(){
         // this.user = user ;
         console.log(this.user.avatar);
-        this.imageServerURL = urls.baseURL ;
+        this.imageServerURL = urls.imageServerURL ;
         const regex = /^http/ig;
         this.expression = this.user.avatar.match(regex) ? true:false ;
     }

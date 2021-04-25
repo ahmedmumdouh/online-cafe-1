@@ -25,7 +25,9 @@
  </ul>
 </details>
     </td>
-    <td><img :src="`${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px"/> </td>
+    <!-- <td><img :src="`/image/${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px"/> </td> -->
+    <td v-if="user.avatar.match(/^http/ig)"><img   :src="user.avatar " :alt=" user.name "  style="height: 40px; width: 40px" class="profile-user-img img-fluid img-circle"/></td>
+    <td v-if="!user.avatar.match(/^http/ig)"><img   :src="imageServerURL+user.avatar " :alt=" user.name " style="height: 40px; width: 40px" class="profile-user-img img-fluid img-circle" /></td>
     <!-- <td>{{user.avatar}}</td> -->
      <!-- <td><a  href="#" class="btn btn-primary">view</a></td> -->
      <!-- <td><a href="#" class="btn btn-danger">edit</a></td> -->
@@ -65,12 +67,12 @@
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
-
+import urls from '../services/apiURLs' ; 
     export default {
      data(){
          return{
               users: [],
-
+              imageServerURL:''
                   }
              },
     methods:{
@@ -98,6 +100,9 @@ axios.defaults.baseURL = 'http://localhost:8000'
      created(){
        
         this.getUsers();
+        this.imageServerURL = urls.imageServerURL ;
+        // const regex = /^http/ig;
+        // this.expression = this.user.avatar.match(regex) ? true:false ;
 
                },
         }
@@ -112,3 +117,5 @@ axios.defaults.baseURL = 'http://localhost:8000'
 <style>
 
 </style>
+
+      

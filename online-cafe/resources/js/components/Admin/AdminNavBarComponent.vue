@@ -71,7 +71,7 @@ export default {
     props: ['user'],
     beforeMount(){
         console.log(this.user.avatar);
-        this.imageServerURL = urls.baseURL ;
+        this.imageServerURL = urls.imageServerURL ;
         const regex = /^http/ig;
         this.expression = this.user.avatar.match(regex) ? true:false ;       
     }

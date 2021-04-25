@@ -36,8 +36,8 @@ class AdminUserController extends Controller
 
         if ($image = $request->file('avatar')) {
             $destinationPath = 'image/';
-            // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
             $input['avatar'] = "$profileImage";
             }
@@ -81,7 +81,8 @@ public function update($id, Request $request)
 
         if ($image = $request->file('avatar')) {
             $destinationPath = 'image/';
-            $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
             $input['avatar'] = "$profileImage";
         }

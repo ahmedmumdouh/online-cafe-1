@@ -19,7 +19,7 @@
                             
                             </div>
                     </div>
-
+                    
                     <div class="mb-3">
                             <div class="input-group is-invalid">
                             <div class="input-group-prepend">
@@ -33,6 +33,11 @@
                     </div>
 
                      <div class="mb-3">
+
+                        <button type="button" class="btn btn-success mb-1" data-toggle="modal" data-target="#exampleModal">
+                            Add Category
+                        </button>
+
                         <div class="input-group is-invalid">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="validatedInputGroupSelect">Category</label>
@@ -40,7 +45,35 @@
                      
      
                      
-                     
+                     <!-- Button trigger modal -->
+                        
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form  @submit="addCategory" >
+                                <div class="modal-body">
+                                    <input type="text" v-model="categoryName" placeholder="Category Name" required >
+                                    <div style="color: red;">
+                                         {{categoryErr}}  
+                                    </div>
+                                     
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
                         <select class="custom-select" id="validatedInputGroupSelect" v-model="form.category_id"  required>
                             <option v-for="category in categories" :key="category.id" :value="category.id" :selected="category.id === form.category_id" >{{category.name}}</option>
                             
@@ -50,6 +83,10 @@
                         
                         </div>
                     </div>
+
+
+                                            
+
 
                     <div class="custom-file mb-3">
                         <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
@@ -89,10 +126,14 @@ import urls from '../services/apiURLs.js'
                     },
                     imageName:'Upload Cover Photo',
                     url: null,
+                    categoryName: "",
+                    categoryErr:"",
+                        
+                    
                 }    
                 
             },
-        mounted() {
+        beforeCreate() {
             console.log('Component mounted.');
             axios.get(`${urls.getCategoriesURL}`).then(categoryResponse => {
                 this.categories = categoryResponse.data;
@@ -115,14 +156,6 @@ import urls from '../services/apiURLs.js'
                 this.url = URL.createObjectURL(this.form.image);
                 console.log(this.form);
             },
-            // createImage(file) {
-            //     let reader = new FileReader();
-            //     let vm = this;
-            //     reader.onload = (e) => {
-            //         vm.form.image = e.target.result;
-            //     };
-            //     reader.readAsDataURL(file);
-            // },
             onSubmit(e) {
                 e.preventDefault();
                 const existingObj = this;
@@ -141,13 +174,34 @@ import urls from '../services/apiURLs.js'
                     console.log(pair[0]+ ', ' + pair[1]); 
                 }
                 axios.post(`${urls.postProductURL}`, formData,config).then(function (res) {
-                        existingObj.success = res.data.success;
-                        existingObj.$router.push({ name: 'allProducts' })
+                    console.log(res);
+                    existingObj.$router.push({ name: 'allProducts' })
+                  
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            },
+            addCategory(e){
+                const categoryList = this.categories.map(value => value.name.toLowerCase());
+                const found = categoryList.includes(this.categoryName) ;
+                if(!found){
+                    axios.post(`${urls.postCategoryURL}`, {name:this.categoryName}).then(function (res) {
                         console.log(res);
                     })
                     .catch(function (err) {
-                        existingObj.output = err;
+                        console.log(err);
                     });
+                }
+                else{
+                    this.categoryErr = `This category "${this.categoryName}" is already exist ...`;
+                    e.preventDefault();
+                }
+                
+                this.categoryName = '';
+                
+               
+                
             }  
         }
         

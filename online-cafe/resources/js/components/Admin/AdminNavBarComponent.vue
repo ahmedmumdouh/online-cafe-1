@@ -1,9 +1,9 @@
 <template>
-     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto" >
+                    <ul class="navbar-nav mr-auto " >
                         <li class="p-2">
                             <router-link to="/home" class="navbar-brand links">online-cafe</router-link>
                         </li >
@@ -11,10 +11,19 @@
                             <router-link to="/home" class="navbar-brand links">Home</router-link>
                         </li>
                         <li class="p-2">
-                            <router-link to="/create-order" class="navbar-brand links">Create Order</router-link>
+                            <router-link :to="{name: 'allProducts'}" class="navbar-brand links">Products</router-link>
+                        </li>
+                        <li class="p-2">
+                            <router-link to="{name: 'alluser'}" class="navbar-brand links">Users</router-link>
+                        </li>
+                        <li class="p-2">
+                            <router-link to="/create-order" class="navbar-brand links">Manual Order</router-link>
+                        </li>
+                        <li class="p-2">
+                            <router-link to="/create-order" class="navbar-brand links">Checks</router-link>
                         </li>
                          <li class="p-2">
-                            <router-link to="/my-order" class="navbar-brand links">My-Order</router-link>
+                            <router-link to="/my-order" class="navbar-brand links"></router-link>
                         </li>
                     </ul>
 
@@ -36,19 +45,22 @@
 
             </div>
         </nav>
+
+        <div class="container">
+            <router-view col-md-12></router-view>
+        </div>
 </template>
 <script>
 import axios from 'axios';
 axios.defaults.withCredentials =true;
 axios.defaults.baseURL = 'http://localhost:8000';
 import urls from '../services/apiURLs' ; 
-
 export default {
     data() {
         return {
+        //    user:null,
            expression :true,
            imageServerURL:'',
-        //    user:user
         }
     },
     methods: {
@@ -60,11 +72,21 @@ export default {
     },
     props: ['user'],
     beforeMount(){
-        // this.user = user ;
-        console.log(this.user.avatar);
-        this.imageServerURL = urls.imageServerURL ;
-        const regex = /^http/ig;
-        this.expression = this.user.avatar.match(regex) ? true:false ;
+        // const that = this ;
+        //     console.log('Component mounted.');
+        //     axios.get('/api/user').then(response => {
+        //         console.log(response.data)
+        //         that.user = response.data;
+        //         console.log(that.user)
+
+                
+        //     })
+            console.log(this.user.avatar);
+                this.imageServerURL = urls.imageServerURL ;
+                const regex = /^http/ig;
+                this.expression = this.user.avatar.match(regex) ? true:false ;
+        
+        
     }
 }
 </script>

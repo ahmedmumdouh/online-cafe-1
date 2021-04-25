@@ -27,6 +27,7 @@ import handler from "./components/handler.vue";
 import Home from "./components/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
 
+
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 

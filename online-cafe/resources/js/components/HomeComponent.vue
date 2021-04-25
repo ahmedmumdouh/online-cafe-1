@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div >
         <div v-if="user==1">
     
         </div>
@@ -15,13 +15,13 @@
 import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
-
+import {user} from '../app.js'
     export default {
         data(){
             user:0
         },
-        mounted() {
-            console.log('Component mounted.');
+        beforeCreate() {
+            console.log('hi');
             axios.get('/api/user').then(response => {
                 console.log(response.data.is_admin);
                 this.user = response.data.is_admin ;

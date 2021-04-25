@@ -1,17 +1,22 @@
 <template>
     <div class="container">
-        <!-- Dispaly all User For Admin Start-->
-        <div class="row" v-if="allUsers">
-            <div class="col-lg-12 align-baseline m-2">
-                <label for="all-users" class="col-lg-form-label text">Select User </label>
-                 <select required v-model="order.user" name="all-users" class="m-2">
-                            <option v-for="user in allUsers" :key="user.id">{{user.name}}</option>
-                </select>
-             </div>
-        </div>
-        <!-- Dispaly all User For Admin end-->
+       
+       
+        
         <div class="row">
-            <form class="col-lg-4 p-3" @submit.prevent="confirmOrder()">
+            <form class="col-lg-4 p-3 border" @submit.prevent="confirmOrder()">
+                <!-- Dispaly all User For Admin Start-->
+
+                <div class="row" v-if="order.user.is_admin">
+                    <div class="col-lg-12 align-baseline m-2">
+                        <label for="all-users" class="col-lg-form-label text">Select User </label>
+                        <select required v-model="order.user" name="all-users" class="m-2">
+                                    <option v-for="user in allUsers" :key="user.id">{{user.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dispaly all User For Admin end-->
                 <div class="row  align-content-center" v-for="product in order.products" :key="product.id"> <!-- contorles -->
                     <div class="col-lg-2 text-dark m-auto"><label for="" class="text">{{ product.name }}</label></div> <!-- Product name !-->
                     <div class="col-lg-1 text-success m-auto">
@@ -28,8 +33,8 @@
                 </div>
                 
                 
-                <div class="row py-3"> <!-- Notes -->
-                    <div class="col-lg-12">
+                <div class="row py-3 "> <!-- Notes -->
+                    <div class="col-lg-12 ">
                      <label for="notes" class="text" >Notes</label>
                         <textarea name="notes" id="order-notes" cols="35" rows="10" v-model="order.notes"></textarea>
                     </div>
@@ -49,27 +54,41 @@
                         <div class="d-flex flex-column float-right mr-2 text-center
                         "> 
                             <label for="total-price">{{ formatPrice(order.totalPrice) }}</label>
-                            <button class="btn btn-success m-auto">Confirm</button>
+                            <button type="submit" class="btn btn-success m-auto">Confirm</button>
                         </div>
                     </div>
                 </div>
             </form> <!-- create order  -->
             <div id="products" class="col-lg-8 py-3 ">
                 <div class="row justify-content-center">
-                    <div class="card m-2 p-2" style="width: 12rem;" v-for="product in products" :key="product.id">
+                    <div v-for="product in products" :key="product.id" >
+                    <div class="card m-2 " style="width: 12rem;  height: 95%;" v-if="product.available">
                         <img
-                                :src="product.image"
+                                :src="imageServerURL+product.image"
                                 class="card-img-top img"
-                                style="height: 80%;"
+                                style="height: 70%;"
                                 alt="..."
                                 @click="addProduct(product.id)"
                         />
-                        <div class="card-body align-baseline"  style="position: relative;">
-                            <h3 class="card-title blue-text">{{product.name}}</h3>
-                            <h6 class="card-text details-value">{{ formatPrice(product.price) }}</h6>
-                            <a href="#" @click.prevent="addProduct(product.id)" class="btn btn-primary m-1" style="position: absolute; bottom: 0; right: 10%; "
-                            >Add </a
-                            >
+                        <div class="card-body "  style="padding: 0%;">
+                            <div class="d-flex w-100 justify-content-between mb-3 align-baseline">
+                                <div class="row col-6 ">
+                                    <div style="font-family: fantasy; font-size: x-large; padding-left: 7%;color: crimson;">{{product.name}}</div> 
+                                   
+                                    
+                                </div>
+                                
+                                <div class="row col-6">
+                                    <div class="" style="align-self: center;">{{ formatPrice(product.price) }}</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-footer">
+                             <button href="#" @click.prevent="addProduct(product.id)" class="btn btn-primary btn-block" style="position: absolute; bottom: 0; right: 0%; "
+                                    >Add </button
+                                    >
+                        </div>
                         </div>
                     </div>
 
@@ -83,8 +102,10 @@
 import services  from '../../services/orders';
 import userServices from '../../services/users';
 import {user} from '../../app';
+import urls from '../services/apiURLs' ; 
 export default {
     async created(){
+        this.imageServerURL = urls.imageServerURL ;
         this.getData();
         if(user.is_admin){
             this.getAllUsers();
@@ -102,6 +123,7 @@ export default {
             products: [],
             rooms: [],
             allUsers: null,
+            imageServerURL:'',
         }    
     },
     methods:{

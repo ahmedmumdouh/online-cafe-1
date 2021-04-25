@@ -11,13 +11,23 @@
             class="form-control"
             name="start"
             v-model="start"
+            required
           />
         </div>
         <div class="col">
           <label for="end_date">End Date</label>
-          <input type="date" class="form-control" name="end" v-model="end" />
+          <input required type="date" class="form-control" name="end" v-model="end" />
         </div>
       </div>
+      <!-- Date messages  Start -->
+      <div class="row p-3" v-if="message.error || message.info">
+            <div :class="['alert', message.error ? 'alert-danger': 'alert-info' ,'m-auto']">
+                <p class="p-1" v-if="message.error">{{message.error}}</p>
+                <p class="p-1" v-if="message.info">{{message.info}}</p>
+            </div>
+        </div>
+      <!-- Date messages  End -->
+
       <br /><br />
       <div class="form-row">
         <div class="col">
@@ -27,6 +37,7 @@
             id="exampleFormControlSelect1"
             name="selectedUser"
             v-model="selectedUser"
+            required
           >
             <option v-for="user in users" :key="user.id">
               {{ user.name }}
@@ -81,11 +92,11 @@
           <tr v-for="order in data_of_user['orders']" :key="order.id">
             <td>
               <button
-                type="button"
+                type="submit"
                 class="btn btn-primary"
                 @click="orderClicked(order.id)"
               >
-                {{order.created_at}}
+                {{formatDate(order.created_at)}}
               </button>
             </td>
             <th>{{order.total_price}}</th>
@@ -115,9 +126,6 @@
           <h4 >{{product.name}} </h4>
           <p >{{product.pivot.quantity}}</p>
         </div>
-
-        
-        
       </div>
     
     </div>
@@ -135,8 +143,8 @@
 
 <script>
 import axios from "axios";
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000";
+import formater from '../helper/formater';
+import validate from '../helper/validate';
 
 export default {
   data() {
@@ -151,6 +159,7 @@ export default {
       data_of_user: [],
       selectedOrderId:"",
       selectedOrderProducts:[],
+      message: {error: null, info: null}
     };
   },
   //mounted() {},
@@ -165,7 +174,20 @@ export default {
           console.log("Error...");
         });
     },
+    formatDate(date){
+      return formater.formatDate(date);
+    },
+    cleareDateMessages(){
+      this.message.error = null;
+      this.message.info = null;
+    },
     submitform() {
+      
+      this.cleareDateMessages();
+      // validate date, foramte date
+      if(!validate.isStartDateBeforeEndDate(this.start, this.end)){
+        return  this.message.error = "The start date must be before end date!"
+      }
       axios
         .post("/api/checks", {
           selectedUser: this.selectedUser,

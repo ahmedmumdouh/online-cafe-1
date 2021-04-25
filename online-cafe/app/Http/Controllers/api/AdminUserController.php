@@ -27,41 +27,41 @@ class AdminUserController extends Controller
     //    return response()-> json($users);
 
    }
-  // save users 
+    // save users 
     public function store(Request $request)
     {    
+            
+        $input = $request->all();
+        $input['password']=Hash::make($input['password']);
+
+        if ($image = $request->file('avatar')) {
+            $destinationPath = 'image/';
+            // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
+            $image->move($destinationPath, $profileImage);
+            $input['avatar'] = "$profileImage";
+            }
+
+        $add = User::create($input);
+
+            
+        if ($add){
+            
+            $user = User::find($add->id);
+            $rooms = array_map('intval', explode(',', $input['rooms']));
+
+            foreach($rooms as $room)
+            {
+                
+            $user->rooms()->attach($room);
+            }
+            return response()->json(["is_done"=>true]);
+        }else{
+            return response()->json(["is_done"=>false]);
+
+        }
+            // return response()->json('user created');
         
-    $input = $request->all();
-    $input['password']=Hash::make($input['password']);
-
-if ($image = $request->file('avatar')) {
-    $destinationPath = 'image/';
-    // $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-    $profileImage = 'image/'.$request->file('avatar')->getClientOriginalName(); 
-    $image->move($destinationPath, $profileImage);
-    $input['avatar'] = "$profileImage";
-}
-
-   $add = User::create($input);
-
-    
-  if ($add){
-       
-    $user = User::find($add->id);
-    $rooms = array_map('intval', explode(',', $input['rooms']));
-
-    foreach($rooms as $room)
-    {
-        
-    $user->rooms()->attach($room);
-    }
-    return response()->json(["is_done"=>true]);
-  }else{
-    return response()->json(["is_done"=>false]);
-
-  }
-    // return response()->json('user created');
-       
     }
 
 // delete user

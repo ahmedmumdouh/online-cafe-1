@@ -1,7 +1,8 @@
 // I think there is some sort of repeations in urls !! but ok for now ...
 export default{
+    "baseURL": "http://localhost:8000/",
     "imageServerURL": "http://localhost:8000/image/",
-
+    
     "getProductsURL": "api/products",
     "getProductURL": "api/products/",
     "deleteProductURL": "api/products/",

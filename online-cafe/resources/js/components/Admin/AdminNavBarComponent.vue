@@ -28,7 +28,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item dropdown">
-                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name "  style=" width: 25%; margin-left: 100%;" />
+                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name "  style=" width: 25%; margin-left: 100%; " />
                             <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " style="    width: 25%; margin-left: 100%; "/>
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" style="margin-left: 100%;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{ user.name}}</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="left: 100%;">
@@ -48,10 +48,11 @@
         </div>
 </template>
 <script>
+import urls from '../services/apiURLs' ; 
 import axios from 'axios';
 axios.defaults.withCredentials =true;
 axios.defaults.baseURL = 'http://localhost:8000';
-import urls from '../services/apiURLs' ; 
+
 export default {
     data() {
         return {
@@ -69,28 +70,20 @@ export default {
     },
     props: ['user'],
     beforeMount(){
-        // const that = this ;
-        //     console.log('Component mounted.');
-        //     axios.get('/api/user').then(response => {
-        //         console.log(response.data)
-        //         that.user = response.data;
-        //         console.log(that.user)
-
-                
-        //     })
-            console.log(this.user.avatar);
-                this.imageServerURL = 'http://localhost:8000/' ;
-                const regex = /^http/ig;
-                this.expression = this.user.avatar.match(regex) ? true:false ;
-        
-        
+        console.log(this.user.avatar);
+        this.imageServerURL = urls.baseURL ;
+        const regex = /^http/ig;
+        this.expression = this.user.avatar.match(regex) ? true:false ;       
     }
 }
 </script>
+
+
 <style scoped>
-.links:hover {
-    color: blue ;
-    transform: scale(1.5);
-   
-}
+
+    .links:hover {
+        color: blue ;
+        transform: scale(1.5);
+    
+    }
 </style>

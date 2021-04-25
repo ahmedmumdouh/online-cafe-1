@@ -18,11 +18,11 @@
                 </ul>
             </nav>
         </div>
-        <!-- Pagination End -->
+        <!-- Pagination End  -->
 </template>
 
 <script>
-import service from '../services/orders';
+import service from '../../services/orders';
 
 export default {
     data() {

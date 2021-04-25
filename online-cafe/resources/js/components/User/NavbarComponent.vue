@@ -22,10 +22,10 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item dropdown">
-                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name " />
-                            <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " />
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{ user.name}}</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <img  v-if="expression==true" :src="user.avatar " :alt=" user.name " style=" width: 25%; margin-left: 100%;" />
+                            <img  v-if="expression==false" :src="imageServerURL+user.avatar " :alt=" user.name " style=" width: 25%; margin-left: 100%;  " />
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" style="margin-left: 100%;" aria-haspopup="true" aria-expanded="false" >{{ user.name}}</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="left: 100%;">
                                 <a class="dropdown-item" href="/logout" @click.prevent="logout()">
                                     Logout
                                 </a>
@@ -62,7 +62,7 @@ export default {
     beforeMount(){
         // this.user = user ;
         console.log(this.user.avatar);
-        this.imageServerURL = urls.imageServerURL ;
+        this.imageServerURL = urls.baseURL ;
         const regex = /^http/ig;
         this.expression = this.user.avatar.match(regex) ? true:false ;
     }

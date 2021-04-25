@@ -5,5 +5,5 @@ export default {
     getProducts: "/api/products",
     getRooms: "/api/rooms",
     getOrderProducts: "api/order/products",
-    getAllUsers: "api/users",
+    getAllUsers: "/api/userindex",
 };

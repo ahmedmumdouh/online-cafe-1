@@ -23,30 +23,69 @@
             </div>
 
 
-            <div class="custom-file mb-3">
-                        <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
-                        <label class="custom-file-label"  for="validatedCustomFile">{{imageName}}</label>
-                        <div class="invalid-feedback">Cover Photo</div> 
-                        <div id="preview" style="margin-top: 1%;">
-                            <img v-if="url" :src="url" />
-                        </div>
-                    </div>
+           
 
            
         <!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <button type="button" class="btn btn-success mb-1" data-toggle="modal" data-target="#exampleModal">
+                Add Room
+        </button>
+<!-- Button trigger modal -->
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form  @submit="addRoom" >
+                    <div class="modal-body hustify-content-center">
+                        <input type="text" v-model="roomName" placeholder="Room Name" required >
+                        <div style="color: red;">
+                                {{roomErr}}  
+                        </div>
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+            
+        
+
+        <!--  -->
 
         <select class="custom-select" id="validatedInputGroupSelect" v-model="form.rooms" multiple required >
          <option v-for="room in rooms" :key="room.id" :value="room.id" :selected="room.id === form.rooms" >{{room.name}}</option>
              
         </select> 
+        <br>            
+        <br>
+        <br>
+
+         <div class="custom-file mb-3">
+                <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
+                <label class="custom-file-label"  for="validatedCustomFile">{{imageName}}</label>
+                <div class="invalid-feedback">Cover Photo</div> 
+                <div id="preview" style="margin-top: 1%;">
+                    <img v-if="url" :src="url" />
+                </div>
+         </div>
+
 
             <br>            
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
+          
 
             <button type="submit" name="submit" class="btn btn-primary mg-5">create</button>
         </form>
@@ -76,6 +115,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
                     },
                     imageName:'Upload Cover Photo',
                     url: null,
+                    roomName:'',
+                    roomErr:''
             }
         },
           mounted(){
@@ -90,7 +131,7 @@ axios.defaults.baseURL = 'http://localhost:8000'
                 console.log(this.form);
             },
 
-             onSubmit(e) {
+            onSubmit(e) {
                 const existingObj = this;
                 const config = {
                     headers: {
@@ -115,14 +156,13 @@ axios.defaults.baseURL = 'http://localhost:8000'
                         });
                 }          
                
-            e.preventDefault();
+                e.preventDefault();
 
-             },
-
-              getRooms() {
+            },
+            getRooms() {
                 const that = this ;
                 // console.log('hhhhhhhhhhhhhhh')
-            axios
+                axios
                 .get("/api/rooms")
                 .then((data) => {
                     that.rooms = data.data
@@ -132,7 +172,32 @@ axios.defaults.baseURL = 'http://localhost:8000'
                 .catch(() => {
                     console.log("Error...");
                 });
-                     }}, 
+            },
+            addRoom(e){
+                const roomList = this.rooms.map(value => value.name.toLowerCase());
+                const found = roomList.includes(this.roomName) ;
+                if(!found){
+                    axios.post('/api/rooms', {name:this.roomName}).then(function (res) {
+                        console.log(res);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+                }
+                else{
+                    this.roomErr = `This room "${this.categoryName}" is already exist ...`;
+                    e.preventDefault();
+                }
+                
+                this.roomName = '';
+                
+               
+                
+            }  
+
+
+        },
+            
                         
 
 
@@ -146,6 +211,21 @@ axios.defaults.baseURL = 'http://localhost:8000'
             //             this.$router.push({ name:'alluser'});
             //         });
             // }
-        }
+    }
     
 </script>
+
+
+
+<style scoped>
+#preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+}
+</style>

@@ -76,10 +76,11 @@ const AdminRoutes = [
     component:allusercomponent ,
      name:'alluser'},
 
-    {   name:'edit',
+    {   
+        name:'edit',
         path:'/edit/:id',
-      component:edituser
-                       },   
+        component:edituser
+    },   
                        
    { name:'store',
    path:'/userstore',

@@ -47,6 +47,6 @@ export default {
                 this.allPages = this.links;
         },
     },
-    props:['links', 'nextAndPrevious']
+    props:['links']
 }
 </script>

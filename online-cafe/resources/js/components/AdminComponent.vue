@@ -1,7 +1,6 @@
 <template>
     <div>
         <AdminNavBarComponent v-if="user" :user="user"/>
-     
     </div>
 
 </template>

@@ -19,6 +19,15 @@
           <input required type="date" class="form-control" name="end" v-model="end" />
         </div>
       </div>
+      <!-- Date messages  Start -->
+      <div class="row p-3" v-if="message.error || message.info">
+            <div :class="['alert', message.error ? 'alert-danger': 'alert-info' ,'m-auto']">
+                <p class="p-1" v-if="message.error">{{message.error}}</p>
+                <p class="p-1" v-if="message.info">{{message.info}}</p>
+            </div>
+        </div>
+      <!-- Date messages  End -->
+
       <br /><br />
       <div class="form-row">
         <div class="col">
@@ -80,14 +89,14 @@
         </thead>
         <tbody>
           
-          <tr v-for="order in data_of_user['orders']" :key="order.id">
+          <tr v-for="order in data_of_user['orders']['data']" :key="order.id">
             <td>
               <button
                 type="submit"
                 class="btn btn-primary"
                 @click="orderClicked(order.id)"
               >
-                {{order.created_at}}
+                {{formatDate(order.created_at)}}
               </button>
             </td>
             <th>{{order.total_price}}</th>
@@ -105,39 +114,50 @@
       >
         Hide
       </button>
+            <pagination v-if="data_of_user['orders']" :links="data_of_user['orders']['links']" @paginate="getDate"/>
+
     </div>
 
-    <div
-      v-if="orderDetailsDisplay == true"
-      class="p-3 mb-2 mt-5 text-primary"
-      style="background-color: #F0F0F0"
-    >
-      <div class="d-flex flex-row">
-        <div class="p-2" v-for="product in selectedOrderProducts" :key="product.id" style="display:inline">
-          <h4 >{{product.name}} </h4>
-          <p >{{product.pivot.quantity}}</p>
+    <div  v-if="orderDetailsDisplay == true"
+>
+      <div
+        class="p-3 mb-2 mt-5 text-primary"
+        style="background-color: #F0F0F0"
+      >
+        <div class="d-flex flex-row">
+          <div class="p-2" v-for="product in selectedOrderProducts" :key="product.id" style="display:inline">
+            <h4 >{{product.name}} </h4>
+            <p >{{product.pivot.quantity}}</p>
+          </div>
         </div>
+              
+
       </div>
-    
-    </div>
-    <button v-if="orderDetailsDisplay==true"
-            type="button"
-            class="btn btn-danger"
-            style="float:right"
-            @click="orderDetailsDisplay = false"
-          >
-            Hide
-          </button>
-    
+      <button 
+              type="button"
+              class="btn btn-danger"
+              style="float:right"
+              @click="orderDetailsDisplay = false"
+            >
+              Hide
+      </button>
+      </div>
   </div>
+
+
+ 
 </template>
 
 <script>
 import axios from "axios";
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000";
+import formater from '../helper/formater';
+import validate from '../helper/validate';
+import pagination from "./PaginationComponent";
 
 export default {
+  components: {
+    pagination,
+  },
   data() {
     return {
       orderDetailsDisplay: false,
@@ -150,13 +170,13 @@ export default {
       data_of_user: [],
       selectedOrderId:"",
       selectedOrderProducts:[],
+      message: {error: null, info: null}
     };
   },
-  //mounted() {},
   methods: {
     getUsers() {
       axios
-        .get("/api/checks")
+        .get("/api/users")
         .then((response) => {
           this.users = response.data;
         })
@@ -164,11 +184,24 @@ export default {
           console.log("Error...");
         });
     },
+    getDate(resData){
+      this.data_of_user['orders'] = resData.data;
+    },
+    formatDate(date){
+      return formater.formatDate(date);
+    },
+    cleareDateMessages(){
+      this.message.error = null;
+      this.message.info = null;
+    },
     submitform() {
-      // required, ...{}
       
-      axios
-        .post("/api/checks", {
+      this.cleareDateMessages();
+      // validate date, foramte date
+      if(!validate.isStartDateBeforeEndDate(this.start, this.end)){
+        return  this.message.error = "The start date must be before end date!"
+      }
+      axios.post(`/api/checks?selectedUser=${this.selectedUser}&start=${this.start}&end=${this.end}`, {
           selectedUser: this.selectedUser,
           start: this.start,
           end: this.end,

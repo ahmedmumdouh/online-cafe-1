@@ -23,10 +23,11 @@ import AddProduct from "./components/Admin/AddProductComponent.vue";
 import AllProducts from "./components/Admin/AllProductsComponent.vue";
 import UpdateProduct from "./components/Admin/UpdateProductComponent.vue";
 import Admin from "./components/AdminComponent.vue";
+import CheckOrderComponent from "./components/CheckOrderComponent";
+import ChecksComponent from "./components/ChecksComponent.vue";
 import handler from "./components/handler.vue";
 import Home from "./components/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
-
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
@@ -60,6 +61,9 @@ const AdminRoutes = [
     { name: "home", path: "/home", component: Home },
     { name: "allProducts", path: "/products", component: AllProducts },
     { name: "addProduct", path: "/add_product", component: AddProduct },
+    { path: "/checks", component: ChecksComponent },
+    { path: "/checkOrder/:id", component: CheckOrderComponent },
+    { path: "/:catchAll(.*)", component: handler },
     {
         name: "updateProduct",
         path: "/update_product/:productId",
@@ -78,7 +82,7 @@ window.addEventListener("load", function (e) {
         routes: AdminRoutes,
     });
     axios.get("/api/user").then((response) => {
-        if (!response.data.is_admin) {
+        if (response.data.is_admin) {
             createApp(Admin).use(adminRouter).mount("#main");
             user = response.data;
         } else {

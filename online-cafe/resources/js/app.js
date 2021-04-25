@@ -78,7 +78,7 @@ window.addEventListener("load", function (e) {
         routes: AdminRoutes,
     });
     axios.get("/api/user").then((response) => {
-        if (response.data.is_admin) {
+        if (!response.data.is_admin) {
             createApp(Admin).use(adminRouter).mount("#main");
             user = response.data;
         } else {

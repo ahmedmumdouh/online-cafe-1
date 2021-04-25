@@ -3,30 +3,30 @@
 
         <!-- Date Filter End -->
         <h1>My Order </h1>
-        <div class="row m-2">
-            <label for="startDate" class="col-sm-2 col-form-label">Date From</label>
+        <div >
+            <form class="row m-2" @submit.prevent="getOrderByDate()">                
+                <label for="startDate" class="col-sm-2 col-form-label">Date From</label>
 
-            <div class="col-sm-3 d-inline-block"> <!-- Start Date -->
-                <input v-model="startDate" name="startDate" aria-placeholder="Date From" type="date" class="form-check-input">
-            </div>
+                <div class="col-sm-3 d-inline-block"> <!-- Start Date -->
+                    <input @change="submitForm()"  v-model="startDate"  required id="startDate" aria-placeholder="Date From" type="datetime-local" class="form-check-input">
+                </div>
 
-                <label for="endDate" class="col-sm-2 col-form-label" aria-placeholder="Date To">Date To</label>
+                    <label for="endDate" class="col-sm-2 col-form-label" aria-placeholder="Date To">Date To</label>
 
-            <div class="col-sm-3 d-inline-block"> <!-- End Date -->
-                <input v-model="endDate" @change="getOrderByDate()" name="endDate" type="date" class="form-check-input">
-            </div>
+                <div class="col-sm-3 d-inline-block"> <!-- End Date -->
+                    <input v-model="endDate" @change="submitForm()" required id="endDate" type="datetime-local" class="form-check-input">
+                </div>
+
+                <div class="col-sm-2 d-inline-block"> <!-- End Date -->
+                    <button type="submit" hidden id="submit-form"  class="btn btn-info">Get</button>
+                </div>
+            </form>
 
         </div>
-
-        <div class="row" v-if="dateErrorMessages">
-            <div class="alert alert-danger m-auto">
-                <p class="p-1">{{dateErrorMessages}}</p>
-            </div>
-        </div>
-
-        <div class="row" v-if="dateInfoMessages">
-            <div class="alert alert-info m-auto">
-                <p class="p-1">{{dateInfoMessages}}</p>
+        <div class="row" v-if="message.error || message.info">
+            <div :class="['alert', message.error ? 'alert-danger': 'alert-info' ,'m-auto']">
+                <p class="p-1" v-if="message.error">{{message.error}}</p>
+                <p class="p-1" v-if="message.info">{{message.info}}</p>
             </div>
         </div>
         <!-- Date Filter End -->
@@ -94,8 +94,13 @@ import {user} from '../../app';
 import service from '../../services/orders';
 import PaginationComponent from '../PaginationComponent.vue';
 
+import urls from '../services/apiURLs';
+import formater from '../../helper/formater';
+import validate from '../../helper/validate';
 export default {
     async created(){
+        
+        this.imageServerURL = urls.imageServerURL ;
         const orders = await service.getOrders(user.id);
         this.orders = orders.data;
     },
@@ -106,8 +111,8 @@ export default {
             startDate: null,
             endDate: null,
             orderDetails: false,
-            dateErrorMessages: null,
-            dateInfoMessages: null,
+            message: {error: null, info: null},
+            imageServerURL:''
         }
     },
     components: {
@@ -115,10 +120,7 @@ export default {
     },
     methods: {
         formatPrice(price){
-            const formater = Intl.NumberFormat('eg-SA',{
-                   style: 'currency', currency: 'EGP' 
-                   })
-            return formater.format(price);
+            return formater.formatPrice(price);
         },
         async displayDetails(orderId){
             const products = await this.getOrderProducts(orderId);
@@ -143,7 +145,7 @@ export default {
 
         async getOrderByDate(){
             // verify the two date is not null, but the max date as the last created one,
-            if(!this.startDate || !this.endDate) return this.dateErrorMessages = "The two date fields are required!";
+            if(!validate.isStartDateBeforeEndDate(this.startDate, this.endDate)) return this.message.error = "The start date must be before end date!";
 
             const date = {start_date: this.startDate, end_date: this.endDate}
             const orders = await service.getOrders(this.user.id,date);
@@ -152,21 +154,23 @@ export default {
             if(orders.data.data.length > 0){
                 this.updateCurrentOrders(orders);
             }else{
-                this.dateInfoMessages = "No Orders within this date!"
+                this.message.info = "No Orders within this date!"
             }
         },
         changeDateFormat(date){
-            const newDate = new Date(date);
-            return newDate.toLocaleString();
+            return formater.formatDate(date);
         },
         cleareDateMessages(){
-            this.dateErrorMessages = null;
-            this.dateInfoMessages = null;
+            this.message.error = null;
+            this.message.info = null;
         },
         updateCurrentOrders(orders){
             this.orders = orders.data;
 
         },
+        submitForm(){
+            document.getElementById('submit-form').click();
+        }
     }
 }
 </script>

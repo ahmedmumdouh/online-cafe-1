@@ -3,32 +3,46 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-
                     <div class="card-body">
-                        
-                        
                         <router-view col-md-12></router-view>
-    
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div>
+        <AdminNavBarComponent v-if="user" :user="user"/>
+    </div>
 
 </template>
 
 <script>
-import axios from 'axios'
-axios.defaults.withCredentials =true
-axios.defaults.baseURL = 'http://localhost:8000'
+import axios from 'axios';
+axios.defaults.withCredentials =true;
+axios.defaults.baseURL = 'http://localhost:8000';
+import urls from './services/apiURLs' ; 
+import AdminNavBarComponent from './Admin/AdminNavBarComponent.vue'
 
     export default {
-        mounted() {
+        data(){
+            return{
+                user: null
+            }
+            
+        },
+        beforeCreate() {
+           const that = this ;
             console.log('Component mounted.');
-            axios.get('/api/categories').then(response => {
+            axios.get('/api/user').then(response => {
                 console.log(response.data)
+                that.user = response.data;
+                console.log(that.user);
             })
         },
+        components:{
+            AdminNavBarComponent,
+        }
+        
         
     }
 </script>

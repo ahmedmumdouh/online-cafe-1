@@ -3,13 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Example Component</div>
-
+                    <div class="card-header text-center text-dark">404</div>
                     <div class="card-body">
-                        I'm an example compo
-                       
-                        <h3>handler</h3>
-    
+                        <h3 class="aler alert-info text-center">Page Not Found</h3>
                     </div>
                 </div>
             </div>
@@ -25,10 +21,8 @@ axios.defaults.baseURL = 'http://localhost:8000'
 
     export default {
         mounted() {
-            console.log('Component mounted.');
-            axios.get('/api/user').then(response => {
-                console.log(response.data)
-            })
+            console.log('Handler Component mounted.');
+            
         },
       
     }

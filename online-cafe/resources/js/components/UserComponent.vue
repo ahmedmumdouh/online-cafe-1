@@ -1,36 +1,37 @@
 <template>
-    <div class="container">
+    <div>
+        <Navbar  v-if="user" :user="user"/>
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example compo
-                       
-                        <h3>Uesr-</h3>
-                        <router-view col-md-12></router-view>
-    
-                    </div>
-                </div>
+            <div class="container col-12 py-4">
+                <router-view></router-view>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
 import axios from 'axios'
-axios.defaults.withCredentials =true
-axios.defaults.baseURL = 'http://localhost:8000'
+import Navbar from '../components/User/NavbarComponent';
 
     export default {
-        mounted() {
-            console.log('Component mounted.');
-            axios.get('/api/categories').then(response => {
-                console.log(response.data)
+        created() {
+            console.log('User Component Created.');
+             axios.get('/api/user').then(response => {
+                this.user = response.data;
             })
         },
+        data(){
+            return {
+                user: null,
+            }
+        },
+        components: {
+            Navbar,
+        }
     
     }
 </script>
+
+<style scoped>
+
+</style>

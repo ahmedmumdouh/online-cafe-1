@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('image')->nullable();
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

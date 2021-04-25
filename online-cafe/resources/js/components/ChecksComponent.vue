@@ -89,7 +89,7 @@
         </thead>
         <tbody>
           
-          <tr v-for="order in data_of_user['orders']" :key="order.id">
+          <tr v-for="order in data_of_user['orders']['data']" :key="order.id">
             <td>
               <button
                 type="submit"
@@ -114,39 +114,50 @@
       >
         Hide
       </button>
+            <pagination v-if="data_of_user['orders']" :links="data_of_user['orders']['links']" @paginate="getDate"/>
+
     </div>
 
-    <div
-      v-if="orderDetailsDisplay == true"
-      class="p-3 mb-2 mt-5 text-primary"
-      style="background-color: #F0F0F0"
-    >
-      <div class="d-flex flex-row">
-        <div class="p-2" v-for="product in selectedOrderProducts" :key="product.id" style="display:inline">
-          <h4 >{{product.name}} </h4>
-          <p >{{product.pivot.quantity}}</p>
+    <div  v-if="orderDetailsDisplay == true"
+>
+      <div
+        class="p-3 mb-2 mt-5 text-primary"
+        style="background-color: #F0F0F0"
+      >
+        <div class="d-flex flex-row">
+          <div class="p-2" v-for="product in selectedOrderProducts" :key="product.id" style="display:inline">
+            <h4 >{{product.name}} </h4>
+            <p >{{product.pivot.quantity}}</p>
+          </div>
         </div>
+              
+
       </div>
-    
-    </div>
-    <button v-if="orderDetailsDisplay==true"
-            type="button"
-            class="btn btn-danger"
-            style="float:right"
-            @click="orderDetailsDisplay = false"
-          >
-            Hide
-          </button>
-    
+      <button 
+              type="button"
+              class="btn btn-danger"
+              style="float:right"
+              @click="orderDetailsDisplay = false"
+            >
+              Hide
+      </button>
+      </div>
   </div>
+
+
+ 
 </template>
 
 <script>
 import axios from "axios";
 import formater from '../helper/formater';
 import validate from '../helper/validate';
+import pagination from "./PaginationComponent";
 
 export default {
+  components: {
+    pagination,
+  },
   data() {
     return {
       orderDetailsDisplay: false,
@@ -162,17 +173,19 @@ export default {
       message: {error: null, info: null}
     };
   },
-  //mounted() {},
   methods: {
     getUsers() {
       axios
-        .get("/api/checks")
+        .get("/api/users")
         .then((response) => {
           this.users = response.data;
         })
         .catch(() => {
           console.log("Error...");
         });
+    },
+    getDate(resData){
+      this.data_of_user['orders'] = resData.data;
     },
     formatDate(date){
       return formater.formatDate(date);
@@ -188,8 +201,7 @@ export default {
       if(!validate.isStartDateBeforeEndDate(this.start, this.end)){
         return  this.message.error = "The start date must be before end date!"
       }
-      axios
-        .post("/api/checks", {
+      axios.post(`/api/checks?selectedUser=${this.selectedUser}&start=${this.start}&end=${this.end}`, {
           selectedUser: this.selectedUser,
           start: this.start,
           end: this.end,

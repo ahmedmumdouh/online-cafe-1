@@ -3,11 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\RoomController;
 use App\Models\User;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\ProductController;
+use App\Http\Controllers\api\AdminUserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +21,7 @@ use App\Http\Controllers\api\ProductController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// middleware('auth:sanctum')->get
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -42,4 +46,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("/categories", CategoryController::class);
     Route::put("/products/available/{product}", [ProductController::class, 'available']);
     // ... Other routes
+
+
+    Route::post('/userstore',[AdminUserController::class,'store']); 
+    Route::get('/userindex',[AdminUserController::class,'index']); 
+    Route::delete('/userdelete/{id}',[AdminUserController::class,'destroy']); 
+    Route::patch('/useredit/{id}',[AdminUserController::class,'update']); 
+    Route::get('/usershow/{id}',[AdminUserController::class,'show']); 
+    Route::apiResource("/rooms",RoomController::class);
+
+
 });

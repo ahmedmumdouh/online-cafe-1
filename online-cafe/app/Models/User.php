@@ -19,8 +19,10 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
     public function rooms()
-    {
-        return $this->belongsToMany(Room::class);
+    {  
+         
+        return $this->belongsToMany(Room::class ,'user_room_tables','user_id','room_id');
+      
     }
     /**
      * The attributes that are mass assignable.

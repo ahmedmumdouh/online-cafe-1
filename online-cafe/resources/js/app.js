@@ -18,6 +18,7 @@ require("./bootstrap");
 
 import axios from "axios";
 import { createApp } from "vue";
+
 import { createRouter, createWebHistory } from "vue-router";
 import AddProduct from "./components/Admin/AddProductComponent.vue";
 import AllProducts from "./components/Admin/AllProductsComponent.vue";
@@ -26,12 +27,18 @@ import Admin from "./components/AdminComponent.vue";
 import handler from "./components/handler.vue";
 import Home from "./components/HomeComponent.vue";
 import User from "./components/UserComponent.vue";
+// import test from "./components/testComponent.vue";
+import allusercomponent from "./components/Admin/allusercomponent.vue";
+import edituser from "./components/Admin/editeUserComponent.vue"
+import storeuser from "./components/Admin/addUserComponent.vue"
+
 
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
 // routes
+
 const loadUserGroupComponents = (componenet) => {
     return import(
         /* webpack-ChunkName: 'userGroup' */ `./components/User/${componenet}.vue`
@@ -65,6 +72,19 @@ const AdminRoutes = [
         path: "/update_product/:productId",
         component: UpdateProduct,
     },
+    {path:'/alluser',
+    component:allusercomponent ,
+     name:'alluser'},
+
+    {   name:'edit',
+        path:'/edit/:id',
+      component:edituser
+                       },   
+                       
+   { name:'store',
+   path:'/userstore',
+   component:storeuser
+   },
     { name: "handler", path: "/:catchAll(.*)", component: handler },
 ];
 export let user;
@@ -84,6 +104,7 @@ window.addEventListener("load", function (e) {
         } else {
             createApp(User).use(userRouter).mount("#main");
             user = response.data;
+
         }
     });
 });

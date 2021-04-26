@@ -7,11 +7,13 @@
             <form class="col-lg-4 p-3 border" @submit.prevent="confirmOrder()">
                 <!-- Dispaly all User For Admin Start-->
 
-                <div class="row" v-if="order.user.is_admin">
+                <div class="row" v-if="curUesr.is_admin">
                     <div class="col-lg-12 align-baseline m-2">
                         <label for="all-users" class="col-lg-form-label text">Select User </label>
-                        <select required v-model="order.user" name="all-users" class="m-2">
-                                    <option v-for="user in allUsers" :key="user.id">{{user.name}}</option>
+                        <select required v-model="order.user" name="all-users" class="m-2" >        
+                                <template v-for="user in allUsers"  :key="user.id">
+                                   <option v-if="!user.is_admin" :value="user" >{{user.name}}</option>
+                                </template>
                         </select>
                     </div>
                 </div>
@@ -105,6 +107,7 @@ import {user} from '../../app';
 import urls from '../services/apiURLs' ; 
 export default {
     async created(){
+
         this.imageServerURL = urls.imageServerURL ;
         this.getData();
         if(user.is_admin){
@@ -124,6 +127,7 @@ export default {
             rooms: [],
             allUsers: null,
             imageServerURL:'',
+            curUesr:user,
         }    
     },
     methods:{
@@ -200,6 +204,7 @@ export default {
             }
         },
         async submitOrder(){
+            console.log(this.order.user)
             try {
                 const res =  await services.submitOrder(this.order);
                  console.log(res.data);
@@ -215,13 +220,13 @@ export default {
             this.products = products.data;
             console.log(products.data);
         },
-         async getRooms(){
+        async getRooms(){
             const products = await services.getRooms();
             this.rooms = products.data;
             console.log(products.data);
 
         },
-         async getData(){
+        async getData(){
             this.getRooms();
             this.getProducts();
         }

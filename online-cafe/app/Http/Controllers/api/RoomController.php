@@ -1,26 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\api;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Room;
 
-use App\Models\User;
 
 class RoomController extends Controller
 {
-    //
-    // function __construct(){
-    //     $this->middleware("auth:sanctum");
-    //     // $this->middleware("auth:sanctum")->only(["destroy","update"]);
-
-    // }
-
+    
     function index (){
-        $rooms = Room::all();
-        return $rooms ;
+        $room = Room::all();
+        return $room ;
     }
 
 

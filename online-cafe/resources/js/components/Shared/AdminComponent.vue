@@ -9,8 +9,8 @@
 import axios from 'axios';
 axios.defaults.withCredentials =true;
 axios.defaults.baseURL = 'http://localhost:8000';
-import urls from './services/apiURLs' ; 
-import AdminNavBarComponent from './Admin/AdminNavBarComponent.vue'
+import urls from '../services/apiURLs' ; 
+import AdminNavBarComponent from '../Admin/AdminNavBarComponent.vue'
 
     export default {
         data(){

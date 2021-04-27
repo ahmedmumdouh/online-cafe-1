@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import LatestOrderComponenet from './LatestOrderComponent';
-import CreatedOrderComponent from '../User/CreateOrderComponent';
+import LatestOrderComponenet from '../User/LatestOrderComponent.vue';
+import CreatedOrderComponent from '../User/CreateOrderComponent.vue';
 import {user}  from '../../app';
     export default {
         mounted() {

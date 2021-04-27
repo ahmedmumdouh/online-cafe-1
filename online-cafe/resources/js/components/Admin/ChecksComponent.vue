@@ -39,11 +39,14 @@
             v-model="selectedUser"
             required
           >
-            <option v-for="user in users" :key="user.id">
+            <!-- <option v-for="user in users" :key="user.id">
               {{ user.name }}
-            </option>
+            </option> -->
+     
+            <template v-for="user in users"  :key="user.id">
+                <option v-if="!user.is_admin"  >{{user.name}}</option>
+            </template>
 
-            <option>All</option>
           </select>
         </div>
       </div>
@@ -150,9 +153,9 @@
 
 <script>
 import axios from "axios";
-import formater from '../helper/formater';
-import validate from '../helper/validate';
-import pagination from "./PaginationComponent";
+import formater from '../../helper/formater';
+import validate from '../../helper/validate';
+import pagination from "../Shared/PaginationComponent.vue";
 
 export default {
   components: {

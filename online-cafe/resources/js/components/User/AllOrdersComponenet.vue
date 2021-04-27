@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="order in orders.data" :key="order.id">
+                    <tr class="clickable"  v-for="order in orders.data" :key="order.id" >
                         <td @click="displayDetails(order.id)">{{changeDateFormat(order.created_at)}}</td>
                         <td @click="displayDetails(order.id)">{{order.status}}</td>
                         <td @click="displayDetails(order.id)">{{formatPrice(order.total_price)}}</td>
@@ -110,7 +110,7 @@
 <script>
 import {user} from '../../app';
 import service from '../../services/orders';
-import PaginationComponent from '../PaginationComponent.vue';
+import PaginationComponent from '../Shared/PaginationComponent.vue';
 
 import urls from '../services/apiURLs';
 import formater from '../../helper/formater';
@@ -192,3 +192,12 @@ export default {
     }
 }
 </script>
+
+
+
+<style scoped>
+.clickable:hover{
+    cursor: pointer;
+    background-color: lightskyblue;
+}
+</style>

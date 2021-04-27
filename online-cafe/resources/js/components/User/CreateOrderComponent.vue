@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container" >
        
-       
+       <div v-if="products.length > 0">
         
         <div class="row">
             <form class="col-lg-4 p-3 border" @submit.prevent="confirmOrder()">
@@ -61,7 +61,8 @@
                     </div>
                 </div>
             </form> <!-- create order  -->
-            <div id="products" class="col-lg-8 py-3 ">
+            <div class="col-1"></div>
+            <div id="products" class="col-lg-7 py-3  border">
                 <div class="row justify-content-center">
                     <div v-for="product in products" :key="product.id" >
                     <div class="card m-2 " style="width: 12rem;  height: 95%;" v-if="product.available">
@@ -97,6 +98,22 @@
                 </div>
             </div><!-- display products !-->
         </div>
+        </div>
+        <div v-if="products.length < 1 ">
+             
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center text-dark"></div>
+                        <div class="card-body">
+                            <h3 class="aler alert-info text-center">  Unfortunately, there is no available products Right Now ... </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </template>
 

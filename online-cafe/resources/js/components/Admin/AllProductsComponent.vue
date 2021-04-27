@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div v-if="products.length > 0">
+
          <router-link class="btn btn-success mb-2 float-right" :to="{name: 'addProduct'}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -20,7 +21,7 @@
             <tr  v-for="product in products" :key="product.id" >
                 <td style="vertical-align: middle;">{{product.name}}</td>
                 <td>{{product.category_id.name}}</td>
-                <td>{{product.price}}</td>                
+                <td>{{formatPrice(product.price)}}</td>                
                 <td style="width:25%"><img :src="imageServerURL+product.image" style="width:25% ;" :alt="product.name"></td>
                 <td>
                     <button class="btn btn-warning mr-1" @click="visable(product.id)" v-if="product.available==1">
@@ -56,7 +57,24 @@
     </table>
 
     </div>
-   
+       <div v-if="products.length < 1">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center text-dark"></div>
+                        <div class="card-body">
+                            <h3 class="aler alert-info text-center">Please Wait, Loading ... </h3>
+
+                        </div>
+                        <div class="card-footer">
+                            <router-link class="btn btn-success btn-block" :to="{name: 'addProduct'}">Add Products
+                            </router-link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+
 
 </template>
 
@@ -65,6 +83,8 @@ import axios from 'axios'
 axios.defaults.withCredentials =true
 axios.defaults.baseURL = 'http://localhost:8000'
 import urls from '../services/apiURLs.js'
+import formater from '../../helper/formater';
+
     export default {
         data(){
                 return{                    
@@ -115,7 +135,13 @@ import urls from '../services/apiURLs.js'
                         console.log(productResponse);
                         console.log(this.products);
                 } )
-            }
+            },
+             formatPrice(price){
+            const formater = Intl.NumberFormat('eg-SA',{
+                   style: 'currency', currency: 'EGP' 
+                   })
+            return formater.format(price);
+        },
         
         }
         

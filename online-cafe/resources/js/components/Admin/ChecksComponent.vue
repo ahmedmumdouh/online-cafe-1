@@ -57,7 +57,7 @@
     </form>
     <br /><br />
 
-    <table class="table table-striped">
+    <table class="table table-striped text-center">
       <thead class="bg-info">
         <tr>
           <th scope="col">Name</th>
@@ -83,11 +83,12 @@
     </table>
 
     <div v-if="orderDisplay">
-      <table class="table table-hover table-primary mt-5">
+      <table class="table table-hover table-primary mt-5 text-center">
         <thead>
           <tr>
             <th scope="col">Order Date</th>
             <th scope="col">Amount</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -102,8 +103,8 @@
                 {{formatDate(order.created_at)}}
               </button>
             </td>
-            <th>{{order.total_price}}</th>
-            <th><router-link v-bind:to="'/checkOrder/'+order.id">Details</router-link></th>
+            <td>{{order.total_price}}</td>
+            <td><router-link class="btn btn-info" v-bind:to="'/checkOrder/'+order.id">Details</router-link></td>
           </tr>
           
           

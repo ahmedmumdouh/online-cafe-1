@@ -11,7 +11,7 @@ use App\Http\Controllers\api\RoomController;
 use App\Models\User;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\AdminUserController;
-
+use App\Http\Controllers\api\CheckOrderController ;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,3 +72,6 @@ Route::get('/checks', [ChecksController::class, 'index']);
 
 
 Route::post('/checks/products', [ChecksController::class, 'getProducts']);
+
+Route::post('/checkOrder',[CheckOrderController::class,'index']);
+Route::put('/checkOrder',[CheckOrderController::class,'update']);

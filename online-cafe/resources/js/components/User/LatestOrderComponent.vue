@@ -51,9 +51,12 @@ import urls from '../services/apiURLs' ;
 export default {
     async created(){
         this.imageServerURL = urls.imageServerURL;
-        const latestOrder = await services.getLatestOrder(this.user.id);
-        this.latestOrder = latestOrder.data;
-        console.log("Latest Order Created \n\ ", latestOrder.data);
+        if(! this.user.is_admin){
+            const latestOrder = await services.getLatestOrder(this.user.id);
+            this.latestOrder = latestOrder.data;
+            console.log("Latest Order Created \n\ ", latestOrder.data);
+        }
+       
     },
     data() {
         return {

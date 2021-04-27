@@ -16,8 +16,7 @@ import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Admin from "./components/Shared/AdminComponent.vue";
 import User from "./components/Shared/UserComponent.vue";
-import CheckOrderComponent from "./components/CheckOrderComponent";
-import ChecksComponent from "./components/ChecksComponent.vue";
+
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -73,8 +72,8 @@ const AdminRoutes = [
     { name: 'edit', path:'/edit/:id', component: loadAdminGroupComponents("editeUserComponent")},                  
     { name: 'store', path:'/userstore', component: loadAdminGroupComponents("addUserComponent")},
 
-    { path: "/checks", component: ChecksComponent },
-    { path: "/checkOrder/:id", component: CheckOrderComponent },
+    { name: 'checks', path:"/checks", component: loadAdminGroupComponents("ChecksComponent")}, 
+    { name: 'checkOrder', path:"/checkOrder/:id", component: loadAdminGroupComponents("CheckOrderComponent")}, 
 
     { name: "handler", path: "/:catchAll(.*)", component: loadSharedGroupComponents("handler") },
 ];
